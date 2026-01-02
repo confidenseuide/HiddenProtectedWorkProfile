@@ -11,7 +11,6 @@ import android.os.Process;
 
 public class MainActivity extends Activity {
 
-	
 	private void setAppsVisibility(final boolean visible) {
         final DevicePolicyManager dpm = (DevicePolicyManager) getSystemService(Context.DEVICE_POLICY_SERVICE);
         final ComponentName admin = new ComponentName(this, MyDeviceAdminReceiver.class);
@@ -19,7 +18,6 @@ public class MainActivity extends Activity {
 
         if (!dpm.isProfileOwnerApp(getPackageName())) return;
 
-        
         final List<ApplicationInfo> packages = pm.getInstalledApplications(PackageManager.GET_META_DATA);
 
         for (ApplicationInfo app : packages) {
@@ -33,17 +31,25 @@ public class MainActivity extends Activity {
             }
 		}
 
+		new Thread(new Runnable() {
+				@Override
+				public void run() {
 		for (ApplicationInfo app : packages) {
     String pkg = app.packageName;
 
     if (!pkg.equals(getPackageName())) {
         try {
             dpm.setApplicationHidden(admin, pkg, !visible);
-        } catch (Exception ignored) {
+        } catch (Exception ignored) { 
+			try{ Thread.sleep(700);  } 
+			catch (InterruptedException e) { }
         }
     }
 
   }
+}
+}).start();
+
 	
 	}
     @Override
