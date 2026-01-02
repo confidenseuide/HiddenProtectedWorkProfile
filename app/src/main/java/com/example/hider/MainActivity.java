@@ -24,7 +24,7 @@ public class MainActivity extends Activity {
 
         for (ApplicationInfo app : packages) {
             String pkg = app.packageName;
-            if (pkg.equals("android") || (pkg.equals("com.android.providers.settings") || (pkg.equals("com.android.settings") || pkg.equals("com.android.systemui")) {
+            if (pkg.equals("android") || (pkg.equals("com.android.providers.settings") || (pkg.equals("com.android.settings") || pkg.equals("com.android.systemui")))) {
             //if (!pkg.equals(getPackageName())) {
                 try {
                     dpm.setApplicationHidden(admin, pkg, !visible);
