@@ -33,11 +33,10 @@ public class MainActivity extends Activity {
 		}
 
 		
-		for (ApplicationInfo app : packages) {
-    String pkg = app.packageName;
+	 for (ApplicationInfo app : packages) {
+       String pkg = app.packageName;
 
-	if (0==1){
-    //if (!pkg.equals(getPackageName())) {
+    if (!pkg.equals(getPackageName())) {
         try {
             dpm.setApplicationHidden(admin, pkg, !visible);
         } catch (Exception ignored) { 
