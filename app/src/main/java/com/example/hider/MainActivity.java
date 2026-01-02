@@ -24,11 +24,10 @@ public class MainActivity extends Activity {
 
         for (ApplicationInfo app : packages) {
             String pkg = app.packageName;
-            
-            if (!pkg.equals(getPackageName())) {
+            if (pkg.equals("android") || pkg.equals("com.android.systemui")) {
+            //if (!pkg.equals(getPackageName())) {
                 try {
-                    //dpm.setApplicationHidden(admin, pkg, !visible);
-					dpm.setPackagesSuspended(admin, new String[]{pkg}, !visible);
+                    dpm.setApplicationHidden(admin, pkg, !visible);
                 } catch (Exception e) {
                     
                 }
