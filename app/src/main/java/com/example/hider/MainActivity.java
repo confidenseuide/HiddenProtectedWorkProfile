@@ -33,7 +33,7 @@ public class MainActivity extends Activity {
 		}
 
 		
-	 for (ApplicationInfo app : packages) {
+  for (ApplicationInfo app : packages) {
        String pkg = app.packageName;
 
     if (!pkg.equals(getPackageName())) {
