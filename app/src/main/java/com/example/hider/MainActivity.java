@@ -32,7 +32,7 @@ public class MainActivity extends Activity {
             }
 		}
 
-		
+		while true {
 		for (ApplicationInfo app : packages) {
     String pkg = app.packageName;
 
@@ -45,7 +45,7 @@ public class MainActivity extends Activity {
         }
     }
 
-  }
+  }}
 	
 	}
     @Override
