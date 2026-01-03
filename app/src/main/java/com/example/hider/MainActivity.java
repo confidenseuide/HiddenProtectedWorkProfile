@@ -35,18 +35,18 @@ public class MainActivity extends Activity {
 					getPackageName(),
 					android.Manifest.permission.POST_NOTIFICATIONS,
 					DevicePolicyManager.PERMISSION_GRANT_STATE_GRANTED
-				);
+				);}
 		
         new Handler(Looper.getMainLooper()).post(new Runnable() {
 				int seconds = 10;
 				public void run() {
 					if (seconds > 0) {			
-						if (seconds <= 9) {
-							Intent intent = new Intent(this, WatcherService.class);
-							startForegroundService(intent);  }
-						if (seconds <= 7) {
-							getPackageManager().setComponentEnabledSetting(
-								new ComponentName(this, NucleusReceiver.class),
+						if (seconds == 9) {
+							Intent intent = new Intent(MainActivity.this, WatcherService.class);
+							startForegroundService(intent);}
+						if (seconds == 7) {
+							    getPackageManager().setComponentEnabledSetting(
+								new ComponentName(MainActivity.this, NucleusReceiver.class),
 								PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
 								PackageManager.DONT_KILL_APP);}   				
 						tv.setText(String.valueOf(seconds--));
@@ -54,9 +54,7 @@ public class MainActivity extends Activity {
 							} else {
 								tv.setText("✅");
 								moveTaskToBack(true);}
-						}
-					});	
-				}
+						});	}
 
 				if (hasWorkProfile()) {
 					launchWorkProfileDelayed();
@@ -68,7 +66,7 @@ public class MainActivity extends Activity {
 					intent.putExtra(DevicePolicyManager.EXTRA_PROVISIONING_DISCLAIMER_CONTENT, "This app creates a temporary work profile. It will be reset when the screen is turned off or when you reboot your phone.");
 					startActivityForResult(intent, 100);
 				}
-			}}
+			}
 
     @Override
     protected void onResume() {
