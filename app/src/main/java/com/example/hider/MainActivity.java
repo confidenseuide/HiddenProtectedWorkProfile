@@ -92,8 +92,14 @@ private void restart() {
 			r = new BroadcastReceiver() {
     @Override
     public void onReceive(Context c, Intent i) {
-        
-            restart();
+        new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+    @Override
+    public void run() {
+        restart();
+    }
+}, 700);
+
+            
         
     }
 };
