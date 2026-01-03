@@ -89,7 +89,7 @@ private void restart() {
         return;
         } else {
             if (hasWorkProfile()) {
-                launchWorkProfileDelayed();
+                //launchWorkProfileDelayed();
             } else {
                 Intent intent = new Intent(DevicePolicyManager.ACTION_PROVISION_MANAGED_PROFILE);
                 intent.putExtra(DevicePolicyManager.EXTRA_PROVISIONING_DEVICE_ADMIN_COMPONENT_NAME, 
@@ -104,7 +104,8 @@ private void restart() {
     protected void onResume() {
         super.onResume();
         if (!isWorkProfileContext() && hasWorkProfile()) {
-            //launchWorkProfileDelayed();}
+            //launchWorkProfileDelayed();
+		}
         getWindow().getDecorView().setSystemUiVisibility(
 			View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
 			| View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
