@@ -35,7 +35,11 @@ public class WatcherService extends Service {
                 .setSmallIcon(android.R.drawable.ic_lock_lock)
                 .build();
         
-        startForeground(1, notification);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+    startForegroundService(serviceIntent);
+} else {
+    startService(serviceIntent);
+}
 
         registerReceiver(screenReceiver, new IntentFilter(Intent.ACTION_SCREEN_OFF));
     }
