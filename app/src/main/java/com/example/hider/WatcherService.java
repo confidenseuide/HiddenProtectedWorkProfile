@@ -32,7 +32,7 @@ public class WatcherService extends Service {
         Notification notification = new Notification.Builder(this, CHANNEL_ID)
                 .setContentTitle("Profile protection is active")
                 .setContentText("The data will be deleted when the screen is turned off.")
-                .setSmallIcon(android.R.drawable.ic_launcher)
+                .setSmallIcon(android.R.drawable.ic_lock_lock)
                 .build();
         
         startForeground(1, notification);
