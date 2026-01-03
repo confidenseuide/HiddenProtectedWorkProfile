@@ -39,7 +39,7 @@ public class MainActivity extends Activity {
     
     try { Thread.sleep(50); } catch (Exception ignored) {}
 
-		}
+		}}
         if (hasWorkProfile()) {
             launchWorkProfileDelayed();
         } else {
