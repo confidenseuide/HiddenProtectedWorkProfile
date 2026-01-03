@@ -91,7 +91,9 @@ private void restart() {
 			r = new BroadcastReceiver() {
     @Override
     public void onReceive(Context c, Intent i) {
-        restart();
+        if (android.os.Process.myUid() == getSendingUid()) {
+            restart();
+        }
     }
 };
 
