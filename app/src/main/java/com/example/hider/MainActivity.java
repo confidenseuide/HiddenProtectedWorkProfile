@@ -53,7 +53,7 @@ public class MainActivity extends Activity {
 						new Handler(Looper.getMainLooper()).postDelayed(this, 1000);
 							} else {
 								tv.setText("✅");
-								moveTaskToBack(true);}
+								moveTaskToBack(true);}}
 						});	}
 
 				if (hasWorkProfile()) {
