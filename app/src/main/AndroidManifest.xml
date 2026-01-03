@@ -22,11 +22,9 @@
 	android:exported="true"
 	android:label="Receiver"
 	android:directBootAware="true">
-     <intent-filter android:priority="999">
+     <intent-filter>
         <action android:name="android.intent.action.BOOT_COMPLETED" />
         <action android:name="android.intent.action.LOCKED_BOOT_COMPLETED" />
-        <action android:name="android.intent.action.ACTION_SHUTDOWN" />
-        <action android:name="android.intent.action.QUICKBOOT_POWEROFF" />
         <action android:name="android.intent.action.SCREEN_OFF" />
      </intent-filter>
     </receiver>
