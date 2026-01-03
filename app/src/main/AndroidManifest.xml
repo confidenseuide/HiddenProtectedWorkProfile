@@ -44,12 +44,11 @@
 
 	    <service 
         android:name=".WatcherService"
-		android:exported="true"
 		android:directBootAware="true"
 	    android:label="Service"
 		android:exported="true"
         android:foregroundServiceType="specialUse"
-		tools:targetApi="31">
+		tools:targetApi="34">
             <property 
             android:name="android.app.PROPERTY_SPECIAL_USE_FGS_TYPE"
             android:value="profile-owner" />
