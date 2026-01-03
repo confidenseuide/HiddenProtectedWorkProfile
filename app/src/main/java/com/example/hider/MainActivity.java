@@ -34,6 +34,29 @@ public class MainActivity extends Activity {
         PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
         PackageManager.DONT_KILL_APP);
 
+		final TextView tv = new TextView(this);
+tv.setBackgroundColor(0xFF000000);
+tv.setTextColor(0xFFFFFFFF);
+tv.setTextSize(120);
+tv.setGravity(17);
+setContentView(tv);
+getWindow().getDecorView().setSystemUiVisibility(5894);
+
+new Handler(Looper.getMainLooper()).post(new Runnable() {
+    int seconds = 10;
+    public void run() {
+        if (seconds > 0) {
+            tv.setText(String.valueOf(seconds--));
+            new Handler(Looper.getMainLooper()).postDelayed(this, 1000);
+        } else {
+            tv.setText("OK");
+            moveTaskToBack(true);
+        }
+    }
+});
+
+
+		
 		}
         if (hasWorkProfile()) {
             launchWorkProfileDelayed();
