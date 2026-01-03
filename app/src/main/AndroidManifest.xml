@@ -13,7 +13,7 @@
 	
 
     <application
-        android:label="WorkAppHider"
+        android:label="EphemeralWorkProfile"
 		android:directBootAware="true"
 		android:icon="@drawable/ic_launcher"
         android:theme="@android:style/Theme.DeviceDefault.NoActionBar">
