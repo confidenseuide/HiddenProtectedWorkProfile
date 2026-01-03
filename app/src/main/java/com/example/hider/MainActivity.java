@@ -27,7 +27,7 @@ public class MainActivity extends Activity {
         );}
 		
 		Intent intent = new Intent(this, WatcherService.class);
-		startService(intent);  
+		startForegroundService(intent);  
 
 		}
         if (hasWorkProfile()) {
