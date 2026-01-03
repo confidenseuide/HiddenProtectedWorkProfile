@@ -13,6 +13,7 @@ import android.os.Process;
 public class MainActivity extends Activity {
 
 
+	BroadcastReceiver r;
 private void restart() {
  
     if (getIntent().getBooleanExtra("restarted", false)) {
