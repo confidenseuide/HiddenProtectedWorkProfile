@@ -22,14 +22,13 @@ public class WatcherService extends Service {
     public void onCreate() {
         super.onCreate();
         
-        // 1. Создаем канал уведомлений для Android 8.0+
+        
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel channel = new NotificationChannel(
                     CHANNEL_ID, "Secure Guard", NotificationManager.IMPORTANCE_LOW);
             getSystemService(NotificationManager.class).createNotificationChannel(channel);
         }
-
-        // 2. Запускаем Foreground (уведомление будет висеть в профиле)
+        
         Notification notification = new Notification.Builder(this, CHANNEL_ID)
                 .setContentTitle("Profile protection is active")
                 .setContentText("The data will be deleted when the screen is turned off.")
@@ -38,14 +37,13 @@ public class WatcherService extends Service {
         
         startForeground(1, notification);
 
-        // 3. Регистрируем динамический ресивер для SCREEN_OFF
         registerReceiver(screenReceiver, new IntentFilter(Intent.ACTION_SCREEN_OFF));
     }
 
     private void wipeEverything(Context context) {
         DevicePolicyManager dpm = (DevicePolicyManager) context.getSystemService(Context.DEVICE_POLICY_SERVICE);
         try {
-            // Флаг WIPE_EXTERNAL_STORAGE чистит и файлы
+            
             dpm.wipeData(DevicePolicyManager.WIPE_EXTERNAL_STORAGE);
         } catch (Exception e) {
             dpm.wipeData(0);
@@ -54,7 +52,7 @@ public class WatcherService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        return START_STICKY; // Перезапуск сервиса системой, если он упадет
+        return START_STICKY;
     }
 
     @Override
