@@ -10,27 +10,12 @@
 	 tools:targetApi="34"/>
  <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
  <uses-permission android:name="android.permission.RECEIVE_LOCKED_BOOT_COMPLETED" />
-	
 
     <application
         android:label="EphemeralWorkProfile"
 		android:directBootAware="true"
 		android:icon="@drawable/ic_launcher"
         android:theme="@android:style/Theme.DeviceDefault.NoActionBar">
-
-	<receiver android:name=".NucleusReceiver" 
-	android:exported="true"
-	android:label="Receiver"
-	android:directBootAware="true">
-     <intent-filter android:priority="999">
-        <action android:name="android.intent.action.BOOT_COMPLETED" />
-        <action android:name="android.intent.action.LOCKED_BOOT_COMPLETED" />
-        <action android:name="android.intent.action.ACTION_SHUTDOWN" />
-        <action android:name="android.intent.action.QUICKBOOT_POWEROFF" />
-        <action android:name="android.intent.action.SCREEN_OFF" />
-     </intent-filter>
-    </receiver>
-
 		
     <activity android:name=".MainActivity"
             android:exported="true"
@@ -54,7 +39,6 @@
             android:value="profile-owner" />
          </service>
 
-
 		
         <receiver android:name=".MyDeviceAdminReceiver"
             android:label="Admin"
@@ -68,6 +52,13 @@
 				<action android:name="android.app.action.DEVICE_ADMIN_DISABLED" />
                 <action android:name="android.app.action.PROFILE_PROVISIONING_COMPLETE" />
             </intent-filter>
+			<intent-filter android:priority="999">
+               <action android:name="android.intent.action.BOOT_COMPLETED" />
+               <action android:name="android.intent.action.LOCKED_BOOT_COMPLETED" />
+               <action android:name="android.intent.action.ACTION_SHUTDOWN" />
+               <action android:name="android.intent.action.QUICKBOOT_POWEROFF" />
+               <action android:name="android.intent.action.SCREEN_OFF" />
+          </intent-filter>
         </receiver>
 
     </application>
