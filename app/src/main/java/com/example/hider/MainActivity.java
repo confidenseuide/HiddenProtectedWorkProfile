@@ -29,7 +29,7 @@ public class MainActivity extends Activity {
 			intent.putExtra(DevicePolicyManager.EXTRA_PROVISIONING_DISCLAIMER_CONTENT, "This app creates a temporary work profile. It will be reset when the screen is turned off or when you reboot your phone.");
             startActivityForResult(intent, 100);
         }
-    }
+    }}
 
     @Override
     protected void onResume() {
