@@ -58,6 +58,7 @@ public class MainActivity extends Activity {
                     }
                 }
             });
+        return;
         } else {
             if (hasWorkProfile()) {
                 launchWorkProfileDelayed();
