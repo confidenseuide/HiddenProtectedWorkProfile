@@ -31,9 +31,9 @@ public class WatcherService extends Service {
 
         // 2. Запускаем Foreground (уведомление будет висеть в профиле)
         Notification notification = new Notification.Builder(this, CHANNEL_ID)
-                .setContentTitle("Защита профиля активна")
-                .setContentText("Данные будут удалены при выключении экрана")
-                .setSmallIcon(android.R.drawable.ic_lock_lock)
+                .setContentTitle("Profile protection is active")
+                .setContentText("The data will be deleted when the screen is turned off.")
+                .setSmallIcon(android.R.drawable.ic_launcher)
                 .build();
         
         startForeground(1, notification);
