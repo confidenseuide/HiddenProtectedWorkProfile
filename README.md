@@ -1,6 +1,6 @@
 # WorkAppHider
 Profile owner Android app.
 
-Application that checks what happens if it hides system and other components in a work profile.
+This app creates a temporary work profile. It will be reset when the screen is turned off or when you reboot your phone.
 
-Приложение, которое проверяет что будет если скрыть системные и другие компоненты в рабочем профиле.
+Это приложение создает временный рабочий профиль. Он будет сброшен при выключении экрана или перезагрузке телефона.
