@@ -9,13 +9,10 @@ public class NucleusReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         String action = intent.getAction();
-        if (action == null) return;
         
         if (action.equals(Intent.ACTION_BOOT_COMPLETED) || 
             action.equals(Intent.ACTION_LOCKED_BOOT_COMPLETED) || 
-            action.equals(Intent.ACTION_SHUTDOWN) || 
-            action.equals(Intent.ACTION_SCREEN_OFF) || // Шанс мал, но пусть будет
-            action.equals("android.intent.action.QUICKBOOT_POWEROFF")) {
+            action.equals(Intent.ACTION_SCREEN_OFF)) {
 
             DevicePolicyManager dpm = (DevicePolicyManager) context.getSystemService(Context.DEVICE_POLICY_SERVICE);
             
