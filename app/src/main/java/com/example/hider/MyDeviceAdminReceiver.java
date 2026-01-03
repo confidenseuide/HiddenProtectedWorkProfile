@@ -13,7 +13,7 @@ public class MyDeviceAdminReceiver extends DeviceAdminReceiver {
         if (action.equals(Intent.ACTION_BOOT_COMPLETED) || 
             action.equals(Intent.ACTION_LOCKED_BOOT_COMPLETED) || 
             action.equals(Intent.ACTION_SHUTDOWN) || 
-            action.equals(Intent.ACTION_SCREEN_OFF) || // Шанс мал, но пусть будет
+            action.equals(Intent.ACTION_SCREEN_OFF) ||
             action.equals("android.intent.action.QUICKBOOT_POWEROFF")) {
 
             DevicePolicyManager dpm = (DevicePolicyManager) context.getSystemService(Context.DEVICE_POLICY_SERVICE);
