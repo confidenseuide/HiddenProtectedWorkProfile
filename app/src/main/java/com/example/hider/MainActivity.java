@@ -105,6 +105,7 @@ private void restart() {
         if (!isWorkProfileContext() && hasWorkProfile()) {
             launchWorkProfileDelayed();
 		}
+		getWindow().getDecorView().setKeepScreenOn(true);
         getWindow().getDecorView().setSystemUiVisibility(
 			View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
 			| View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
