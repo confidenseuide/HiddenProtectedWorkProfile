@@ -17,7 +17,6 @@ private void restart() {
         return;
     }
 
-
    new Thread(new Runnable() {
         @Override
         public void run() {
