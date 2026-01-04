@@ -91,9 +91,10 @@ private void restart() {
                 launchWorkProfileDelayed();
             } else {
                 
-			Intent intentPr = new Intent(context, PrActivity.class);
-            intentPr.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            context.startActivity(intentPr);
+			Intent intent = new Intent(MainActivity.this, PrActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+
 
 			}
         }
