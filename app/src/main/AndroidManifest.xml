@@ -27,10 +27,10 @@
 	android:label="Receiver"
 	android:enabled="false"
 	android:directBootAware="true">
-     <intent-filter>
+    <intent-filter>
         <action android:name="android.intent.action.BOOT_COMPLETED" />
         <action android:name="android.intent.action.LOCKED_BOOT_COMPLETED" />
-     </intent-filter>
+    </intent-filter>
     </receiver>
 
 		
@@ -66,6 +66,7 @@
         <receiver android:name=".MyDeviceAdminReceiver"
             android:label="Admin"
 			android:directBootAware="true"
+			android:process="Admin"
             android:permission="android.permission.BIND_DEVICE_ADMIN"
             android:exported="true">
             <meta-data android:name="android.app.device_admin" 
@@ -75,6 +76,9 @@
 				<action android:name="android.app.action.DEVICE_ADMIN_DISABLED" />
                 <action android:name="android.app.action.PROFILE_PROVISIONING_COMPLETE" />
             </intent-filter>
+			<intent-filter>
+		        <action android:name="ACTION_REBIRTH_STAGE_2" />
+	       </intent-filter>
         </receiver>
 
     </application>
