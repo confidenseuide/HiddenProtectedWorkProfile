@@ -14,17 +14,22 @@ public class MainActivity extends Activity {
 int a=0;
 
 private void restart() {
- 
     if (getIntent().getBooleanExtra("restarted", false)) {
         return;
     }
 
-    Intent intent = new Intent(this, MainActivity.class);
-    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-    intent.putExtra("restarted", true);
-    startActivity(intent);
-    finish();
+    new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+        @Override
+        public void run() {
+            Intent intent = new Intent(MainActivity.this, MainActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            intent.putExtra("restarted", true);
+            startActivity(intent);
+            finish();
+        }
+    }, 1000);
 }
+
 
 
     @Override
