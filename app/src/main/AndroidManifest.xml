@@ -40,7 +40,7 @@
         </activity>
 
 	<activity android:name=".PrActivity"
-            android:exported="true"
+            android:exported="false"
 		    android:excludeFromRecents="true"
 			android:directBootAware="true"
             >
