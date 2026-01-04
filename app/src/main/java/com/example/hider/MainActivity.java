@@ -12,42 +12,48 @@ import android.os.Process;
 
 public class MainActivity extends Activity {
 
-
 private void restart() {
- 
     if (getIntent().getBooleanExtra("restarted", false)) {
         return;
     }
 
-	// 1. Готовим интент на возврат
-Intent intent = new Intent(this, MainActivity.class);
-intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-intent.putExtra("restarted", true);
+    // 1. Сначала ПРЯЧЕМСЯ, чтобы провижнинг не видел нас
+    moveTaskToBack(true);
 
-// 2. Упаковываем в PendingIntent. 
-// FLAG_CANCEL_CURRENT нужен, чтобы старые копии интента не мешались.
-PendingIntent pi = PendingIntent.getActivity(
-    this, 
-    0, 
-    intent, 
-    PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_CANCEL_CURRENT
-);
+    // 2. Вызываем финиш. С этого момента активити официально "умирает"
+    finish();
 
-// 3. Используем AlarmClock. 
-// Это самый высокий приоритет в Android, он игнорирует ограничения фона.
-AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-if (am != null) {
-    // Ставим время: текущее + 1 секунда (чтобы провижнинг успел сдохнуть)
-    long triggerTime = System.currentTimeMillis() + 1000;
-    AlarmManager.AlarmClockInfo info = new AlarmManager.AlarmClockInfo(triggerTime, pi);
-    am.setAlarmClock(info, pi);
+    // 3. Запускаем новый поток, который выживет после finish()
+    // и подождет, пока труп активити остынет
+    new Thread(new Runnable() {
+        @Override
+        public void run() {
+            try {
+                // Спим 1.5 секунды. За это время finish() точно отработает,
+                // и Provisioning Manager закроется.
+                Thread.sleep(1500);
+            } catch (InterruptedException ignored) {}
+
+            // 4. Используем Context приложения (не Активити!), чтобы запустить новую задачу
+            Context appChild = getApplicationContext();
+            Intent intent = new Intent(appChild, MainActivity.class);
+            
+            // Важнейшие флаги: запуск в новой задаче на пустом месте
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            intent.putExtra("restarted", true);
+            
+            try {
+                appChild.startActivity(intent);
+            } catch (Exception e) {
+                // Если тут упало, значит система всё еще считает нас фоновым спамом
+            }
+
+            // 5. Жестко убиваем старый процесс, если нужно всё очистить
+            // android.os.Process.killProcess(android.os.Process.myPid());
+        }
+    }).start();
 }
 
-// 4. ГЛАВНОЕ: Уходим в небытие.
-// Теперь Provisioning Manager видит, что ты закрылся, и он тоже закрывается.
-finish();
-
-}
 
 
     @Override
