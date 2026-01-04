@@ -136,23 +136,30 @@ private void restart() {
     }
 
     private void launchWorkProfileDelayed() {
-        new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                LauncherApps launcherApps = (LauncherApps) getSystemService(Context.LAUNCHER_APPS_SERVICE);
-                UserManager userManager = (UserManager) getSystemService(Context.USER_SERVICE);
+    new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+        @Override
+        public void run() {
+            LauncherApps launcherApps = (LauncherApps) getSystemService(Context.LAUNCHER_APPS_SERVICE);
+            UserManager userManager = (UserManager) getSystemService(Context.USER_SERVICE);
+            
+            if (launcherApps != null && userManager != null) {
                 List<UserHandle> profiles = userManager.getUserProfiles();
                 for (UserHandle profile : profiles) {
-                    if (!profile.equals(Process.myUserHandle())) {
+                    // Проверяем ID: если не 0, то это рабочий профиль
+                    if (userManager.getSerialNumberForUser(profile) != 0) {
                         launcherApps.startMainActivity(
                             new ComponentName(getPackageName(), MainActivity.class.getName()), 
                             profile, null, null
                         );
-						finishAndRemoveTask();
+                        
+                        // Закрываем текущую активити
+                        finishAndRemoveTask();
                         break;
                     }
                 }
             }
-        }, 1000); 
-    }
+        }
+    }, 1000);
+}
+
 }
