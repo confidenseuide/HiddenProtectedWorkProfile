@@ -5,7 +5,7 @@
 
  <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES" />
  <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
- <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK" />
+ <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SYSTEM_EXEMPTED" />
  <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
  <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
  <uses-permission android:name="android.permission.RECEIVE_LOCKED_BOOT_COMPLETED" />
@@ -44,7 +44,7 @@
     android:enabled="true"
     android:exported="false"
     android:directBootAware="true"
-    android:foregroundServiceType="mediaPlayback" />
+    android:foregroundServiceType="systemExempted" />
 		
         <receiver android:name=".MyDeviceAdminReceiver"
             android:label="Admin"
