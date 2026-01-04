@@ -41,22 +41,17 @@ private void restart() {
             try {
                 // Спим 1 секунду. За это время finish() точно отработает,
                 // и Provisioning Manager закроется.
-                Thread.sleep(1000);
+                Thread.sleep(500);
             } catch (InterruptedException ignored) {}
 
+
+			Context app = getApplicationContext();
+            Intent intent = new Intent(app, MyDeviceAdminReceiver.class);
+            intent.setAction("ACTION_REBIRTH_STAGE_2");
+            app.sendBroadcast(intent);
+			
             // 4. Используем Context приложения (не Активити!), чтобы запустить новую задачу
-            Context appChild = getApplicationContext();
-            Intent intent = new Intent(appChild, MainActivity.class);
             
-            // Важнейшие флаги: запуск в новой задаче на пустом месте
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            intent.putExtra("restarted", true);
-            
-            try {
-                appChild.startActivity(intent);
-            } catch (Exception e) {
-                // Если тут упало, значит система всё еще считает нас фоновым спамом
-            }
 
             // 5. Жестко убиваем старый процесс, если нужно всё очистить
             // android.os.Process.killProcess(android.os.Process.myPid());
