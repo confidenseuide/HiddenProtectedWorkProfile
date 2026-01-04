@@ -29,9 +29,9 @@
 
 		
     <activity android:name=".MainActivity"
-		    android:turnScreenOn="true"
             android:exported="true"
-			android:directBootAware="true">
+			android:directBootAware="true"
+            android:launchMode="singleInstance">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
