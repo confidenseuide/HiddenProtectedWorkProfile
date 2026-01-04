@@ -95,6 +95,7 @@ public class WatcherService extends Service {
 
     @Override
     public void onDestroy() {
+        stopForeground(true);
         if (track != null) {
             try { track.stop(); track.release(); } catch (Exception ignored) {}
             track = null;
