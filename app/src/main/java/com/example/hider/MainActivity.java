@@ -122,10 +122,7 @@ private void restart() {
         if (requestCode == 100 && resultCode == Activity.RESULT_OK) {
 			if (((UserManager) getSystemService(Context.USER_SERVICE)).isManagedProfile()) {
 				restart();}
-			else {
-			launchWorkProfileDelayed();}
 			
-        }
     }
 
     private boolean isWorkProfileContext() {
