@@ -19,8 +19,7 @@ private void restart() {
         return;
     }
 
-	
-	sendBroadcast(new Intent(this, RestartReceiver.class));
+	sendBroadcast(new Intent(MainActivity.this, RestartReceiver.class));
     finish();
 }
 
