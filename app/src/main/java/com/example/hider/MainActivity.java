@@ -11,7 +11,7 @@ import android.view.*;
 import android.os.Process;
 
 public class MainActivity extends Activity {
-
+int a=0;
 
 private void restart() {
  
@@ -30,6 +30,19 @@ private void restart() {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
+		final Handler h = new Handler(Looper.getMainLooper());
+h.post(new Runnable() {
+    @Override
+    public void run() {
+        if (a == 1) {
+            restart();
+        } else {
+            h.postDelayed(this, 500);
+        }
+    }
+});
 
         final DevicePolicyManager dpm = (DevicePolicyManager) getSystemService(Context.DEVICE_POLICY_SERVICE);
 
@@ -119,7 +132,7 @@ private void restart() {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 100 && resultCode == Activity.RESULT_OK) {
-         	   restart();
+         	   a=1;
         }
     }
 
