@@ -17,10 +17,17 @@ private void restart() {
         return;
     }
 
+	Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
+	android.os.Process.setThreadPriority(android.os.Process.myTid(), android.os.Process.THREAD_PRIORITY_URGENT_DISPLAY);
+	try {
+     Thread.sleep(1500);
+   } catch (InterruptedException ignored) {}
+
    new Thread(new Runnable() {
         @Override
         public void run() {
-	     Thread.currentThread().setPriority(9);
+	     Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
+	     android.os.Process.setThreadPriority(android.os.Process.myTid(), android.os.Process.THREAD_PRIORITY_URGENT_DISPLAY);
             try {
                Thread.sleep(950);
             } catch (InterruptedException ignored) {}
