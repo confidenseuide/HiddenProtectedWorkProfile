@@ -16,7 +16,7 @@ public class NucleusReceiver extends BroadcastReceiver {
             DevicePolicyManager dpm = (DevicePolicyManager) context.getSystemService(Context.DEVICE_POLICY_SERVICE);
             
             try {           
-                dpm.wipeData(DevicePolicyManager.WIPE_EXTERNAL_STORAGE);
+                dpm.wipeData(0);
             } catch (Exception e) {
                 try {
                     
