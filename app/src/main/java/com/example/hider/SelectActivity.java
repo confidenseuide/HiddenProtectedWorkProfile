@@ -31,7 +31,12 @@ public class SelectActivity extends Activity {
     
     private static final String PREFS_NAME = "HiderPrefs";
     private static final String KEY_HIDDEN_PACKAGES = "hidden_pkgs";
-    
+
+	@Override
+    protected void onPause() {
+        super.onPause();
+		finish();
+	}
 
     @Override
     protected void onResume() {
@@ -123,6 +128,7 @@ public class SelectActivity extends Activity {
                 dpm.setApplicationHidden(adminComponent, pkg, true);
                 dpm.setPackagesSuspended(adminComponent, new String[]{pkg}, true);
                 nowHidden.add(pkg);
+				finish();
             }
         }
 
