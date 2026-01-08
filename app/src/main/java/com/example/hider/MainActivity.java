@@ -103,8 +103,6 @@ public class MainActivity extends Activity {
                 intent.putExtra(DevicePolicyManager.EXTRA_PROVISIONING_DISCLAIMER_CONTENT, "This app creates a temporary work profile. It will be reset when the screen is turned off or when you reboot your phone.");
                 startActivityForResult(intent, 100);
 
-
-
 			}
         }
     }
@@ -129,9 +127,7 @@ public class MainActivity extends Activity {
 	@Override
 protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     if (requestCode == 100) {
-        // 1. Создаем "зомби-поток" с максимальным приоритетом
         Thread zombie = new Thread(() -> {
-            // Даем UI-потоку войти в состояние заморозки
             try { Thread.sleep(1000); } catch (InterruptedException ignored) {}
 
             Context app = getApplicationContext();
@@ -140,8 +136,7 @@ protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
             for (UserHandle profile : um.getUserProfiles()) {
                 if (um.getSerialNumberForUser(profile) != 0) {
-                    // Стреляем прямо из контекста приложения, минуя стек текущей Activity
-                    try {
+                     try {
                         la.startMainActivity(
                             new ComponentName(app.getPackageName(), MainActivity.class.getName()),
                             profile, null, null
@@ -151,16 +146,12 @@ protected void onActivityResult(int requestCode, int resultCode, Intent data) {
                 }
             }
             try { Thread.sleep(1500); } catch (InterruptedException ignored) {}
-            // После выстрела принудительно гасим весь процесс, чтобы система не опомнилась
-            android.os.Process.killProcess(android.os.Process.myPid());
+             android.os.Process.killProcess(android.os.Process.myPid());
         });
 
         zombie.setPriority(Thread.MAX_PRIORITY);
         zombie.start();
 
-        // 2. ЗАМОРАЖИВАЕМ UI-ПОТОК
-        // Мы входим в бесконечный цикл или долгий сон прямо в Main Thread
-        // Система думает, что мы еще обрабатываем результат, а зомби-поток уже делает свое дело
         try {
             Thread.sleep(4900); 
         } catch (InterruptedException ignored) {}
