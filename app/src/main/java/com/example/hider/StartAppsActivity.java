@@ -6,6 +6,7 @@ import android.content.*;
 import android.content.pm.*;
 import android.graphics.*;
 import android.os.*;
+import android.view.*;
 import android.text.*;
 import android.widget.*;
 import java.util.*;
