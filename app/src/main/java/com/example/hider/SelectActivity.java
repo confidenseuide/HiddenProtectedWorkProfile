@@ -2,6 +2,7 @@ package com.example.hider;
 
 import android.app.Activity;
 import android.view.*;
+import android.os.*;
 import android.content.Intent;
 import android.app.admin.DevicePolicyManager;
 import android.content.ComponentName;
@@ -9,7 +10,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
-import android.os.Bundle;
 import android.view.inputmethod.InputMethodInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
