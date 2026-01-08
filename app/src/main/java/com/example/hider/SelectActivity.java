@@ -2,6 +2,7 @@ package com.example.hider;
 
 import android.app.Activity;
 import android.view.*;
+import android.content.Intent;
 import android.app.admin.DevicePolicyManager;
 import android.content.ComponentName;
 import android.content.Context;
