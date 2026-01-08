@@ -106,7 +106,6 @@ private void restart() {
                     } else {
                         tv.setText("✅");
 						moveTaskToBack(true);
-						finish();
                     }
                 }
             });
