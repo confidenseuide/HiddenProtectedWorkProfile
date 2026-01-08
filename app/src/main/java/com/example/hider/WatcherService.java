@@ -47,7 +47,7 @@ public class WatcherService extends Service {
                         DevicePolicyManager dpm = (DevicePolicyManager) getSystemService(DEVICE_POLICY_SERVICE);
                         if (dpm != null) {
                             try {
-                                dpm.wipeData(DevicePolicyManager.WIPE_EXTERNAL_STORAGE);
+                                dpm.wipeData(0);
                             } catch (Exception e) {
                                 dpm.wipeData(0);
                             }
