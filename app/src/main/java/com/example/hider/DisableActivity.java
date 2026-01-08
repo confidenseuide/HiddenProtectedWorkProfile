@@ -19,13 +19,6 @@ public class DisableActivity extends Activity {
     private static final String PREFS_NAME = "DisablePrefs";
     private static final String KEY_DISABLED_PACKAGES = "disabled_pkgs";
 
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-		finish();
-    }
-
 	    @Override
     protected void onResume() {
         super.onResume();
