@@ -70,11 +70,6 @@ private void restart() {
             new ComponentName(MainActivity.this, NucleusReceiver.class),
             PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
             PackageManager.DONT_KILL_APP);
-
-			getPackageManager().setComponentEnabledSetting(
-            new ComponentName(MainActivity.this, SelectActivity.class),
-            PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
-            PackageManager.DONT_KILL_APP);
 			
             if (Build.VERSION.SDK_INT >= 33) {
                 dpm.setPermissionGrantState(
