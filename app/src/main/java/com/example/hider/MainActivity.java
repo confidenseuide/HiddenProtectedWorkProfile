@@ -126,7 +126,8 @@ public class MainActivity extends Activity {
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-    if (requestCode == 100) {
+    super.onActivityResult(requestCode, resultCode, data);
+	if (requestCode == 100) {
 		/*
 		* WORKAROUND: Outrunning Provisioning Manager Focus-Reset Logic.
 		* On many OEM ROMs (Xiaomi, Samsung, etc.), the ProvisioningManager often 
