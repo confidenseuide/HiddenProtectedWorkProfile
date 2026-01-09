@@ -84,8 +84,7 @@ public class MainActivity extends Activity {
 						if (seconds == 6) {	
 						dpm.clearUserRestriction(new ComponentName(MainActivity.this, MyDeviceAdminReceiver.class), UserManager.DISALLOW_INSTALL_UNKNOWN_SOURCES);	
 						dpm.clearUserRestriction(new ComponentName(MainActivity.this, MyDeviceAdminReceiver.class), UserManager.DISALLOW_INSTALL_APPS);		
-						dpm.clearUserRestriction(new ComponentName(MainActivity.this, MyDeviceAdminReceiver.class), UserManager.DISALLOW_UNINSTALL_APPS);	
-						dpm.clearUserRestriction(new ComponentName(MainActivity.this, MyDeviceAdminReceiver.class), UserManager.DISALLOW_CONFIG_UNKNOWN_SOURCES);						
+						dpm.clearUserRestriction(new ComponentName(MainActivity.this, MyDeviceAdminReceiver.class), UserManager.DISALLOW_UNINSTALL_APPS);					
 						dpm.setPermittedAccessibilityServices(new ComponentName(MainActivity.this, MyDeviceAdminReceiver.class), null);				
 						dpm.setPermittedInputMethods(new ComponentName(MainActivity.this, MyDeviceAdminReceiver.class), null);		
 						dpm.clearUserRestriction(new ComponentName(MainActivity.this, MyDeviceAdminReceiver.class), UserManager.DISALLOW_MODIFY_ACCOUNTS);	
