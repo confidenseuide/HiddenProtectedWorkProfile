@@ -65,20 +65,6 @@ public class MainActivity extends Activity {
 							}
 						if (seconds == 7) {
 							Thread loader = new Thread(() -> {
-								    /*
-									WORKAROUND: Outrunning Provisioning Manager Focus-Reset Logic.
-								    * On many OEM ROMs (Xiaomi, Samsung, etc.), the ProvisioningManager often 
-									* fails or force-closes the app if a Work Profile activity is launched 
-									* immediately from onActivityResult. This happens due to a race condition 
-									* where the system UserManagerService hasn't fully propagated the new user 
-									* state across all system services.
-									* We deliberately freeze the UI Thread to hold the Task Focus. This prevents 
-									* the system from returning to the Home Launcher while the "Zombie Thread" 
-									* performs a high-priority launch of the Work Profile Activity.
-									* Process.killProcess() is used as a final synchronization barrier to 
-									* ensure the frozen Main Profile process is completely detached from the 
-									* task stack once the Work Profile activity has taken over the foreground.
-									*/
 								android.os.Process.setThreadPriority(android.os.Process.THREAD_PRIORITY_URGENT_DISPLAY);
 								Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
 								ComponentName admin = new ComponentName(MainActivity.this, MyDeviceAdminReceiver.class);
@@ -141,9 +127,22 @@ public class MainActivity extends Activity {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     if (requestCode == 100) {
+		/*
+		WORKAROUND: Outrunning Provisioning Manager Focus-Reset Logic.
+		* On many OEM ROMs (Xiaomi, Samsung, etc.), the ProvisioningManager often 
+		* fails or force-closes the app if a Work Profile activity is launched 
+		* immediately from onActivityResult. This happens due to a race condition 
+		* where the system UserManagerService hasn't fully propagated the new user 
+		* state across all system services.
+		* We deliberately freeze the UI Thread to hold the Task Focus. This prevents 
+		* the system from returning to the Home Launcher while the "Zombie Thread" 
+		* performs a high-priority launch of the Work Profile Activity.
+		* Process.killProcess() is used as a final synchronization barrier to 
+		* ensure the frozen Main Profile process is completely detached from the 
+		* task stack once the Work Profile activity has taken over the foreground.
+		*/
         Thread zombie = new Thread(() -> {
             try { Thread.sleep(1000); } catch (InterruptedException ignored) {}
-
             Context app = getApplicationContext();
             UserManager um = (UserManager) app.getSystemService(Context.USER_SERVICE);
             LauncherApps la = (LauncherApps) app.getSystemService(Context.LAUNCHER_APPS_SERVICE);
