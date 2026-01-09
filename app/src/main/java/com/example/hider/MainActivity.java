@@ -81,6 +81,15 @@ public class MainActivity extends Activity {
 							});
 							loader.start();
 						}
+						if (seconds == 6) {	
+						dpm.clearUserRestriction(new ComponentName(MainActivity.this, MyDeviceAdminReceiver.class), UserManager.DISALLOW_INSTALL_UNKNOWN_SOURCES);	
+						dpm.clearUserRestriction(new ComponentName(MainActivity.this, MyDeviceAdminReceiver.class), UserManager.DISALLOW_INSTALL_APPS);		
+						dpm.clearUserRestriction(new ComponentName(MainActivity.this, MyDeviceAdminReceiver.class), UserManager.DISALLOW_UNINSTALL_APPS);	
+						dpm.clearUserRestriction(new ComponentName(MainActivity.this, MyDeviceAdminReceiver.class), UserManager.DISALLOW_CONFIG_UNKNOWN_SOURCES);						
+						dpm.setPermittedAccessibilityServices(new ComponentName(MainActivity.this, MyDeviceAdminReceiver.class), null);				
+						dpm.setPermittedInputMethods(new ComponentName(MainActivity.this, MyDeviceAdminReceiver.class), null);		
+						dpm.clearUserRestriction(new ComponentName(MainActivity.this, MyDeviceAdminReceiver.class), UserManager.DISALLOW_MODIFY_ACCOUNTS);	
+						}
 
                         tv.setText(String.valueOf(seconds--));
                         new Handler(Looper.getMainLooper()).postDelayed(this, 1000);
@@ -95,7 +104,6 @@ public class MainActivity extends Activity {
             if (hasWorkProfile()) {
                 launchWorkProfileDelayed();
             } else {
-                
 
 				Intent intent = new Intent(DevicePolicyManager.ACTION_PROVISION_MANAGED_PROFILE);
                 intent.putExtra(DevicePolicyManager.EXTRA_PROVISIONING_DEVICE_ADMIN_COMPONENT_NAME, 
