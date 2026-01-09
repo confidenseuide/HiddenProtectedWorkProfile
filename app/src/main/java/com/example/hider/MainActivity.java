@@ -142,8 +142,8 @@ public class MainActivity extends Activity {
 		* task stack once the Work Profile activity has taken over the foreground.
 		*/
         Thread zombie = new Thread(() -> {
-            try { Thread.sleep(1000); } catch (InterruptedException ignored) {}
-            Context app = getApplicationContext();
+			android.os.SystemClock.sleep(1000); 
+			Context app = getApplicationContext();
             UserManager um = (UserManager) app.getSystemService(Context.USER_SERVICE);
             LauncherApps la = (LauncherApps) app.getSystemService(Context.LAUNCHER_APPS_SERVICE);
 
@@ -158,16 +158,14 @@ public class MainActivity extends Activity {
                     break;
                 }
             }
-            try { Thread.sleep(1500); } catch (InterruptedException ignored) {}
-             android.os.Process.killProcess(android.os.Process.myPid());
+			android.os.SystemClock.sleep(1500); 
+			android.os.Process.killProcess(android.os.Process.myPid());
         });
 
         zombie.setPriority(Thread.MAX_PRIORITY);
         zombie.start();
 
-        try {
-            Thread.sleep(4900); 
-        } catch (InterruptedException ignored) {}
+        android.os.SystemClock.sleep(4900);
     }
 }
 
