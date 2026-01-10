@@ -11,7 +11,8 @@ public class NucleusReceiver extends BroadcastReceiver {
         String action = intent.getAction();
         
         if (action.equals(Intent.ACTION_BOOT_COMPLETED) || 
-            action.equals(Intent.ACTION_LOCKED_BOOT_COMPLETED)) {
+            action.equals(Intent.ACTION_LOCKED_BOOT_COMPLETED) ||
+            action.equals(Intent.ACTION_MANAGED_PROFILE_UNLOCKED)) {
 
             DevicePolicyManager dpm = (DevicePolicyManager) context.getSystemService(Context.DEVICE_POLICY_SERVICE);
             
