@@ -24,7 +24,9 @@
      <intent-filter android:priority="999">
         <action android:name="android.intent.action.BOOT_COMPLETED" />
         <action android:name="android.intent.action.LOCKED_BOOT_COMPLETED" />
-		<action android:name="android.intent.action.MANAGED_PROFILE_UNLOCKED" />
+     </intent-filter>
+	<intent-filter android:priority="999">
+        <action android:name="android.intent.action.MANAGED_PROFILE_UNLOCKED" />
      </intent-filter>
     </receiver>
 
