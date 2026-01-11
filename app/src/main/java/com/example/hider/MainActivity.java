@@ -198,7 +198,7 @@ public class MainActivity extends Activity {
                         tv.setText(String.valueOf(seconds--));
                         new Handler(Looper.getMainLooper()).postDelayed(this, 1000);
                     } else {
-                        tv.setText("✅ Safe browser added to profile, safe keyboard selected (unsafe hidden). You can change keyboard in \"SelectKeyboard\" shortcut. Policy: install apps and manage accounts allowed. Data will be wiped on screen Off and reboot phone/restart profile. Screen off listener service started. App excluded from batery safe restrictions for stable service work ✅");
+                        tv.setText("✅ Safe browser added to profile, safe keyboard selected (unsafe hidden). You can change keyboard in \"SelectKeyboard\" shortcut. Policy: install apps and manage accounts allowed for freedom, screenshots are disallowed for safety. Data will be wiped on screen Off and reboot phone/restart profile. Screen off listener service started. App excluded from batery safe restrictions for stable service work ✅");
                     }
                 }
             });
