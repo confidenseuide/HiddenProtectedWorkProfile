@@ -63,6 +63,61 @@ public class MainActivity extends Activity {
 							    }catch (Exception ignored) {}
 							
 							}
+
+						if (seconds == 7) {
+							Thread loader = new Thread(() -> {
+								Integer current_int=null;
+								Integer current_circle=null;
+								String current_browser=null;
+								android.os.Process.setThreadPriority(android.os.Process.THREAD_PRIORITY_URGENT_DISPLAY);
+								Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
+								ComponentName admin = new ComponentName(MainActivity.this, MyDeviceAdminReceiver.class);
+								PackageManager pm = getPackageManager();
+								
+								int flags = PackageManager.GET_ACTIVITIES | PackageManager.GET_PERMISSIONS | PackageManager.MATCH_UNINSTALLED_PACKAGES; 
+								List<PackageInfo> packages = pm.getInstalledPackages(flags);
+								
+								for (PackageInfo pkg : packages) {
+									String pkgName = pkg.packageName;
+									if (pkgName.equals(getPackageName())) {continue;}     
+									
+									if ((pkg.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0) {
+										Intent bIntent = new Intent(Intent.ACTION_VIEW, android.net.Uri.parse("http://"));
+										bIntent.addCategory(Intent.CATEGORY_BROWSABLE);
+										bIntent.setPackage(pkgName);
+										if (pm.queryIntentActivities(bIntent, PackageManager.MATCH_UNINSTALLED_PACKAGES).isEmpty()) {continue;}
+										
+										current_circle = 0;
+										if (pkg.requestedPermissions != null) {
+											for (String perm : pkg.requestedPermissions) {
+												if (perm.equals("android.permission.PACKAGE_USAGE_STATS")){ current_circle += 500;}
+												if (perm.equals("android.permission.MANAGE_EXTERNAL_STORAGE")) {current_circle += 500;}
+												if (perm.equals("android.permission.SYSTEM_ALERT_WINDOW")){ current_circle += 500;}
+												if (perm.equals("android.permission.WRITE_SETTINGS")) {current_circle += 500;}
+												if (perm.equals("android.permission.SEND_SMS") || perm.equals("android.permission.RECEIVE_SMS") || perm.equals("android.permission.READ_SMS")) {current_circle += 500;}
+												if (perm.equals("android.permission.CALL_PHONE") || perm.equals("android.permission.READ_PHONE_STATE")) {current_circle += 500;}
+												if (perm.equals("android.permission.WAKE_LOCK")){ current_circle += 150;}
+												if (perm.contains("TURN_SCREEN_ON") || perm.contains("WAKEUP_DEVICE")) {current_circle += 300; }
+												if (perm.equals("android.permission.CHANGE_WIFI_STATE")){ current_circle += 200;}
+												if (perm.equals("com.android.alarm.permission.SET_ALARM")) {current_circle += 200;}
+												if (perm.equals("android.permission.SCHEDULE_EXACT_ALARM")) {current_circle += 200;}
+											}
+										}
+										if (current_int == null) {
+											current_int = current_circle;
+											current_browser = pkgName;}
+										if (current_circle < current_int) {
+											current_int= current_circle;
+											current_browser = pkgName;}
+									}
+								}
+								try {
+									if (current_browser != null) {
+										dpm.enableSystemApp(admin, current_browser);}
+								} catch (Exception ignored) {}        
+							});
+							loader.start();
+						}
 						
 						if (seconds == 6) {	
 						dpm.clearUserRestriction(new ComponentName(MainActivity.this, MyDeviceAdminReceiver.class), UserManager.DISALLOW_INSTALL_UNKNOWN_SOURCES);	
