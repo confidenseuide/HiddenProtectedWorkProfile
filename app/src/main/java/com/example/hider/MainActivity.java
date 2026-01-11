@@ -121,6 +121,7 @@ public class MainActivity extends Activity {
 						}
 						
 						if (seconds == 6) {
+						dpm.setScreenCaptureDisabled(new ComponentName(this, MyDeviceAdminReceiver.class), true);
 						dpm.clearUserRestriction(new ComponentName(MainActivity.this, MyDeviceAdminReceiver.class), UserManager.DISALLOW_INSTALL_UNKNOWN_SOURCES);	
 						dpm.clearUserRestriction(new ComponentName(MainActivity.this, MyDeviceAdminReceiver.class), UserManager.DISALLOW_INSTALL_APPS);		
 						dpm.clearUserRestriction(new ComponentName(MainActivity.this, MyDeviceAdminReceiver.class), UserManager.DISALLOW_UNINSTALL_APPS);					
