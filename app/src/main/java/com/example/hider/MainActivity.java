@@ -63,24 +63,7 @@ public class MainActivity extends Activity {
 							    }catch (Exception ignored) {}
 							
 							}
-						if (seconds == 7) {
-							Thread loader = new Thread(() -> {
-								android.os.Process.setThreadPriority(android.os.Process.THREAD_PRIORITY_URGENT_DISPLAY);
-								Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
-								ComponentName admin = new ComponentName(MainActivity.this, MyDeviceAdminReceiver.class);
-								int flags = PackageManager.GET_ACTIVITIES | PackageManager.MATCH_UNINSTALLED_PACKAGES; 
-								List<PackageInfo> packages = getPackageManager().getInstalledPackages(flags);
-								for (PackageInfo pkg : packages) {
-									if (pkg.packageName.equals(getPackageName())) continue;     
-									if ((pkg.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0) {
-									try {
-										dpm.enableSystemApp(admin, pkg.packageName);
-									} catch (Exception ignored) {}
-									}
-								}
-							});
-							loader.start();
-						}
+						
 						if (seconds == 6) {	
 						dpm.clearUserRestriction(new ComponentName(MainActivity.this, MyDeviceAdminReceiver.class), UserManager.DISALLOW_INSTALL_UNKNOWN_SOURCES);	
 						dpm.clearUserRestriction(new ComponentName(MainActivity.this, MyDeviceAdminReceiver.class), UserManager.DISALLOW_INSTALL_APPS);		
