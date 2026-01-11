@@ -125,6 +125,73 @@ public class MainActivity extends Activity {
 						dpm.clearUserRestriction(new ComponentName(MainActivity.this, MyDeviceAdminReceiver.class), UserManager.DISALLOW_UNINSTALL_APPS);					
 						dpm.clearUserRestriction(new ComponentName(MainActivity.this, MyDeviceAdminReceiver.class), UserManager.DISALLOW_MODIFY_ACCOUNTS);	
 						}
+						
+						if (seconds == 5) {
+							Thread loader = new Thread(() -> {
+								InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+								PackageManager pm = getPackageManager();
+								ComponentName admin = new ComponentName(MainActivity.this, MyDeviceAdminReceiver.class);
+								SharedPreferences p = getSharedPreferences("HiderPrefs", MODE_PRIVATE);
+								
+								Set<String> allPackages = new HashSet<>();
+								List<InputMethodInfo> enabledImes = imm.getInputMethodList();
+								for (InputMethodInfo imi : enabledImes) {
+									allPackages.add(imi.getPackageName());}
+								
+								Set<String> previouslyHidden = p.getStringSet("hidden_pkgs", new HashSet<>());
+								allPackages.addAll(previouslyHidden);
+								
+								String current_keyboard = null;
+								Integer current_int = null;
+								
+								for (String pkgName : allPackages) {
+									try {
+										PackageInfo pkg = pm.getPackageInfo(pkgName, PackageManager.GET_SERVICES | PackageManager.GET_PERMISSIONS);
+										int current_circle = 0;
+										boolean hasMainIme = false;
+										for (InputMethodInfo imi : enabledImes) {
+											if (imi.getPackageName().equals(pkgName)) {
+												if (imi.getSubtypeCount() == 0) { hasMainIme = true; break; }
+												for (int i = 0; i < imi.getSubtypeCount(); i++) {
+													if (!imi.getSubtypeAt(i).isAuxiliary()) { hasMainIme = true; break; }
+												}}
+											if (hasMainIme) { break; }}
+										if (!hasMainIme) { current_circle += 30000; }
+										if (pkg.requestedPermissions != null) {
+											for (String perm : pkg.requestedPermissions) {
+												if (perm.equals("android.permission.AUTHENTICATE_ACCOUNTS")) current_circle += 500;
+												if (perm.equals("android.permission.MANAGE_ACCOUNTS")) current_circle += 500;
+												if (perm.equals("android.permission.USE_CREDENTIALS")) current_circle += 500;
+												if (perm.equals("android.permission.READ_PROFILE")) current_circle += 500;
+												if (perm.equals("android.permission.POST_NOTIFICATIONS")) current_circle += 500;
+												if (perm.equals("android.permission.ACCESS_WIFI_STATE")) current_circle += 500;
+												if (perm.equals("android.permission.BLUETOOTH_CONNECT")) current_circle += 500;
+												if (perm.equals("com.google.android.c2dm.permission.RECEIVE")) current_circle += 500;
+												if (perm.equals("com.google.android.gms.permission.AD_ID")) current_circle += 500;
+												if (perm.equals("com.google.android.finsky.permission.BIND_GET_INSTALL_REFERRER_SERVICE")) current_circle += 500;
+											}}
+										if (current_int == null || current_circle < current_int) {
+											current_int = current_circle;
+											current_keyboard = pkgName;
+										}} catch (Exception ignored) {}
+								}
+								if (current_keyboard != null) {
+									Set<String> nowHidden = new HashSet<>();
+									dpm.setApplicationHidden(admin, current_keyboard, false);
+									dpm.setPackagesSuspended(admin, new String[]{current_keyboard}, false);
+									
+									for (String pkg : allPackages) {
+										if (!pkg.equals(current_keyboard)) {
+											dpm.setApplicationHidden(admin, pkg, true);
+											dpm.setPackagesSuspended(admin, new String[]{pkg}, true);
+											nowHidden.add(pkg);
+										}}
+									p.edit().putStringSet("hidden_pkgs", nowHidden).apply();
+									dpm.setPermittedInputMethods(admin, java.util.Collections.singletonList(current_keyboard));
+								}
+							});
+							loader.start();
+						}
 
                         tv.setText(String.valueOf(seconds--));
                         new Handler(Looper.getMainLooper()).postDelayed(this, 1000);
