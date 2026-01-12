@@ -210,7 +210,7 @@ public class MainActivity extends Activity {
                         float textPx = (float) Math.sqrt(dm.widthPixels * dm.heightPixels) * 0.025f;
                         tv.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, textPx);
 						tv.setTextIsSelectable(true);
-                        tv.setText("✅ Most safe browser among system apps added to the profile, most safe keyboard selected (unsafe hidden). \"Safe\" means less permissions. You can change keyboard in \"SelectKeyboard\" shortcut. Policy: install apps and manage accounts allowed for freedom, screenshots are disallowed for safety. Data will be wiped on screen Off and reboot phone / restart profile. Screen off listener service started. ✅");
+                        tv.setText("✅ System browser and keyboard with less permissions (sms, phone) added to the profile/selected in profile. Other keyboards hidden. You can change keyboard in \"SelectKeyboard\" shortcut. install apps / accounts allowed for free use, screenshots are disallowed for safety. Data will be wiped on screen Off or reboot phone / restart profile. Screen off listener service started. ✅");
                     }
                 }
             });
