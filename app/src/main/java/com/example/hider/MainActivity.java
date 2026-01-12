@@ -81,8 +81,8 @@ public class MainActivity extends Activity {
 							}
 
 						if (seconds == 7) {
-							PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
-							if (pm.isIgnoringBatteryOptimizations(getPackageName())) {
+							PowerManager pacm = (PowerManager) getSystemService(Context.POWER_SERVICE);
+							if (pacm.isIgnoringBatteryOptimizations(getPackageName())) {
 								reflection_is_work = " App excluded from battery restrictions for stable service and receivers work ";
 							}
 							Thread loader = new Thread(() -> {
