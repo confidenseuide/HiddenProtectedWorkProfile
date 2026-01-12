@@ -73,7 +73,7 @@ public class MainActivity extends Activity {
             "1. App starts service and receiver for screen off / reboot listen.\n" +
             "2. App tries to ignore battery optimization and disable package control to prevent stop-signals from system.\n" +
             "3. App adds \"safest\" system browser to profile (with less permissions from ours blacklist).\n" +
-            "4. App disables screenshots in profile (safety), allows app install and account management (user freedom).\n" +
+            "4. App disables screenshots in profile (safety), allows apps install and accounts management (user freedom).\n" +
             "5. App selects \"safest\" system keyboard and freezes others.\n\n");
     
     scroll.addView(tv);
