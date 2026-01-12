@@ -210,7 +210,7 @@ public class MainActivity extends Activity {
                         float textPx = (float) Math.sqrt(dm.widthPixels * dm.heightPixels) * 0.025f;
                         tv.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, textPx);
 						tv.setTextIsSelectable(true);
-                        tv.setText("✅ System browser and keyboard with less permissions added to the (or selected in) profile. Other keyboards hidden. You can change keyboard in \"SelectKeyboard\" shortcut. install apps / accounts allowed for free use, screenshots are disallowed for safety. Data will be wiped on screen Off / reboot phone / restart profile.✅");
+                        tv.setText("✅ System browser and keyboard with less permissions [added to the/selected in] profile. Other keyboards hidden. You can change keyboard in \"SelectKeyboard\" shortcut. install apps / accounts allowed for free use, screenshots disallowed for safety. Data will be wiped on screen Off / reboot phone / restart profile.✅");
                     }
                 }
             });
