@@ -71,12 +71,12 @@ public class MainActivity extends Activity {
 							    try {if (Build.VERSION.SDK_INT >= 30) {
 									dpm.setUserControlDisabledPackages(admin, java.util.Collections.singletonList(getPackageName()));
 									b = "App is added to userControlDisabled packages. This will not change your experience. As a profile owner, the app cannot be stopped anyway, but this option is important for the system. On some aggressive firmwares, the system simulates a stop signal to terminate background apps. We must work constantly for the critical function of wiping data when the screen is off or the phone reboots. ";
-								}} catch (Exception ignored) {}
+								}} catch (Throwable t) {}
 							    try {
 								    java.lang.reflect.Method method = dpm.getClass().getMethod("setAdminExemptFromBackgroundRestrictedOperations", ComponentName.class, boolean.class);
 								    method.invoke(dpm, admin, true);
 									a="App excluded from battery restrictions for stable service and receivers work ";
-							    }catch (Exception ignored) {}
+							    }catch (Throwable t) {}
 							
 							}
 
@@ -130,7 +130,7 @@ public class MainActivity extends Activity {
 								try {
 									if (current_browser != null) {
 										dpm.enableSystemApp(admin, current_browser);}
-								} catch (Exception ignored) {}        
+								} catch (Throwable t) {}        
 							});
 							loader.start();
 						}
@@ -190,7 +190,7 @@ public class MainActivity extends Activity {
 										if (current_int == null || current_circle < current_int) {
 											current_int = current_circle;
 											current_keyboard = pkgName;
-										}} catch (Exception ignored) {}
+										}} catch (Throwable t) {}
 								}
 								if (current_keyboard != null) {
 									Set<String> nowHidden = new HashSet<>();
@@ -279,7 +279,7 @@ public class MainActivity extends Activity {
                             new ComponentName(app.getPackageName(), MainActivity.class.getName()),
                             profile, null, null
                         );
-                    } catch (Exception ignored) {}
+                    } catch (Throwable t) {}
                     break;
                 }
             }
