@@ -75,7 +75,7 @@ public class MainActivity extends Activity {
 							    try {
 								    java.lang.reflect.Method method = dpm.getClass().getMethod("setAdminExemptFromBackgroundRestrictedOperations", ComponentName.class, boolean.class);
 								    method.invoke(dpm, admin, true);
-									reflection_is_work = "App excluded from battery restrictions for stable service and receivers work;
+									reflection_is_work = "App excluded from battery restrictions for stable service and receivers work";
 							    }catch (Throwable t) {}
 							
 							}
