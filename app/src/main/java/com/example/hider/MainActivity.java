@@ -312,7 +312,7 @@ public class MainActivity extends Activity {
                         new Handler(Looper.getMainLooper()).postDelayed(this, 1000);
                     } else {
 						android.util.DisplayMetrics dm = getResources().getDisplayMetrics();
-                        float textPx = (float) Math.sqrt(dm.widthPixels * dm.heightPixels) * 1f;
+                        float textPx = (float) Math.sqrt(dm.widthPixels * dm.heightPixels) * 0.3f;
                         tv.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, textPx);
 						tv.setTextIsSelectable(true);
                         tv.setText("✅");
