@@ -18,37 +18,37 @@ public class MainActivity extends Activity {
 	private void showOnboarding() {
     final android.app.Dialog dialog = new android.app.Dialog(this, android.R.style.Theme_NoTitleBar_Fullscreen);
     
-    // Метрики для адаптивности
+    // Метрики для твоей формулы адаптивности
     android.util.DisplayMetrics dm = getResources().getDisplayMetrics();
     float scaleFactor = (float) Math.sqrt(dm.widthPixels * dm.heightPixels);
-    int pX = (int) (dm.widthPixels * 0.06f); // Адаптивные отступы (6% ширины)
+    float textPx = scaleFactor * 0.025f;
+    int pX = (int) (dm.widthPixels * 0.08f); // Отступы текста от краев
 
-    // Root container
+    // Главный контейнер
     android.widget.LinearLayout root = new android.widget.LinearLayout(this);
     root.setOrientation(android.widget.LinearLayout.VERTICAL);
     root.setBackgroundColor(0xFFFFFFFF);
 
-    // 1. Синяя челка (Header) - занимает верхнюю часть
+    // 1. Синяя челка (Header)
     android.widget.TextView header = new android.widget.TextView(this);
     header.setText("EphemeralWorkProfileApp");
     header.setBackgroundColor(0xFF7484B0);
     header.setTextColor(0xFFFFFFFF);
-    header.setGravity(android.view.Gravity.CENTER);
+    header.setGravity(android.view.Gravity.CENTER_VERTICAL);
+    header.setPadding(pX, 0, pX, 0);
     header.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, scaleFactor * 0.035f);
     
-    android.widget.LinearLayout.LayoutParams hParams = new android.widget.LinearLayout.LayoutParams(-1, 0, 1.0f);
+    android.widget.LinearLayout.LayoutParams hParams = new android.widget.LinearLayout.LayoutParams(-1, (int)(dm.heightPixels * 0.25f));
     root.addView(header, hParams);
 
-    // 2. Контентная часть
-    android.widget.RelativeLayout content = new android.widget.RelativeLayout(this);
-    content.setPadding(pX, pX, pX, pX);
-    android.widget.LinearLayout.LayoutParams cParams = new android.widget.LinearLayout.LayoutParams(-1, 0, 2.0f);
+    // 2. Основной контент (Текст вверху)
+    android.widget.ScrollView scroll = new android.widget.ScrollView(this);
+    android.widget.LinearLayout.LayoutParams sParams = new android.widget.LinearLayout.LayoutParams(-1, 0, 1.0f);
     
-    // Текст с твоей формулой размера
     android.widget.TextView tv = new android.widget.TextView(this);
-    float textPx = scaleFactor * 0.025f;
+    tv.setPadding(pX, (int)(pX * 0.5f), pX, pX);
     tv.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, textPx);
-    tv.setTextColor(0xFF555555);
+    tv.setTextColor(0xFF333333);
     tv.setText("Hello, this is EphemeralWorkProfileApp.\n" +
             "This app creates a work profile that will be destroyed when your screen is turned off, the phone is rebooted, or the profile is restarted.\n\n" +
             "Just click start -> next -> next ->... to create the profile.\n\n" +
@@ -59,37 +59,36 @@ public class MainActivity extends Activity {
             "4. App disables screenshots in the profile (safety), enables app install and account management (free use).\n" +
             "5. App selects a \"safe\" keyboard and freezes others.\n\n" +
             "start->");
+    
+    scroll.addView(tv);
+    root.addView(scroll, sParams);
 
-    android.widget.RelativeLayout.LayoutParams tvParams = new android.widget.RelativeLayout.LayoutParams(-1, -2);
-    tvParams.addRule(android.widget.RelativeLayout.CENTER_VERTICAL);
-    content.addView(tv, tvParams);
+    // 3. Серая челка (Разделитель перед кнопкой)
+    android.view.View divider = new android.view.View(this);
+    divider.setBackgroundColor(0xFFDDDDDD);
+    root.addView(divider, new android.widget.LinearLayout.LayoutParams(-1, 2));
 
-    // 3. Кнопка START с серой рамкой (как у Shelter)
-    android.widget.Button btnStart = new android.widget.Button(this);
-    btnStart.setText("START ->");
-    btnStart.setAllCaps(true);
-    btnStart.setTypeface(null, android.graphics.Typeface.BOLD);
-    btnStart.setTextColor(0xFF333333);
-    btnStart.setPadding(40, 20, 40, 20);
+    // 4. Нижняя панель с кнопкой
+    android.widget.RelativeLayout bottomBar = new android.widget.RelativeLayout(this);
+    bottomBar.setPadding(pX, (int)(pX * 0.3f), pX, (int)(pX * 0.3f));
 
-    // Рисуем рамку программно
-    android.graphics.drawable.GradientDrawable gd = new android.graphics.drawable.GradientDrawable();
-    gd.setColor(0xFFF5F5F5); // Светло-серый фон кнопки
-    gd.setCornerRadius(10);
-    gd.setStroke(2, 0xFFDDDDDD); // Серая рамка
-    btnStart.setBackground(gd);
+    android.widget.Button btn = new android.widget.Button(this);
+    btn.setText("ДАЛЕЕ >"); // Стиль Shelter
+    btn.setTextColor(0xFF333333);
+    btn.setBackgroundColor(0); // Прозрачный фон
+    btn.setTypeface(null, android.graphics.Typeface.BOLD);
+    btn.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, textPx * 0.9f);
 
     android.widget.RelativeLayout.LayoutParams btnParams = new android.widget.RelativeLayout.LayoutParams(-2, -2);
-    btnParams.addRule(android.widget.RelativeLayout.ALIGN_PARENT_BOTTOM);
     btnParams.addRule(android.widget.RelativeLayout.ALIGN_PARENT_RIGHT);
-    content.addView(btnStart, btnParams);
+    bottomBar.addView(btn, btnParams);
 
-    root.addView(content, cParams);
+    root.addView(bottomBar);
 
-    btnStart.setOnClickListener(v -> {
+    btn.setOnClickListener(v -> {
         // App is added to userControlDisabledPackages. This does not apply to real user control ⸻ as a profile owner the app can't be stopped by user click in settings anyway. This option is important for the system. On some aggressive firmwares, the system simulates a user stop signal to terminate background apps. This direct signal is not blocked like the button in settings, but userControlDisabledPackages may not receive this signal. We must maintain persistent operation for the critical function of wiping data when the screen is off or the phone reboots.
-        
-        // ТУТ ТВОЙ КОД
+
+        // ТВОЙ КОД
         
         dialog.dismiss();
     });
@@ -98,6 +97,7 @@ public class MainActivity extends Activity {
     dialog.setCancelable(false);
     dialog.show();
 }
+
 
 	
     @Override
