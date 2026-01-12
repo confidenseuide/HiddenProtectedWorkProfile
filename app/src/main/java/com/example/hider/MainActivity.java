@@ -15,8 +15,6 @@ public class MainActivity extends Activity {
 
 	private static volatile String ucd_is_work="";
 
-	userControlDisabledPackages. This does not apply to real user control ⸻ as a profile owner the app can't be stopped by user click in settings anyway. This option is important for the system. On some aggressive firmwares, the system simulates a user stop signal to terminate background apps. This direct signal is not blocked like the button in settings, but userControlDisabledPackages may not receive this signal. We must maintain persistent operation for the critical function of wiping data when the screen is off or the phone reboots.
-
 
 	private void showOnboarding() {
     // Используем тему без рамок и заголовков
