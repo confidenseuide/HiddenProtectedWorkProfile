@@ -8,13 +8,14 @@ public class DevicePolicyManager {
     // Скрытый метод (ради которого всё затевалось)
     public void setExemptFromBackgroundRestrictedOperations(ComponentName admin, boolean exempt) {}
 
-    // Методы из MyDeviceAdminReceiver и MainActivity
+    // ТОТ САМЫЙ ПОСЛЕДНИЙ МЕТОД:
+    public boolean setPermissionGrantState(ComponentName admin, String packageName, String permission, int grantState) { return false; }
+
+    // Остальные методы
     public void setProfileEnabled(ComponentName admin) {}
     public void setProfileName(ComponentName admin, String name) {}
     public void enableSystemApp(ComponentName admin, String packageName) {}
     public void setUserControlDisabledPackages(ComponentName admin, List<String> packages) {}
-    
-    // Методы из предыдущих итераций
     public boolean isProfileOwnerApp(String packageName) { return false; }
     public void wipeData(int flags) {}
     public void setScreenCaptureDisabled(ComponentName admin, boolean disabled) {}
