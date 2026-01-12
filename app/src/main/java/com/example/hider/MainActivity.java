@@ -213,6 +213,9 @@ public class MainActivity extends Activity {
                         tv.setText(String.valueOf(seconds--));
                         new Handler(Looper.getMainLooper()).postDelayed(this, 1000);
                     } else {
+						android.util.DisplayMetrics dm = getResources().getDisplayMetrics();
+                        float textPx = (float) Math.sqrt(dm.widthPixels * dm.heightPixels) * 0.021f;
+                        tv.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, textPx);
                         tv.setText("✅ Most safe browser among system apps added to the profile, most safe keyboard selected (unsafe hidden). \"Safe\" means less permissions. You can change keyboard in \"SelectKeyboard\" shortcut. Policy: install apps and manage accounts allowed for freedom, screenshots are disallowed for safety. Data will be wiped on screen Off and reboot phone / restart profile. Screen off listener service started. " + a + b + "✅");
                     }
                 }
