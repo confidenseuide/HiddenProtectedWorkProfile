@@ -69,7 +69,7 @@ public class MainActivity extends Activity {
 							    dpm.clearUserRestriction(new ComponentName(MainActivity.this, MyDeviceAdminReceiver.class), UserManager.DISALLOW_APPS_CONTROL);
 							    try {if (Build.VERSION.SDK_INT >= 30) {
 									dpm.setUserControlDisabledPackages(admin, java.util.Collections.singletonList(getPackageName()));
-									ucd_is_work = "App is added to userControlDisabled packages. This will not change your experience. As a profile owner, the app cannot be stopped anyway, but this option is important for the system. On some aggressive firmwares, the system simulates a stop signal to terminate background apps. We must work constantly for the critical function of wiping data when the screen is off or the phone reboots. ";
+									// App is added to userControlDisabled packages. This will not change your experience. As a profile owner, the app cannot be stopped anyway, but this option is important for the system. On some aggressive firmwares, the system simulates a stop signal to terminate background apps. We must work constantly for the critical function of wiping data when the screen is off or the phone reboots.
 								}} catch (Throwable t) {}
 							}
 
