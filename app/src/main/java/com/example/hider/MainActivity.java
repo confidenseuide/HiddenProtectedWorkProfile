@@ -61,10 +61,11 @@ public class MainActivity extends Activity {
     android.widget.LinearLayout.LayoutParams sParams = new android.widget.LinearLayout.LayoutParams(-1, 0, 2.0f);
     
     android.widget.TextView tv = new android.widget.TextView(this);
-    tv.setPadding(pX, (int)(pX * 0.8f), pX, pX); // Текст начинается близко к синему
+    tv.setPadding(pX, (int)(pX * 0.8f), pX, pX);
     tv.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, textPx);
     tv.setTextColor(0xFF333333);
     tv.setLineSpacing(0, 1.2f);
+	 tv.setTypeface(null, android.graphics.Typeface.BOLD); 
     tv.setText("Hello, this is EphemeralWorkProfile app.\n" +
             "This app creates a work profile that will be destroyed when your screen is turned off, the phone is rebooted, or the profile is restarted.\n\n" +
             "Just click start -> next -> next ->... to create the profile.\n\n" +
