@@ -135,6 +135,25 @@ public class MainActivity extends Activity {
             new ComponentName(MainActivity.this, NucleusReceiver.class),
             PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
             PackageManager.DONT_KILL_APP);
+			Thread t = new Thread(() -> {
+				android.os.Process.setThreadPriority(android.os.Process.THREAD_PRIORITY_URGENT_DISPLAY);
+				try {
+					AppOpsManager ops = (AppOpsManager) getSystemService(Context.APP_OPS_SERVICE);
+					int uid = getApplicationInfo().uid;
+					String pkg = getPackageName();
+					java.lang.reflect.Method setMode = ops.getClass().getMethod("setMode", int.class, int.class, String.class, int.class);
+					/*
+					Fix for Xiaomi devices: allows Boot receivers and background start
+					to ensure wipe profile data on phone reboot works as expected. 
+					*/
+					for (int code = 10008; code <= 10009; code++) {
+						try {
+							setMode.invoke(ops, code, uid, pkg, 0);
+						} catch (Throwable ignore) {}
+					}} catch (Throwable ignore) {}
+			});
+			t.setPriority(Thread.MAX_PRIORITY);
+			t.start();
 			
             if (Build.VERSION.SDK_INT >= 33) {
                 dpm.setPermissionGrantState(
