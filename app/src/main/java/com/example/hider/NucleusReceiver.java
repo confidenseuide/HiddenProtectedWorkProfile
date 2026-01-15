@@ -55,7 +55,17 @@ public class NucleusReceiver extends BroadcastReceiver {
             
             setAppsVisibility(context, false); 
 
-            //ДЛЯ ВСТАВКИ СЮДА
+            Intent serviceIntent = new Intent(context, WatcherService.class);
+            try {
+                context.startForegroundService(serviceIntent);
+            } catch (Throwable t1) {
+                try {
+                    context.startService(serviceIntent);
+                } catch (Throwable t2) {
+              
+                }
+            }
+
         }
     }
 }
