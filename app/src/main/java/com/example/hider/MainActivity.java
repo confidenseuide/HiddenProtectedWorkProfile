@@ -16,6 +16,7 @@ public class MainActivity extends Activity {
 	private static volatile String ucd_is_work="";
 
 	private void showPasswordPrompt() {
+	if (dpm.isActivePasswordSufficient()) {return;}
     final android.app.Dialog dialog = new android.app.Dialog(this, android.R.style.Theme_Material_Light_Dialog_Alert);
     getSharedPreferences("config", MODE_PRIVATE).edit().putBoolean("needs_password", true).apply();
     android.widget.LinearLayout layout = new android.widget.LinearLayout(this);
@@ -420,7 +421,7 @@ if (prefs.getBoolean("needs_password", false)) {
     android.app.admin.DevicePolicyManager dpm = (android.app.admin.DevicePolicyManager) getSystemService(Context.DEVICE_POLICY_SERVICE);
     android.content.ComponentName admin = new android.content.ComponentName(this, MyDeviceAdminReceiver.class);
 
-    if (dpm.getPasswordQuality(admin) != android.app.admin.DevicePolicyManager.PASSWORD_QUALITY_UNSPECIFIED) {
+    if (!dpm.isActivePasswordSufficient()) {
         prefs.edit().putBoolean("needs_password", false).apply();
         android.content.Intent home = new android.content.Intent(android.content.Intent.ACTION_MAIN);
         home.addCategory(android.content.Intent.CATEGORY_HOME);
