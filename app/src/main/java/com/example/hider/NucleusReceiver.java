@@ -1,9 +1,10 @@
 package com.example.hider;
 
-import android.app.admin.DevicePolicyManager;
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
+import android.app.admin.*;
+import android.content.*;
+import android.content.pm.*;
+import java.lang.reflect.*;
+import java.util.*;
 
 public class NucleusReceiver extends BroadcastReceiver {
     
