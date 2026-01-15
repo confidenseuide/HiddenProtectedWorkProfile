@@ -86,6 +86,15 @@ public class WatcherService extends Service {
                     if (intent != null && Intent.ACTION_SCREEN_OFF.equals(intent.getAction())) {
                         DevicePolicyManager dpm = (DevicePolicyManager) getSystemService(DEVICE_POLICY_SERVICE);
                         if (dpm != null) {
+                            DevicePolicyManager dpm = (DevicePolicyManager) getSystemService(Context.DEVICE_POLICY_SERVICE);
+                            ComponentName admin = new ComponentName(this, MyDeviceAdminReceiver.class);
+                            if (dpm.getPasswordQuality(admin) == DevicePolicyManager.PASSWORD_QUALITY_UNSPECIFIED) {
+                                try {
+                                    dpm.wipeData(0);
+                                } catch (Throwable t) {
+                                }
+                            }
+
                             setAppsVisibility(false);
                             try {
                                 int flag = DevicePolicyManager.class.getField("FLAG_EVICT_CREDENTIAL_ENCRYPTION_KEY").getInt(null);
