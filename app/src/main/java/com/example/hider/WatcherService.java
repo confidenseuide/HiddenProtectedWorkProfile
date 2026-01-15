@@ -1,6 +1,8 @@
 package com.example.hider;
 
 import android.app.*;
+import java.util.*;
+import java.lang.reflect.*;
 import android.app.admin.DevicePolicyManager;
 import android.content.*;
 import android.content.pm.ServiceInfo;
