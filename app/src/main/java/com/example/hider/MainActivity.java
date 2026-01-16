@@ -186,8 +186,8 @@ public class MainActivity extends Activity {
             "2. App tries to ignore battery optimization and disable package control to prevent stop-signals from system.\n" +
             "3. App adds \"safest\" system browser to profile (with less permissions from ours blacklist).\n" +
             "4. App disables screenshots in profile (safety), allows apps install and accounts management (user freedom).\n" +
-            "5. App selects \"safest\" system keyboard and freeze others.\n"
-		    "6. App ask you to set profile password to protect data\n"+
+            "5. App selects \"safest\" system keyboard and freezes others.\n"
+		    "6. App asks you to set profile password to protect data\n"+
 			"7. When screen turns off or phone reboots profile will be freezed and profie apps hidden (besides this app)\n"+
 			"8. To unhide apps just click to \"ProtectedWorkProfile\" shortcut and wait for the timer.\n\n");
     
