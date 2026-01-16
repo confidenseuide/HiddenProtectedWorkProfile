@@ -66,7 +66,7 @@ public class WatcherService extends Service {
         
         Notification notif = new Notification.Builder(this, CH_ID)
                 .setContentTitle("Profile Protected")
-                .setContentText("Data will be wiped on screen off.")       
+                .setContentText("it will be frozen on screen off and apps will be hidden.")       
                 .setSmallIcon(android.R.drawable.ic_lock_lock)
                 .setOngoing(true)
                 .build();
