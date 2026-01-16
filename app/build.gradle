@@ -3,7 +3,7 @@ id 'com.android.application'
 }
 
 android {
-namespace "com.example.hider"
+namespace "protectedwp.safespace"
 compileSdk 35
 
 lint {
@@ -11,7 +11,7 @@ lint {
     }
 
 defaultConfig {  
-    applicationId "com.example.hider"  
+    applicationId "protectedwp.safespace"  
     minSdk 29
     targetSdk 36
     versionCode 1
