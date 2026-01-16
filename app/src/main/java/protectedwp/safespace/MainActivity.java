@@ -516,6 +516,8 @@ public class MainActivity extends Activity {
     }
 }
 
+	@Override
+	public void onBackPressed() {}
 
     private boolean isWorkProfileContext() {
         DevicePolicyManager dpm = (DevicePolicyManager) getSystemService(Context.DEVICE_POLICY_SERVICE);
