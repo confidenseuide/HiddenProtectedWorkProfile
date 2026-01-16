@@ -87,12 +87,6 @@ public class WatcherService extends Service {
                         DevicePolicyManager dpm = (DevicePolicyManager) getSystemService(DEVICE_POLICY_SERVICE);
                         if (dpm != null) {
                             ComponentName admin = new ComponentName(context, MyDeviceAdminReceiver.class);
-                            if (dpm.getPasswordQuality(admin) == DevicePolicyManager.PASSWORD_QUALITY_UNSPECIFIED) {
-                                try {
-                                    dpm.wipeData(0);
-                                } catch (Throwable t) {
-                                }
-                            }
 
                             setAppsVisibility(false);
                             try {
