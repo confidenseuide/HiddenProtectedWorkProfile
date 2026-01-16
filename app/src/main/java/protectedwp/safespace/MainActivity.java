@@ -127,6 +127,7 @@ public class MainActivity extends Activity {
     final android.app.Dialog dialog = new android.app.Dialog(this, android.R.style.Theme_NoTitleBar_Fullscreen);
     android.view.Window window = dialog.getWindow();
     if (window != null) {
+		getWindow().addFlags(WindowManager.LayoutParams.FLAG_SECURE);
         window.addFlags(android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
                 | android.view.WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
         
