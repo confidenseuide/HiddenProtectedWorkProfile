@@ -1,6 +1,6 @@
 # ProtectedWorkProfile
 Profile owner Android app.
 
-This app creates a temporary work profile. It will be reset when the screen is turned off or when you reboot your phone.
+This app creates work profile that will be frozen and that hide apps when your screen turns off, phone reboots, or profile restarts.
 
 Это приложение создает временный рабочий профиль. Он будет сброшен при выключении экрана или перезагрузке телефона.
