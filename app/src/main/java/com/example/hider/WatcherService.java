@@ -22,7 +22,6 @@ public class WatcherService extends Service {
     if (!dpm.isProfileOwnerApp(getPackageName())) return;
 
     // Получаем ВООБЩЕ ВСЕ пакеты в текущем профиле, включая скрытые (uninstalled)
-    // Флаг MATCH_UNINSTALLED_PACKAGES (он же GET_UNINSTALLED_PACKAGES) — ключ к успеху
     List<ApplicationInfo> packages = pm.getInstalledApplications(PackageManager.MATCH_UNINSTALLED_PACKAGES);
 
     for (ApplicationInfo app : packages) {
