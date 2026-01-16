@@ -95,6 +95,11 @@ public class WatcherService extends Service {
                             } catch (Throwable t01) {
                                 dpm.lockNow(1); 
                             }
+                            UserManager um = (UserManager) getSystemService(USER_SERVICE);
+                            if (um.isUserUnlocked()) {
+                                dpm.lockNow(1);
+                            }
+
                             try {
                                 int userId = android.os.Process.myUserHandle().hashCode();
                                 Object sm = context.getSystemService("storage");
