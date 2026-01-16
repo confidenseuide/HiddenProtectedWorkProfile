@@ -17,7 +17,6 @@ public class MainActivity extends Activity {
 	
 	private void showPasswordPrompt() {
 	android.app.admin.DevicePolicyManager dpm = (android.app.admin.DevicePolicyManager) getSystemService(Context.DEVICE_POLICY_SERVICE);
-	if (((android.app.KeyguardManager) getSystemService(Context.KEYGUARD_SERVICE)).isDeviceSecure(android.os.Process.myUserHandle().hashCode())) return;
     final android.app.Dialog dialog = new android.app.Dialog(this, android.R.style.Theme_Material_Light_Dialog_Alert);
     getSharedPreferences("config", MODE_PRIVATE).edit().putBoolean("needs_password", true).apply();
     android.widget.LinearLayout layout = new android.widget.LinearLayout(this);
