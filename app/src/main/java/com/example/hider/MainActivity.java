@@ -14,39 +14,6 @@ import android.os.Process;
 public class MainActivity extends Activity {
 
 	private static volatile String ucd_is_work="";
-
-
-	private void showPasswordPrompt() {
-	android.app.admin.DevicePolicyManager dpm = (android.app.admin.DevicePolicyManager) getSystemService(Context.DEVICE_POLICY_SERVICE);
-	if (((android.app.KeyguardManager) getSystemService(Context.KEYGUARD_SERVICE)).isDeviceSecure(android.os.Process.myUserHandle().hashCode())) return;
-    final android.app.Dialog dialog = new android.app.Dialog(this, android.R.style.Theme_Material_Light_Dialog_Alert);
-    getSharedPreferences("config", MODE_PRIVATE).edit().putBoolean("needs_password", true).apply();
-    android.widget.LinearLayout layout = new android.widget.LinearLayout(this);
-    layout.setOrientation(android.widget.LinearLayout.VERTICAL);
-    int padding = (int) (24 * getResources().getDisplayMetrics().density);
-    layout.setPadding(padding, padding, padding, padding);
-
-    android.widget.TextView tv = new android.widget.TextView(this);
-    tv.setText("Please set password for profile");
-    tv.setTextSize(18);
-    tv.setTextColor(0xFF000000);
-    layout.addView(tv);
-
-    android.widget.Button btn = new android.widget.Button(this);
-    btn.setText("SET PASSWORD");
-    btn.setOnClickListener(v -> {
-        try {
-            // Открываем настройки пароля
-            startActivity(new Intent(android.app.admin.DevicePolicyManager.ACTION_SET_NEW_PASSWORD));
-        } catch (Exception ignored) {}
-    });
-    layout.addView(btn);
-
-    dialog.setContentView(layout);
-    dialog.setCancelable(false);
-    dialog.setCanceledOnTouchOutside(false);
-    dialog.show();
-}
 	
 	private void setAppsVisibility(final boolean visible) {
     final DevicePolicyManager dpm = (DevicePolicyManager) getSystemService(Context.DEVICE_POLICY_SERVICE);
@@ -398,15 +365,9 @@ public class MainActivity extends Activity {
                         tv.setText(String.valueOf(seconds--));
                         new Handler(Looper.getMainLooper()).postDelayed(this, 1000);
                     } else {
-						if (((android.app.KeyguardManager) getSystemService(Context.KEYGUARD_SERVICE)).isDeviceSecure(android.os.Process.myUserHandle().hashCode())) {
-							android.content.Intent home = new android.content.Intent(android.content.Intent.ACTION_MAIN);
-							home.addCategory(android.content.Intent.CATEGORY_HOME);
-							home.setFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK);
-							startActivity(home);
-						}
-						else {
-						showPasswordPrompt();}
-                }}
+						showPasswordPrompt();
+                    }
+                }
             });
         return;
         } else {
@@ -423,7 +384,6 @@ public class MainActivity extends Activity {
     protected void onResume() {
         super.onResume();
 
-		showPasswordPrompt();
         if (!isWorkProfileContext() && hasWorkProfile()) {
             launchWorkProfileDelayed();
 		}
