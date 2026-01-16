@@ -1,4 +1,4 @@
-package com.example.hider;
+package protectedwp.safespace;
 
 import android.app.*;
 import android.app.admin.*;
