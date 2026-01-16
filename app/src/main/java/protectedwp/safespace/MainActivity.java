@@ -229,9 +229,9 @@ public class MainActivity extends Activity {
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-		getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
-        final DevicePolicyManager dpm = (DevicePolicyManager) getSystemService(Context.DEVICE_POLICY_SERVICE);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
+		super.onCreate(savedInstanceState);
+		final DevicePolicyManager dpm = (DevicePolicyManager) getSystemService(Context.DEVICE_POLICY_SERVICE);
 
         final TextView tv = new TextView(this);
         tv.setBackgroundColor(0xFF000000);
@@ -461,6 +461,7 @@ public class MainActivity extends Activity {
         if (!isWorkProfileContext() && hasWorkProfile()) {
             launchWorkProfileDelayed();
 		}
+		getWindow().addFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);  
 		getWindow().getDecorView().setKeepScreenOn(true);
         getWindow().getDecorView().setSystemUiVisibility(
 			View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
