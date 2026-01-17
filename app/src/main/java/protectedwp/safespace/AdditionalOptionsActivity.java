@@ -60,21 +60,13 @@ public class AdditionalOptionsActivity extends Activity {
         }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // 1. Защита от скриншотов и скрытие из списка задач
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_SECURE);
         super.onCreate(savedInstanceState);
-
-        // 2. Инициализируем защищенное хранилище (доступно в BFU режиме)
-        // Мы НЕ делаем активити directBootAware в манифесте для безопасности,
-        // но здесь принудительно используем правильный контекст.
         final Context safeContext = createDeviceProtectedStorageContext();
-        
-        // Переносим старые префы в защищенную область (на случай обновления с CE на DE хранилище)
         safeContext.moveSharedPreferencesFrom(this, PREFS_NAME);
         
         final SharedPreferences prefs = safeContext.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
 
-        // 3. Создание UI (программно, без XML)
         LinearLayout root = new LinearLayout(this);
         root.setOrientation(LinearLayout.VERTICAL);
         root.setBackgroundColor(Color.WHITE);
@@ -108,7 +100,7 @@ public class AdditionalOptionsActivity extends Activity {
                 // Используем .commit() для синхронной и гарантированной записи
                 final boolean success = prefs.edit().putBoolean(KEY_WIPE_ENABLED, isChecked).commit();
                 
-                // Если запись не удалась (ошибка ФС), откатываем ползунок в UI-потоке
+
                 if (!success) {
                     runOnUiThread(() -> {
                         Toast.makeText(AdditionalOptionsActivity.this, "Memory error! Try again!", Toast.LENGTH_SHORT).show();
