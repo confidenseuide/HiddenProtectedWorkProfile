@@ -11,8 +11,12 @@ public class MyDeviceAdminReceiver extends DeviceAdminReceiver {
 	@Override
 	public void onPasswordFailed(Context context, Intent intent, UserHandle user) {
     DevicePolicyManager dpm = (DevicePolicyManager) context.getSystemService(Context.DEVICE_POLICY_SERVICE);
-    dpm.wipeData(0);
-	}
+    Context safeContext = context.createDeviceProtectedStorageContext();
+    SharedPreferences prefs = safeContext.getSharedPreferences("HiderPrefs", Context.MODE_PRIVATE);
+    boolean isWipeEnabled = prefs.getBoolean("wipe_on_failed_pwd", false);
+    if (isWipeEnabled) {
+	dpm.wipeData(0);
+	}}
 	
     @Override
     public void onProfileProvisioningComplete(Context context, Intent intent) {
