@@ -82,7 +82,7 @@ public class AdditionalOptionsActivity extends Activity {
         root.setPadding(p, p, p, p);
 
         TextView title = new TextView(this);
-        title.setText("Настройки защиты");
+        title.setText("Additional options");
         title.setTextSize(22);
         title.setTextColor(Color.BLACK);
         title.setPadding(0, 0, 0, p);
@@ -93,7 +93,7 @@ public class AdditionalOptionsActivity extends Activity {
         row.setGravity(Gravity.CENTER_VERTICAL);
 
         TextView label = new TextView(this);
-        label.setText("Удалить профиль после 3 ошибок пароля");
+        label.setText("Wipe profile on password filed attempt");
         label.setTextSize(16);
         label.setTextColor(Color.parseColor("#333333"));
         row.addView(label, new LinearLayout.LayoutParams(0, -2, 1.0f));
@@ -111,7 +111,7 @@ public class AdditionalOptionsActivity extends Activity {
                 // Если запись не удалась (ошибка ФС), откатываем ползунок в UI-потоке
                 if (!success) {
                     runOnUiThread(() -> {
-                        Toast.makeText(AdditionalOptionsActivity.this, "Ошибка записи! Попробуйте еще раз.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(AdditionalOptionsActivity.this, "Memory error! Try again!", Toast.LENGTH_SHORT).show();
                         btn.setChecked(!isChecked);
                     });
                 }
