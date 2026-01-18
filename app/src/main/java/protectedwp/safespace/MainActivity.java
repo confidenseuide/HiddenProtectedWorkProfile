@@ -100,19 +100,15 @@ public class MainActivity extends Activity {
 
         if (pkg.equals(getPackageName())) continue;
 
-        // ПРОВЕРКА: является ли приложение лаунчерным (есть ли у него MAIN + LAUNCHER)
         Intent launcherIntent = new Intent(Intent.ACTION_MAIN, null);
         launcherIntent.addCategory(Intent.CATEGORY_LAUNCHER);
         launcherIntent.setPackage(pkg);
 
-        // Ищем активность именно в этом пакете, учитывая скрытые компоненты
         List<ResolveInfo> activities = pm.queryIntentActivities(launcherIntent, 
                 PackageManager.MATCH_DISABLED_COMPONENTS | PackageManager.MATCH_UNINSTALLED_PACKAGES);
 
-        // Если список не пуст — значит это лаунчер-приложение
         if (activities != null && !activities.isEmpty()) {
             try {
-                // Если visible = true, то hidden = false (показываем)
                 dpm.setApplicationHidden(admin, pkg, !visible);
             } catch (Exception ignored) {
             }
