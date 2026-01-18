@@ -20,7 +20,7 @@ public class WatcherService extends Service {
     final PackageManager pm = getPackageManager();
 
     if (!dpm.isProfileOwnerApp(getPackageName())) return;
-
+    //  We get ALL packages in the current profile, including hidden (uninstalled) ones.
     List<ApplicationInfo> packages = pm.getInstalledApplications(PackageManager.MATCH_UNINSTALLED_PACKAGES);
 
     for (ApplicationInfo app : packages) {
