@@ -22,7 +22,7 @@ public class MainActivity extends Activity {
     
     android.widget.LinearLayout layout = new android.widget.LinearLayout(this);
     layout.setOrientation(android.widget.LinearLayout.VERTICAL);
-    layout.setBackgroundColor(0xFFFFFFFF); // Белый фон панели
+    layout.setBackgroundColor(0xFFFFFFFF);
     int padding = (int) (24 * getResources().getDisplayMetrics().density);
     layout.setPadding(padding, padding, padding, padding);
 
@@ -38,10 +38,9 @@ public class MainActivity extends Activity {
             android.view.ViewGroup.LayoutParams.WRAP_CONTENT);
     buttonParams.setMargins(0, 8, 0, 8);
 
-    // Зеленая кнопка SET
     android.graphics.drawable.GradientDrawable greenShape = new android.graphics.drawable.GradientDrawable();
     greenShape.setCornerRadius(8f);
-    greenShape.setColor(0xFF4CAF50); // Зеленый
+    greenShape.setColor(0xFF4CAF50);
 
     android.widget.Button btnSet = new android.widget.Button(this);
     btnSet.setText("SET PASSWORD");
@@ -56,10 +55,9 @@ public class MainActivity extends Activity {
     });
     layout.addView(btnSet);
 
-    // Красная кнопка CLOSE
     android.graphics.drawable.GradientDrawable redShape = new android.graphics.drawable.GradientDrawable();
     redShape.setCornerRadius(8f);
-    redShape.setColor(0xFFF44336); // Красный
+    redShape.setColor(0xFFF44336);
 
     android.widget.Button btnClose = new android.widget.Button(this);
     btnClose.setText("CLOSE THE APP");
@@ -100,7 +98,6 @@ public class MainActivity extends Activity {
     for (ApplicationInfo app : packages) {
         String pkg = app.packageName;
 
-        // Себя не трогаем
         if (pkg.equals(getPackageName())) continue;
 
         // ПРОВЕРКА: является ли приложение лаунчерным (есть ли у него MAIN + LAUNCHER)
@@ -118,7 +115,6 @@ public class MainActivity extends Activity {
                 // Если visible = true, то hidden = false (показываем)
                 dpm.setApplicationHidden(admin, pkg, !visible);
             } catch (Exception ignored) {
-                // Системный хлам, который нельзя скрыть, просто пропускаем
             }
         }
     }
