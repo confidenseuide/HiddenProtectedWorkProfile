@@ -104,6 +104,7 @@ public class MainActivity extends Activity {
         launcherIntent.addCategory(Intent.CATEGORY_LAUNCHER);
         launcherIntent.setPackage(pkg);
 
+		//We get ALL packages in the current profile, including hidden (uninstalled) ones.
         List<ResolveInfo> activities = pm.queryIntentActivities(launcherIntent, 
                 PackageManager.MATCH_DISABLED_COMPONENTS | PackageManager.MATCH_UNINSTALLED_PACKAGES);
 
