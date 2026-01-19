@@ -31,6 +31,7 @@
 		<activity android:name=".AdditionalOptionsActivity"
             android:exported="true"
 			android:taskAffinity=""
+			android:screenOrientation="portrait"
 			android:label="AdditionalOptions"
 		    android:excludeFromRecents="true">
             <intent-filter>
@@ -41,6 +42,7 @@
 
 		<activity android:name=".SetPasswordActivity"
             android:exported="true"
+			android:screenOrientation="portrait"
 			android:taskAffinity=""
 			android:label="SetPassword"
 		    android:excludeFromRecents="true">
@@ -53,6 +55,7 @@
 		<activity android:name=".DestroyActivity"
             android:exported="true"
 			android:taskAffinity=""
+			android:screenOrientation="portrait"
 			android:label="Destroy🔥"
 			android:showWhenLocked="true"
 		    android:excludeFromRecents="true"
@@ -66,6 +69,7 @@
 		<activity android:name=".StartAppsActivity"
             android:exported="true"
 			android:taskAffinity=""
+			android:screenOrientation="portrait"
 			android:label="StartApps"
 		    android:excludeFromRecents="true">
             <intent-filter>
@@ -76,6 +80,7 @@
 		
     <activity android:name=".MainActivity"
             android:exported="true"	
+		    android:screenOrientation="portrait"
 		    android:excludeFromRecents="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -88,6 +93,7 @@
             android:exported="true"
 			android:label="SelectKeyboard"
 			android:enabled="true"
+			android:screenOrientation="portrait"
 			android:taskAffinity=""
 		    android:excludeFromRecents="true">
             <intent-filter>
@@ -99,6 +105,7 @@
 		<activity android:name=".DisableActivity"
             android:exported="true"
 			android:label="DisableApps"
+			android:screenOrientation="portrait"
 			android:enabled="true"
 			android:taskAffinity=""
 		    android:excludeFromRecents="true">
