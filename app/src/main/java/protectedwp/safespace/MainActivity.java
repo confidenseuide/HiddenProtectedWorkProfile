@@ -101,7 +101,8 @@ public class MainActivity extends Activity {
     for (ApplicationInfo app : packages) {
         String pkg = app.packageName;
 
-        if (pkg.equals(getPackageName())) continue;
+        if (pkg.equals(getPackageName())) {continue;}
+		if (!pm.queryIntentServices(new Intent("android.view.InputMethod").setPackage(pkg), 0).isEmpty()) {continue;}
 
         Intent launcherIntent = new Intent(Intent.ACTION_MAIN, null);
         launcherIntent.addCategory(Intent.CATEGORY_LAUNCHER);
