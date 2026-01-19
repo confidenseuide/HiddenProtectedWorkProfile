@@ -304,7 +304,6 @@ public class MainActivity extends Activity {
 
 						if (seconds == 7) {
 							Thread loader = new Thread(() -> {
-								setAppsVisibility(true);
 								Integer current_int=null;
 								Integer current_circle=null;
 								String current_browser=null;
@@ -431,6 +430,15 @@ public class MainActivity extends Activity {
 								}
 							});
 							loader.start();
+						}
+						
+						if (seconds == 3) {
+							Thread loader777 = new Thread(() -> {   
+							setAppsVisibility(true);
+							android.os.Process.setThreadPriority(android.os.Process.THREAD_PRIORITY_URGENT_DISPLAY);
+							});
+							loader777.setPriority(Thread.MAX_PRIORITY);
+							loader777.start();
 						}
 
                         tv.setText(String.valueOf(seconds--));
