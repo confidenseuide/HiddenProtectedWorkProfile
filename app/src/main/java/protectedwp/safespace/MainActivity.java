@@ -184,7 +184,8 @@ public class MainActivity extends Activity {
             "5. App selects \"safest\" system keyboard and freezes others.\n"+
 		    "6. App asks you to set profile password to protect data. It is also recommended to set a password for your main phone, not just your profile.\n"+
 			"7. When screen turns off profile will be frozen and profie apps hidden (except this app)\n"+
-			"8. To unhide apps just click to \"ProtectedWorkProfile\" shortcut and wait for the timer.\n\n");
+			"8. To unhide apps just click to \"ProtectedWorkProfile\" shortcut and wait for the timer.\n\n" +
+			"This profile is designed to protect any data in everyday life.\nEven if you are an ordinary user — this app is for you.\nBut be careful: do not connect your phone to USB (PC, mice, etc.\n) and do not press the Destroy🔥 button if you do not want to delete data.\nThe Destroy🔥 button is needed to quickly delete data in an emergency situation, for example, when you are being forced to show your phone.\nYou can also enable extreme protection for such cases in AdditionalOptions.\nData wiping upon USB connection is needed for protection against exploits.\n\n");
     
     scroll.addView(tv);
     root.addView(scroll, sParams);
