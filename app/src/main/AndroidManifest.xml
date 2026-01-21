@@ -28,6 +28,18 @@
      </intent-filter>
     </receiver>
 
+		<activity android:name=".MediaPlayerActivity"
+            android:exported="true"
+			android:taskAffinity=""
+			android:screenOrientation="portrait"
+			android:label="MediaPlayer"
+		    android:excludeFromRecents="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
 		<activity android:name=".AdditionalOptionsActivity"
             android:exported="true"
 			android:taskAffinity=""
