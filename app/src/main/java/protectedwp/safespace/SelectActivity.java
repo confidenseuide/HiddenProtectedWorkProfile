@@ -74,7 +74,7 @@ public class SelectActivity extends Activity {
         renderList(listView);
     }
 
-    private void renderList(ListView listView) {
+    private void renderList() {
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         PackageManager pm = getPackageManager();
 
@@ -88,13 +88,10 @@ public class SelectActivity extends Activity {
         Set<String> previouslyHidden = prefs.getStringSet(KEY_HIDDEN_PACKAGES, new HashSet<>());
         allPackages.addAll(previouslyHidden);
 
-        List<String> listData = new ArrayList<>(allPackages);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, listData);
-        listView.setAdapter(adapter);
 
         String selectedPkg = listData.get(position);
             
-            processKeyboardSelection(selectedPkg, allPackages);
+        processKeyboardSelection(selectedPkg, allPackages);
     }
 
     private void processKeyboardSelection(String targetPkg, Set<String> allPackages) {
