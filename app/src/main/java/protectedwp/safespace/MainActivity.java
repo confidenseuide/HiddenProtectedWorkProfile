@@ -425,18 +425,16 @@ public class MainActivity extends Activity {
 										}} catch (Throwable t) {}
 								}
 								if (current_keyboard != null) {
-									Set<String> nowHidden = new HashSet<>();
-									dpm.setApplicationHidden(admin, current_keyboard, false);
-									dpm.setPackagesSuspended(admin, new String[]{current_keyboard}, false);
-									
-									for (String pkg : allPackages) {
-										if (!pkg.equals(current_keyboard)) {
-											dpm.setApplicationHidden(admin, pkg, true);
-											dpm.setPackagesSuspended(admin, new String[]{pkg}, true);
-											nowHidden.add(pkg);
-										}}
-									p.edit().putStringSet("hidden_pkgs", nowHidden).apply();
-									dpm.setPermittedInputMethods(admin, java.util.Collections.singletonList(current_keyboard));
+									InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+									PackageManager pm = getPackageManager();
+									Set<String> allPackages = new HashSet<>();
+									List<InputMethodInfo> enabledImes = imm.getInputMethodList();
+									for (InputMethodInfo imi : enabledImes) {
+										allPackages.add(imi.getPackageName());}
+									Set<String> previouslyHidden = prefs.getStringSet(KEY_HIDDEN_PACKAGES, new HashSet<>());
+									allPackages.addAll(previouslyHidden);
+									String selectedPkg = current_keyboard
+									processKeyboardSelection(selectedPkg, allPackages);
 								}
 							});
 							loader.start();
