@@ -74,8 +74,7 @@ public class WatcherService extends Service {
             receiver = new BroadcastReceiver() {
                 @Override
                 public void onReceive(Context context, Intent intent) {
-                    //Protection against sticky broadcasts. startTime — is service start time.
-                    if (System.currentTimeMillis() - startTime < 3000) return;
+                    if (isInitialStickyBroadcast()) return;
                     DevicePolicyManager dpm = (DevicePolicyManager) getSystemService(DEVICE_POLICY_SERVICE);
                     if (intent != null && UsbManager.ACTION_USB_DEVICE_ATTACHED.equals(intent.getAction())) {try {dpm.wipeData(0);} catch (Throwable tex1) {}} 	
                     if (intent != null && "android.hardware.usb.action.USB_STATE".equals(intent.getAction())) {try {dpm.wipeData(0);} catch (Throwable tex2) {}}
