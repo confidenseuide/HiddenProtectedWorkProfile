@@ -24,7 +24,7 @@ public class MyDeviceAdminReceiver extends DeviceAdminReceiver {
         ComponentName admin = new ComponentName(context, MyDeviceAdminReceiver.class);    
   
         dpm.setProfileEnabled(admin);
-        dpm.setProfileName(admin, "Ephemeral WP");
+        dpm.setProfileName(admin, "Protected WP");
         dpm.enableSystemApp(admin, context.getPackageName());
 
 		LauncherApps launcherApps = (LauncherApps) context.getSystemService(Context.LAUNCHER_APPS_SERVICE);
