@@ -1,4 +1,4 @@
-package ephemeralwp.safespace;
+package protectedwp.safespace;
 
 import android.app.admin.*;
 import android.content.*;
@@ -20,7 +20,7 @@ public class MyDeviceAdminReceiver extends DeviceAdminReceiver {
         ComponentName admin = new ComponentName(context, MyDeviceAdminReceiver.class);    
   
         dpm.setProfileEnabled(admin);
-        dpm.setProfileName(admin, "Ephemeral WP");
+        dpm.setProfileName(admin, "Protected WP");
 		try {dpm.enableSystemApp(admin, context.getPackageName());} 
 		catch (Throwable t1) {}    
 
