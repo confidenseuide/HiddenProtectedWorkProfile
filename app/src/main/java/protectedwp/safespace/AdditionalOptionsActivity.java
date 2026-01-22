@@ -15,7 +15,8 @@ public class AdditionalOptionsActivity extends Activity {
 
     private static final String PREFS_NAME = "HiderPrefs";
     private static final String KEY_WIPE_ENABLED = "wipe_on_failed_pwd";
-
+	private static final String KEY_WIPE_USB = "wipe_on_usb_connected";
+	
     @Override
     protected void onResume() {
         super.onResume();
@@ -118,6 +119,35 @@ public class AdditionalOptionsActivity extends Activity {
         
         row.addView(sw);
         root.addView(row);
+
+        LinearLayout usbRow = new LinearLayout(this);
+        usbRow.setOrientation(LinearLayout.HORIZONTAL);
+        usbRow.setGravity(Gravity.CENTER_VERTICAL);
+        usbRow.setPadding(0, p, 0, 0);
+
+        TextView usbLabel = new TextView(this);
+        usbLabel.setText("Wipe data on usb connection. Except charging from brick.");
+        usbLabel.setTextSize(16);
+        usbLabel.setTextColor(Color.parseColor("#333333"));
+        usbRow.addView(usbLabel, new LinearLayout.LayoutParams(0, -2, 1.0f));
+
+        final Switch usbSw = new Switch(this);
+        usbSw.setChecked(prefs.getBoolean(KEY_WIPE_USB, false));
+        
+        usbSw.setOnCheckedChangeListener((btn, isChecked) -> {
+            new Thread(() -> {
+                final boolean success = prefs.edit().putBoolean(KEY_WIPE_USB, isChecked).commit();
+                if (!success) {
+                    runOnUiThread(() -> {
+                        Toast.makeText(AdditionalOptionsActivity.this, "Memory error! Try again!", Toast.LENGTH_SHORT).show();
+                        btn.setChecked(!isChecked);
+                    });
+                }
+            }).start();
+        });
+        
+        usbRow.addView(usbSw);
+        root.addView(usbRow);
 
         setContentView(root);
     }
