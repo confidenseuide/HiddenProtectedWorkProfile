@@ -51,6 +51,7 @@
 			android:enabled="true"
 			android:launchMode="singleInstance"
 		    android:excludeFromRecents="true"
+			android:showWhenLocked="true"
 			android:directBootAware="true">
 			<intent-filter>
                 <action android:name="android.intent.action.MAIN" />
