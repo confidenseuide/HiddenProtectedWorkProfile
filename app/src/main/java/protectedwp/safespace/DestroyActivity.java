@@ -13,18 +13,20 @@ public class DestroyActivity extends Activity {
     protected void onResume() {
         super.onResume();
 		if (isWorkProfileContext()) {
-			DevicePolicyManager dpm = (DevicePolicyManager) getSystemService(Context.DEVICE_POLICY_SERVICE);
-			dpm.wipeData(0);
-		}
+			wipe.wipe(this);	
+		}	
+		
 		if (!isWorkProfileContext() && hasWorkProfile()) {
             launchWorkProfileDelayed();
 		}
+		
 		if (!isWorkProfileContext() && !hasWorkProfile()) {
 			Intent intent = new Intent(this, MainActivity.class);
 			intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 			startActivity(intent);
 			finish();
-		}}
+		}
+	}
 	
 	private boolean isWorkProfileContext() {
         DevicePolicyManager dpm = (DevicePolicyManager) getSystemService(Context.DEVICE_POLICY_SERVICE);
