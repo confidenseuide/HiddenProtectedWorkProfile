@@ -147,6 +147,10 @@ public class WatcherService extends Service {
             try { unregisterReceiver(receiver); } catch (Exception ignored) {}
             receiver = null;
         }
+		if (usbReceiver != null) {
+            try { unregisterReceiver(usbReceiver); } catch (Exception ignored) {}
+			usbReceiver = null;
+        }
         super.onDestroy();
     }
 
