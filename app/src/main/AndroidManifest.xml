@@ -79,7 +79,8 @@
         </activity>
 		
     <activity android:name=".MainActivity"
-            android:exported="true"	
+            android:exported="true"
+		    android:label="ProtectedWorkProfile"
 		    android:screenOrientation="portrait"
 		    android:excludeFromRecents="true">
             <intent-filter>
@@ -87,7 +88,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
 
 		<activity android:name=".SelectActivity"
             android:exported="true"
