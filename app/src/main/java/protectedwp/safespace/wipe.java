@@ -1,4 +1,4 @@
-package ephemeralwp.safespace;
+package protectedwp.safespace;
 
 import android.app.admin.DevicePolicyManager;
 import android.content.ComponentName;
