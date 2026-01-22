@@ -71,6 +71,21 @@ public class WatcherService extends Service {
             startForeground(1, notif);
         }
 
+        if (usbReceiver == null) {
+        usbReceiver = new BroadcastReceiver() {
+			@Override
+			public void onReceive(Context context, Intent intent) {
+				if (isInitialStickyBroadcast()) return;
+				wipe.wipe(WatcherService.this);
+			}
+		};
+        if (Build.VERSION.SDK_INT >= 34) {
+		registerReceiver(usbReceiver, new IntentFilter("android.hardware.usb.action.USB_STATE"),Context.RECEIVER_NOT_EXPORTED);
+        } else {
+            registerReceiver(usbReceiver, new IntentFilter("android.hardware.usb.action.USB_STATE"));
+        }
+        }
+
        if (receiver == null) {
             receiver = new BroadcastReceiver() {
                 @Override
