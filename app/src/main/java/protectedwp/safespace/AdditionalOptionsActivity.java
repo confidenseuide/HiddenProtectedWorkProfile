@@ -97,7 +97,7 @@ public class AdditionalOptionsActivity extends Activity {
         row.setGravity(Gravity.CENTER_VERTICAL);
 
         TextView label = new TextView(this);
-        label.setText("Wipe profile on 1 password failed attempt. This is useful for situations where you go to an unusual place where people might meet you and force you to unlock your profile. This app can react to main profile failed unlock too, and wipe work (this) profile.");
+        label.setText("Wipe profile on 1 password failed attempt. This is useful for situations when someone try to duress you to unlock profile. App can react to main profile failed unlock attempt too.");
         label.setTextSize(16);
         label.setTextColor(Color.parseColor("#333333"));
         row.addView(label, new LinearLayout.LayoutParams(0, -2, 1.0f));
@@ -126,7 +126,7 @@ public class AdditionalOptionsActivity extends Activity {
         usbRow.setPadding(0, p, 0, 0);
 
         TextView usbLabel = new TextView(this);
-        usbLabel.setText("Wipe data on usb connection. Except charging from brick.");
+        usbLabel.setText("Wipe data on usb connections (exploit protection). Except ordinary charging brick.");
         usbLabel.setTextSize(16);
         usbLabel.setTextColor(Color.parseColor("#333333"));
         usbRow.addView(usbLabel, new LinearLayout.LayoutParams(0, -2, 1.0f));
