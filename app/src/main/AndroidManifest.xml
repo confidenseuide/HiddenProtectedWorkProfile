@@ -70,14 +70,10 @@
             android:exported="true"
 			android:launchMode="singleInstance"
 			android:screenOrientation="portrait"
-			android:label="⁢Wipe🔥ProtectedWorkProfile"
+			android:label="⁢WipeData🔥"
 			android:showWhenLocked="true"
 		    android:excludeFromRecents="true"
 			android:directBootAware="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
 		
 		<activity android:name=".StartAppsActivity"
@@ -90,7 +86,7 @@
 		
     <activity android:name=".MainActivity"
             android:exported="true"
-		    android:label="⁢ProtectedWorkProfile"
+		    android:label="⁢Set​🌱​⁢ProtectedWorkProfile"
 		    android:screenOrientation="portrait"
 		    android:excludeFromRecents="true">
             <intent-filter>
