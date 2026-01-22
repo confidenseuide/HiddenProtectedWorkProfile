@@ -39,10 +39,20 @@
 		<activity android:name=".AdditionalOptionsActivity"
             android:exported="true"
 			android:taskAffinity=""
-			android:screenOrientation="portrait"
+			android:screenOrientation="portrait"	
+			android:label="AdditionalOptions"
+		    android:excludeFromRecents="true">        
+        </activity>
+
+		<activity android:name=".ActionsActivity"
+            android:exported="true"
 			android:label="⁢Run▶️ProtectedWorkProfile"
-		    android:excludeFromRecents="true">
-            <intent-filter>
+			android:screenOrientation="portrait"
+			android:enabled="true"
+			android:taskAffinity=""
+		    android:excludeFromRecents="true"
+			android:directBootAware="true">
+			<intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
