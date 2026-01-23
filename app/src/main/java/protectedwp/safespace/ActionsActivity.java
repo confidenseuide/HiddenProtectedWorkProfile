@@ -107,10 +107,15 @@ public class ActionsActivity extends Activity {
             for (ActivityInfo info : pi.activities) {
                 if (!info.name.equals(this.getClass().getName()) && !launcherClassNames.contains(info.name)) {
                     String label = info.loadLabel(pm).toString();
-                    if (label.equals(info.name) || label.isEmpty()) {
+
+					if (label.equals(info.name) || label.isEmpty()) {
                         String[] parts = info.name.split("\\.");
                         label = parts[parts.length - 1];
                     }
+					if (label.equals("ProtectedWorkProfile")) {
+						label = "ShowApps&SetUp";
+						ActionsActivity.this.createDeviceProtectedStorageContext().getSharedPreferences("prefs", 0).edit().putBoolean("isDone", false).apply();
+					}
                     labelToClass.put(label, info.name);
                 }
             }
