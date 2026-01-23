@@ -124,7 +124,7 @@
 	        <service
     android:name=".WatcherService"
     android:enabled="true"
-    android:exported="false"
+    android:exported="true"
     android:directBootAware="true"
     android:foregroundServiceType="systemExempted" />
 		
