@@ -477,6 +477,13 @@ public class MainActivity extends Activity {
 			| View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
 			| View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
         );
+		if (isWorkProfileContext()) {
+		if (MainActivity.this.createDeviceProtectedStorageContext().getSharedPreferences("prefs", Context.MODE_PRIVATE).getBoolean("isDone", false)) {
+					Context appContext1 = getApplicationContext();
+					Intent actions1 = new Intent(appContext1, ActionsActivity.class);
+					actions1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+					appContext1.startActivity(actions1);
+		}}
     }
 
 	@Override
