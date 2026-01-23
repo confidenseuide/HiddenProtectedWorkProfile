@@ -70,10 +70,10 @@ public class ActionsActivity extends Activity {
                 startActivity(home);
             } else {
                 try {
-					if (label.equals("ProtectedWorkProfile") || label.equals("ShowApps&SetUp")) {
+					if (label.contains("ProtectedWorkProfile") || label.contains("ShowApps&SetUp")) {
 					unlock();
 					}
-					if (!label.equals("ProtectedWorkProfile") && !label.equals("ShowApps&SetUp")) {
+					if (!label.contains("ProtectedWorkProfile") && !label.contains("ShowApps&SetUp")) {
                     Intent i = new Intent();
                     i.setComponent(new ComponentName(getPackageName(), className));
 					i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
