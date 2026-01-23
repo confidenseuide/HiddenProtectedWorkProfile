@@ -6,7 +6,6 @@
  <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
  <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SYSTEM_EXEMPTED" />
  <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
- <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
  <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
  <uses-permission android:name="android.permission.RECEIVE_LOCKED_BOOT_COMPLETED" />
 	
@@ -60,14 +59,9 @@
 		<activity android:name=".SetPasswordActivity"
             android:exported="true"
 			android:screenOrientation="portrait"
-			android:directBootAware="true"
 			android:launchMode="singleInstance"
 			android:label="SetPassword"
 		    android:excludeFromRecents="true">
-			<intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.INFO" />
-            </intent-filter>
         </activity>
 
 		<activity android:name=".DestroyActivity"
@@ -90,7 +84,7 @@
 		    android:excludeFromRecents="true">
         </activity>
 		
-    <activity android:name=".MainActivity"
+       <activity android:name=".MainActivity"
             android:exported="true"
 			android:directBootAware="true"
 			android:showWhenLocked="true"
@@ -103,15 +97,11 @@
             </intent-filter>
         </activity>
 
-		    <activity android:name=".ZeroActivity"
-            android:exported="true"
+		<activity android:name=".ZeroActivity"
+            android:exported="false"
 			android:directBootAware="true"
 		    android:screenOrientation="portrait"
 		    android:excludeFromRecents="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.INFO" />
-            </intent-filter>
         </activity>
 		
 
