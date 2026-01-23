@@ -556,7 +556,7 @@ public class MainActivity extends Activity {
                 for (UserHandle profile : profiles) {
                    if (userManager.getSerialNumberForUser(profile) != 0) {
                         launcherApps.startMainActivity(
-                            new ComponentName(getPackageName(), StairActivity.class.getName()), 
+                            new ComponentName(getPackageName(), ZeroActivity.class.getName()), 
                             profile, null, null
                         );
                         
