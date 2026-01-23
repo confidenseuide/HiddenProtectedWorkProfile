@@ -71,13 +71,41 @@ public class ActionsActivity extends Activity {
                 startActivity(home);
             } else {
                 try {
+					if (label.equals("ProtectedWorkProfile") || label.equals("ShowApps&SetUp")) {
+					unlock();
+					}
+					if (!label.equals("ProtectedWorkProfile") && !label.equals("ShowApps&SetUp")) {
                     Intent i = new Intent();
                     i.setComponent(new ComponentName(getPackageName(), className));
-                    startActivity(i);
+                    startActivity(i);}
                 } catch (Exception ignored) {}
             }
         });
     }
+
+	private void unlock() {
+		KeyguardManager km = (KeyguardManager) getSystemService(Context.KEYGUARD_SERVICE);
+		km.requestDismissKeyguard(this, new KeyguardManager.KeyguardDismissCallback() {
+    @Override
+    public void onDismissSucceeded() {
+
+		ActionsActivity.this.createDeviceProtectedStorageContext().getSharedPreferences("prefs", Context.MODE_PRIVATE).edit().putBoolean("isDone", false).apply();
+	
+		
+	}
+
+    @Override
+    public void onDismissCancelled() {
+        unlock();
+    }
+
+    @Override
+    public void onDismissError() {
+        unlock();
+    }
+});
+		
+	}
 
     private void hideSystemUI() {
         getWindow().getDecorView().setSystemUiVisibility(
@@ -114,7 +142,7 @@ public class ActionsActivity extends Activity {
                     }
 					if (label.equals("ProtectedWorkProfile")) {
 						label = "ShowApps&SetUp";
-						ActionsActivity.this.createDeviceProtectedStorageContext().getSharedPreferences("prefs", Context.MODE_PRIVATE).edit().putBoolean("isDone", false).apply();
+						
 					}
                     labelToClass.put(label, info.name);
                 }
