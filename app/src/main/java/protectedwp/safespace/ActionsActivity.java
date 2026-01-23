@@ -104,7 +104,6 @@ public class ActionsActivity extends Activity {
 
     @Override
     public void onDismissError() {
-        unlock();
     }
 });
 		
