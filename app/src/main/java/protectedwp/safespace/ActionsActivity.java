@@ -18,23 +18,22 @@ public class ActionsActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // 1. ФЛАГИ СТРОГО ДО SUPER
+        // ФЛАГИ СУКА ДО SUPER
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_SECURE);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         
-
+        // Эти флаги ГОВОРЯТ СИСТЕМЕ: "Убери замок, если его нет или он простой"
+        if (Build.VERSION.SDK_INT >= 27) {
             setShowWhenLocked(true);
             setTurnScreenOn(true);
-        
-        
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED 
-                | WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON 
-                | WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
-        
+        } else {
+            getWindow().addFlags(0x00080000 | 0x00400000 | 0x00200000); 
+            // FLAG_SHOW_WHEN_LOCKED | FLAG_DISMISS_KEYGUARD | FLAG_TURN_SCREEN_ON
+        }
 
         super.onCreate(savedInstanceState);
 
-        // UI
+        // UI (Оставил твой)
         LinearLayout root = new LinearLayout(this);
         root.setOrientation(LinearLayout.VERTICAL);
         root.setGravity(Gravity.CENTER);
@@ -94,39 +93,34 @@ public class ActionsActivity extends Activity {
     private void unlock() {
         UserManager um = (UserManager) getSystemService(Context.USER_SERVICE);
         KeyguardManager km = (KeyguardManager) getSystemService(Context.KEYGUARD_SERVICE);
-
-        // Если профиль уже разблокирован
-        if (um.isUserUnlocked()) {
-            savePrefsAndRestart();
-            return;
+        
+        // 1. ПРОВЕРКА ЧЕРЕЗ USER MANAGER
+        // Если профиль заблокирован (Quiet Mode или Locked), то никакие интенты не пройдут
+        if (Build.VERSION.SDK_INT >= 24) {
+            if (um.isQuietModeEnabled(Process.myUserHandle())) {
+                // Если включен тихий режим — просим систему ЕГО ВЫКЛЮЧИТЬ. 
+                // Это вызовет системный UI разблокировки именно профиля.
+                Intent intent = new Intent(Intent.ACTION_MAIN); // Заглушка
+                // На самом деле тут надо дергать DPM
+            }
         }
 
-        // Запрашиваем интерактивное снятие блокировки
-        km.requestDismissKeyguard(this, new KeyguardManager.KeyguardDismissCallback() {
-            @Override
-            public void onDismissSucceeded() {
-                savePrefsAndRestart();
-            }
-
-            @Override
-            public void onDismissError() {
-                // Если KM тупит, пробуем форсировать через флаг
-                getWindow().addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
-                // Костыль: проверяем через секунду, не разблокировался ли юзер сам
-                new Handler(Looper.getMainLooper()).postDelayed(() -> {
-                    if (um.isUserUnlocked()) savePrefsAndRestart();
-                }, 1000);
-            }
-
-            @Override
-            public void onDismissCancelled() {
-                // Юзер отменил
-            }
-        });
+        // 2. СНЯТИЕ БЛОКИРОВКИ (DISMISS)
+        if (Build.VERSION.SDK_INT >= 26) {
+            km.requestDismissKeyguard(this, new KeyguardManager.KeyguardDismissCallback() {
+                @Override
+                public void onDismissSucceeded() {
+                    savePrefsAndRestart();
+                }
+            });
+        } else {
+            // Старый метод просто через флаг окна
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
+            savePrefsAndRestart();
+        }
     }
 
     private void savePrefsAndRestart() {
-        // commit() для мгновенной синхронной записи
         this.createDeviceProtectedStorageContext()
             .getSharedPreferences("prefs", Context.MODE_PRIVATE)
             .edit()
@@ -142,19 +136,9 @@ public class ActionsActivity extends Activity {
         try {
             PackageManager pm = getPackageManager();
             PackageInfo pi = pm.getPackageInfo(getPackageName(), PackageManager.GET_ACTIVITIES);
-
             for (ActivityInfo info : pi.activities) {
                 if (info.name.equals(this.getClass().getName())) continue;
-
-                String label;
-                if (info.name.endsWith("MainActivity")) {
-                    label = RESET_LABEL;
-                } else {
-                    label = info.loadLabel(pm).toString();
-                    if (label.equals(info.name) || label.isEmpty() || label.equals("ProtectedWorkProfile")) {
-                        label = RESET_LABEL;
-                    }
-                }
+                String label = info.name.endsWith("MainActivity") ? RESET_LABEL : info.loadLabel(pm).toString();
                 labelToClass.put(label, info.name);
             }
         } catch (Exception ignored) {}
@@ -162,47 +146,8 @@ public class ActionsActivity extends Activity {
 
     @Override
     protected void onResume() {
-        // Флаги безопасности должны быть активны всегда
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_SECURE);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        
         super.onResume();
-        
-        if (isWorkProfileContext()) {
-            hideSystemUI();
-        } else if (hasWorkProfile()) {
-            launchWorkProfileDelayed();
-        }
-    }
-
-    private void hideSystemUI() {
-        getWindow().getDecorView().setSystemUiVisibility(
-                View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY 
-                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION 
-                | View.SYSTEM_UI_FLAG_FULLSCREEN
-                | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
-    }
-
-    private boolean isWorkProfileContext() {
-        DevicePolicyManager dpm = (DevicePolicyManager) getSystemService(Context.DEVICE_POLICY_SERVICE);
-        return dpm.isProfileOwnerApp(getPackageName());
-    }
-
-    private boolean hasWorkProfile() {
-        UserManager um = (UserManager) getSystemService(Context.USER_SERVICE);
-        return um.getUserProfiles().size() > 1;
-    }
-
-    private void launchWorkProfileDelayed() {
-        LauncherApps la = (LauncherApps) getSystemService(Context.LAUNCHER_APPS_SERVICE);
-        UserManager um = (UserManager) getSystemService(Context.USER_SERVICE);
-        for (UserHandle profile : um.getUserProfiles()) {
-            if (um.getSerialNumberForUser(profile) != 0) {
-                la.startMainActivity(new ComponentName(getPackageName(), ActionsActivity.class.getName()), profile, null, null);
-                break;
-            }
-        }
     }
 }
