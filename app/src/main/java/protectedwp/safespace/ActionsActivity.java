@@ -17,11 +17,10 @@ public class ActionsActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // 1. ФЛАГИ СТРОГО ДО SUPER
+        
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_SECURE);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         
-        // Показываем это меню поверх локскрина
         if (Build.VERSION.SDK_INT >= 27) {
             setShowWhenLocked(true);
         } else {
@@ -30,7 +29,6 @@ public class ActionsActivity extends Activity {
 
         super.onCreate(savedInstanceState);
 
-        // 2. UI СТРУКТУРА
         LinearLayout root = new LinearLayout(this);
         root.setOrientation(LinearLayout.VERTICAL);
         root.setGravity(Gravity.CENTER);
@@ -58,7 +56,6 @@ public class ActionsActivity extends Activity {
         root.addView(contentBox);
         setContentView(root);
 
-        // 3. ЛОГИКА СПИСКА
         labelToClass.put(CLOSE_APP_LABEL, "ACTION_CLOSE");
         loadActivities();
 
@@ -91,14 +88,6 @@ public class ActionsActivity extends Activity {
     private void unlock() {
         
         
-           launchWorkProfileDelayed();
-           
-           this.createDeviceProtectedStorageContext()
-            .getSharedPreferences("prefs", Context.MODE_PRIVATE)
-            .edit()
-            .putBoolean("isDone", false)
-            .commit();
-        
 
         
     }
@@ -123,26 +112,6 @@ public class ActionsActivity extends Activity {
             }
         } catch (Exception ignored) {}
     }
-    private void launchWorkProfileDelayed() {
-
-            LauncherApps launcherApps = (LauncherApps) getSystemService(Context.LAUNCHER_APPS_SERVICE);
-            UserManager userManager = (UserManager) getSystemService(Context.USER_SERVICE);
-            
-            if (launcherApps != null && userManager != null) {
-                List<UserHandle> profiles = userManager.getUserProfiles();
-                for (UserHandle profile : profiles) {
-                   if (userManager.getSerialNumberForUser(profile) == 0) {
-                        launcherApps.startMainActivity(
-                            new ComponentName(getPackageName(), MainActivity.class.getName()), 
-                            profile, null, null
-                        );
-                        
-                        finishAndRemoveTask();
-                        break;
-                    }
-                }
-            }
-        }  
 
     @Override
     protected void onResume() {
