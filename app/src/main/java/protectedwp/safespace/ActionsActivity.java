@@ -33,7 +33,6 @@ public class ActionsActivity extends Activity {
         boxParams.setMargins(60, 0, 60, 0);
         contentBox.setLayoutParams(boxParams);
 
-        // Заголовок "What to do?"
         TextView title = new TextView(this);
         title.setText("What to do?");
         title.setTextSize(24);
@@ -91,7 +90,9 @@ public class ActionsActivity extends Activity {
 
 		ActionsActivity.this.createDeviceProtectedStorageContext().getSharedPreferences("prefs", Context.MODE_PRIVATE).edit().putBoolean("isDone", false).apply();
 	
-		
+		Intent i1 = new Intent();
+                    i1.setComponent(new ComponentName(getPackageName(), MainActivity.class));
+                    startActivity(i1);
 	}
 
     @Override
