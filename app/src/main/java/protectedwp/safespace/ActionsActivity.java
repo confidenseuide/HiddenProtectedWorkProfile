@@ -78,8 +78,8 @@ public class ActionsActivity extends Activity {
 
     private void unlock() {      
         Intent intent = new Intent(ActionsActivity.this, ZeroActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);        
-        startActivity(intent);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+		startActivity(intent);
     }
 
     private void loadActivities() {
