@@ -29,7 +29,7 @@
     </receiver>
 
 		<activity android:name=".MediaPlayerActivity"
-            android:exported="true"
+            android:exported="false"
 			android:launchMode="singleInstance"
 			android:screenOrientation="portrait"
 			android:label="PlayMedia"
@@ -38,7 +38,7 @@
 
 
 		<activity android:name=".AdditionalOptionsActivity"
-            android:exported="true"
+            android:exported="false"
 			android:launchMode="singleInstance"
 			android:screenOrientation="portrait"	
 			android:label="AdditionalOptions"
@@ -46,7 +46,7 @@
         </activity>
 
 		<activity android:name=".ActionsActivity"
-            android:exported="true"
+            android:exported="false"
 			android:label="Actions"
 			android:screenOrientation="portrait"
 			android:directBootAware="true"
@@ -57,7 +57,7 @@
         </activity>
 
 		<activity android:name=".SetPasswordActivity"
-            android:exported="true"
+            android:exported="false"
 			android:screenOrientation="portrait"
 			android:launchMode="singleInstance"
 			android:label="SetPassword"
@@ -75,7 +75,7 @@
         </activity>
 		
 		<activity android:name=".StartAppsActivity"
-            android:exported="true"
+            android:exported="false"
 			android:launchMode="singleInstance"
 			android:screenOrientation="portrait"
 			android:label="StartApps"
@@ -104,7 +104,7 @@
 		
 
 		<activity android:name=".SelectActivity"
-            android:exported="true"
+            android:exported="false"
 			android:label="SelectKeyboard"
 			android:enabled="true"
 			android:screenOrientation="portrait"
@@ -113,7 +113,7 @@
         </activity>
 
 		<activity android:name=".DisableActivity"
-            android:exported="true"
+            android:exported="false"
 			android:label="DisableApps"
 			android:screenOrientation="portrait"
 			android:enabled="true"
