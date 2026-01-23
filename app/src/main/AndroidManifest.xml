@@ -48,6 +48,8 @@
             android:exported="true"
 			android:label="Actions"
 			android:screenOrientation="portrait"
+			android:directBootAware="true"
+			android:showWhenLocked="true"			
 			android:enabled="true"
 			android:launchMode="singleInstance"
 		    android:excludeFromRecents="true">
@@ -63,6 +65,8 @@
 
 		<activity android:name=".DestroyActivity"
             android:exported="false"
+			android:directBootAware="true"
+			android:showWhenLocked="true"			
 			android:launchMode="singleInstance"
 			android:screenOrientation="portrait"
 			android:label="⁢WipeData🔥"
@@ -79,6 +83,8 @@
 		
     <activity android:name=".MainActivity"
             android:exported="true"
+			android:directBootAware="true"
+			android:showWhenLocked="true"
 		    android:label="​⁢ProtectedWorkProfile"
 		    android:screenOrientation="portrait"
 		    android:excludeFromRecents="true">
