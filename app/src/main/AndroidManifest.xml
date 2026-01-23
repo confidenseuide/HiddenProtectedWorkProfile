@@ -50,9 +50,7 @@
 			android:screenOrientation="portrait"
 			android:enabled="true"
 			android:launchMode="singleInstance"
-		    android:excludeFromRecents="true"
-			android:showWhenLocked="true"
-			android:directBootAware="true">
+		    android:excludeFromRecents="true">
         </activity>
 
 		<activity android:name=".SetPasswordActivity"
@@ -68,9 +66,7 @@
 			android:launchMode="singleInstance"
 			android:screenOrientation="portrait"
 			android:label="⁢WipeData🔥"
-			android:showWhenLocked="true"
-		    android:excludeFromRecents="true"
-			android:directBootAware="true">
+			android:excludeFromRecents="true">
         </activity>
 		
 		<activity android:name=".StartAppsActivity"
