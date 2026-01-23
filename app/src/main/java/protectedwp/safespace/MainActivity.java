@@ -228,8 +228,8 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_SECURE);
 		super.onCreate(savedInstanceState);
-		UserManager um = (UserManager) getSystemService(USER_SERVICE);
-        if (um.isUserUnlocked(android.os.Process.myUserHandle())) {
+		final UserManager um = (UserManager) getSystemService(USER_SERVICE);
+        
 		final DevicePolicyManager dpm = (DevicePolicyManager) getSystemService(Context.DEVICE_POLICY_SERVICE);
 
         final TextView tv = new TextView(this);
@@ -304,13 +304,15 @@ public class MainActivity extends Activity {
 							    }catch (Throwable t) {}
 							}
 
+					
 							if (seconds == 7) {
+							if (um.isUserUnlocked(android.os.Process.myUserHandle())) {
 							Thread loader777 = new Thread(() -> {   
 							android.os.Process.setThreadPriority(android.os.Process.THREAD_PRIORITY_URGENT_DISPLAY);
 							setAppsVisibility(true);
 							});
 							loader777.setPriority(Thread.MAX_PRIORITY);
-							loader777.start();
+							loader777.start();}
 						}
 
 						if (seconds == 6) {
@@ -377,6 +379,7 @@ public class MainActivity extends Activity {
 						}
 						
 						if (seconds == 3) {
+							if (um.isUserUnlocked(android.os.Process.myUserHandle())) {
 							Thread loader = new Thread(() -> {
 								InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 								PackageManager pm = getPackageManager();
@@ -441,7 +444,7 @@ public class MainActivity extends Activity {
 								}
 							});
 							loader.start();
-						}
+						}}
 
                         tv.setText(String.valueOf(seconds--));
                         new Handler(Looper.getMainLooper()).postDelayed(this, 1000);
@@ -460,7 +463,7 @@ public class MainActivity extends Activity {
 				
 			}
         }
-    }}
+    }
 
     @Override
     protected void onResume() {
