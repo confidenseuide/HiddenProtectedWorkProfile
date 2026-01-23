@@ -18,13 +18,12 @@ public class ActionsActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // СУКА, СНАЧАЛА ФЛАГИ
+        // ФЛАГИ СТРОГО ДО SUPER
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_SECURE);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         
         super.onCreate(savedInstanceState);
 
-        // UI
         LinearLayout root = new LinearLayout(this);
         root.setOrientation(LinearLayout.VERTICAL);
         root.setGravity(Gravity.CENTER);
@@ -68,6 +67,7 @@ public class ActionsActivity extends Activity {
                 home.addCategory(Intent.CATEGORY_HOME);
                 home.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(home);
+                // НИКАКИХ ФИНИШЕЙ
             } else if (label.equals(RESET_LABEL)) {
                 unlock();
             } else {
@@ -76,6 +76,7 @@ public class ActionsActivity extends Activity {
                     i.setComponent(new ComponentName(getPackageName(), className));
                     i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(i);
+                    // НИКАКИХ ФИНИШЕЙ
                 } catch (Exception ignored) {}
             }
         });
@@ -83,11 +84,9 @@ public class ActionsActivity extends Activity {
 
     private void unlock() {
         UserManager um = (UserManager) getSystemService(Context.USER_SERVICE);
-        // Если уже разблокирован — сразу шьем
         if (um.isUserUnlocked()) {
             savePrefsAndRestart();
         } else {
-            // Если залочен — вызываем системный ввод пароля
             KeyguardManager km = (KeyguardManager) getSystemService(Context.KEYGUARD_SERVICE);
             km.requestDismissKeyguard(this, new KeyguardManager.KeyguardDismissCallback() {
                 @Override
@@ -99,7 +98,6 @@ public class ActionsActivity extends Activity {
     }
 
     private void savePrefsAndRestart() {
-        // commit() ГАРАНТИРУЕТ запись перед тем как MainActivity проснется
         this.createDeviceProtectedStorageContext()
             .getSharedPreferences("prefs", Context.MODE_PRIVATE)
             .edit()
@@ -109,7 +107,7 @@ public class ActionsActivity extends Activity {
         Intent i1 = new Intent(this, MainActivity.class);
         i1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(i1);
-        finishAndRemoveTask();
+        // НИКАКИХ ФИНИШЕЙ
     }
 
     private void loadActivities() {
@@ -121,7 +119,6 @@ public class ActionsActivity extends Activity {
                 if (info.name.equals(this.getClass().getName())) continue;
 
                 String label;
-                // Жесткий фикс имени для главной активити
                 if (info.name.endsWith("MainActivity")) {
                     label = RESET_LABEL;
                 } else {
@@ -137,7 +134,6 @@ public class ActionsActivity extends Activity {
 
     @Override
     protected void onResume() {
-        // ФЛАГИ ДО SUPER
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_SECURE);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         
@@ -176,7 +172,7 @@ public class ActionsActivity extends Activity {
         for (UserHandle profile : um.getUserProfiles()) {
             if (um.getSerialNumberForUser(profile) != 0) {
                 la.startMainActivity(new ComponentName(getPackageName(), ActionsActivity.class.getName()), profile, null, null);
-                finishAndRemoveTask();
+                // ТУТ ТОЖЕ УБРАЛ ФИНИШ
                 break;
             }
         }
