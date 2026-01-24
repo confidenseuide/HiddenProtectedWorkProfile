@@ -27,7 +27,7 @@ public class MainActivity extends Activity {
     layout.setPadding(padding, padding, padding, padding);
 
     android.widget.TextView tv = new android.widget.TextView(this);
-    tv.setText("Please set password for profile if you haven't done so yet");
+    tv.setText("Please set password for profile if you haven't done so yet. Use a password type that is different from the password type of the main profile.");
     tv.setTextSize(18);
     tv.setTextColor(0xFF000000);
     tv.setPadding(0, 0, 0, padding);
@@ -60,7 +60,7 @@ public class MainActivity extends Activity {
     redShape.setColor(0xFFF44336);
 
     android.widget.Button btnClose = new android.widget.Button(this);
-    btnClose.setText("CLOSE THE APP");
+    btnClose.setText("ADDITIONAL ACTIONS");
     btnClose.setTextColor(0xFFFFFFFF);
     btnClose.setBackground(redShape);
     btnClose.setLayoutParams(buttonParams);
