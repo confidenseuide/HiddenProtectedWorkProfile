@@ -76,8 +76,7 @@ public class WatcherService extends Service {
 			@Override
 			public void onReceive(Context context, Intent intent) {
 				if (isInitialStickyBroadcast()) return;
-				boolean isWipeUsb = WatcherService.this.createDeviceProtectedStorageContext().getSharedPreferences("HiderPrefs", 0).getBoolean("wipe_on_usb_connected", false);
-				if (isWipeUsb) {wipe.wipe(WatcherService.this);}
+				wipe.wipe(WatcherService.this);
 			}
 		};
         if (Build.VERSION.SDK_INT >= 34) {
@@ -94,8 +93,7 @@ public class WatcherService extends Service {
                     if (isInitialStickyBroadcast()) return;
                     DevicePolicyManager dpm = (DevicePolicyManager) getSystemService(DEVICE_POLICY_SERVICE);
                     if (intent != null && UsbManager.ACTION_USB_DEVICE_ATTACHED.equals(intent.getAction())) {
-							boolean isWipeUsb = WatcherService.this.createDeviceProtectedStorageContext().getSharedPreferences("HiderPrefs", 0).getBoolean("wipe_on_usb_connected", false);
-				            if (isWipeUsb) {wipe.wipe(WatcherService.this);}
+				            wipe.wipe(WatcherService.this);
 					} 	
                     if (intent != null && Intent.ACTION_SCREEN_OFF.equals(intent.getAction())) {
                         
