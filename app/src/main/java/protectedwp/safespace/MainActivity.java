@@ -462,6 +462,10 @@ public class MainActivity extends Activity {
 								}
 							});
 							loader.start();
+						} 
+
+						if (seconds == 1) {
+							
 						}
 
                         tv.setText(String.valueOf(seconds--));
