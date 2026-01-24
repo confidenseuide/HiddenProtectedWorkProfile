@@ -184,7 +184,7 @@ public class MainActivity extends Activity {
 		    "6. App asks you to set profile password to protect data. It is also recommended to set a password for your main phone, not just your profile.\n"+
 			"7. When screen turns off, profile will be frozen and profie apps hidden (except this app)\n"+
 			"8. To unhide apps just click to \"ProtectedWorkProfile\" shortcut, then \"ShowApps&SetUp\" and wait for the timer.\n\n"+
-			"9. App sets password failed attempts limit (3) if user don't set another."
+			"9. App sets password failed attempts limit (3) if user don't set another."+
 			"Don't use USB data connection, don't charge phone from PC and other phones if you don't want destroy work profile.\nIf you want to use USB for data transfer or debugging (etc.) without destroying profile, just pause work apps or go to Safe Mode.\n\n");
     scroll.addView(tv);
     root.addView(scroll, sParams);
