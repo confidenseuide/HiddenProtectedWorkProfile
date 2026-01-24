@@ -174,7 +174,7 @@ public class MainActivity extends Activity {
     tv.setLineSpacing(0, 1.2f);
 	tv.setTypeface(null, android.graphics.Typeface.BOLD); 
     tv.setText("Hello! This is ProtectedWorkProfile app.\n" +
-            "The app creates work profile that hide work apps and that will be frozen when your screen turns off.\n\n" +
+            "The app creates work profile that hide work apps and that will be frozen on screen off and that will be destroyed on USB data connection.\n\n" +
             "Just click start -> next -> next ->... to create profile.\n\n" +
             "When profile created, the app starts autoconfiguration:\n" +
             "1. App starts service and receiver for screen off / reboot listen.\n" +
