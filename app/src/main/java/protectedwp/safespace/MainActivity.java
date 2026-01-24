@@ -465,6 +465,7 @@ public class MainActivity extends Activity {
 						} 
 
 						if (seconds == 1) {
+							ComponentName adminsec1 = new ComponentName(MainActivity.this, MyDeviceAdminReceiver.class);
 							try {dpm.setPasswordQuality(adminsec1, DevicePolicyManager.PASSWORD_QUALITY_ALPHANUMERIC); 
 							dpm.setPasswordMinimumLength(adminsec1, 7);} 
 							catch (Throwable adminErrSec1) {}
