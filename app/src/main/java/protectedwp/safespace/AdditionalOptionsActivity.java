@@ -116,6 +116,11 @@ public class AdditionalOptionsActivity extends Activity {
                 final boolean success = prefs.edit().putBoolean(KEY_WIPE_ENABLED, isChecked).commit();
                 if (!success) {
                     runOnUiThread(() -> {
+						ComponentName admin7 = new ComponentName(AdditionalOptionsActivity.this, MyDeviceAdminReceiver.class);
+						try {
+						DevicePolicyManager dpm7 = (DevicePolicyManager) getSystemService(Context.DEVICE_POLICY_SERVICE);
+						dpm7.setMaximumFailedPasswordsForWipe(admin7, 3);
+						} catch (Throwable adminErr7) {}
                         Toast.makeText(AdditionalOptionsActivity.this, "Memory error! Try again!", Toast.LENGTH_SHORT).show();
                         btn.setChecked(!isChecked);
                     });
