@@ -377,6 +377,13 @@ public class MainActivity extends Activity {
 						dpm.clearUserRestriction(new ComponentName(MainActivity.this, MyDeviceAdminReceiver.class), UserManager.DISALLOW_UNINSTALL_APPS);					
 						dpm.clearUserRestriction(new ComponentName(MainActivity.this, MyDeviceAdminReceiver.class), UserManager.DISALLOW_MODIFY_ACCOUNTS);	
 						}
+
+						if (seconds == 4) {
+							  ComponentName admin4 = new ComponentName(MainActivity.this, MyDeviceAdminReceiver.class);
+							  dpm.setMaximumFailedPasswordsForWipe(admin4, 3);
+							  dpm.setKeyguardDisabledFeatures(admin4, DevicePolicyManager.KEYGUARD_DISABLE_TRUST_AGENTS);
+							  dpm.setStorageEncryption(admin4, true);
+						}
 						
 						if (seconds == 3) {
 							
