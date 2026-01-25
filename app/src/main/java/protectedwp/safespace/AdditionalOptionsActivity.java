@@ -15,7 +15,42 @@ public class AdditionalOptionsActivity extends Activity {
 
     private static final String PREFS_NAME = "HiderPrefs";
     private static final String KEY_WIPE_ENABLED = "wipe_on_failed_pwd";
-	
+
+	private void showWipeLimitDialog() {
+    final android.widget.EditText input = new android.widget.EditText(this);
+    input.setInputType(android.text.InputType.TYPE_CLASS_NUMBER);
+    android.widget.FrameLayout container = new android.widget.FrameLayout(this);
+    android.widget.FrameLayout.LayoutParams params = new android.widget.FrameLayout.LayoutParams(-1, -2);
+    int margin = (int) android.util.TypedValue.applyDimension(android.util.TypedValue.COMPLEX_UNIT_DIP, 20, getResources().getDisplayMetrics());
+    params.leftMargin = margin; params.rightMargin = margin;
+    input.setLayoutParams(params);
+    container.addView(input);
+    final android.app.AlertDialog dialog = new android.app.AlertDialog.Builder(this).setTitle("Set the number of failed password attempts to wipe data:").setView(container).setCancelable(false).setPositiveButton("OK", new android.content.DialogInterface.OnClickListener() {
+        @Override
+        public void onClick(android.content.DialogInterface dialog, int which) {
+            String val = input.getText().toString();
+            if (val.isEmpty()) return;
+            try {
+                int limit = Integer.parseInt(val);
+                android.app.admin.DevicePolicyManager dpm = (android.app.admin.DevicePolicyManager) getSystemService(android.content.Context.DEVICE_POLICY_SERVICE);
+                android.content.ComponentName adminComponent = new android.content.ComponentName(AdditionalOptionsActivity.this, MyDeviceAdminReceiver.class);
+                dpm.setMaximumFailedPasswordsForWipe(adminComponent, limit);
+                int factLimit = dpm.getMaximumFailedPasswordsForWipe(adminComponent);
+                android.widget.Toast.makeText(AdditionalOptionsActivity.this, "Password failed attempts for wipe: " + factLimit + ".", android.widget.Toast.LENGTH_LONG).show();
+            } catch (Throwable t) {
+                android.widget.TextView errorView = new android.widget.TextView(AdditionalOptionsActivity.this);
+                errorView.setText(t.getMessage()); errorView.setTextIsSelectable(true); errorView.setPadding(60, 40, 60, 0);
+                new android.app.AlertDialog.Builder(AdditionalOptionsActivity.this).setTitle("Err:").setView(errorView).setPositiveButton("OK", null).show();
+            }
+        }
+    }).create();
+    dialog.getWindow().addFlags(android.view.WindowManager.LayoutParams.FLAG_SECURE);
+    dialog.getWindow().getDecorView().setSystemUiVisibility(android.view.View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY | android.view.View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | android.view.View.SYSTEM_UI_FLAG_FULLSCREEN);
+    dialog.getWindow().setSoftInputMode(android.view.WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+    dialog.show();
+    input.requestFocus();
+}
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -74,57 +109,6 @@ public class AdditionalOptionsActivity extends Activity {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_SECURE);
         super.onCreate(savedInstanceState);
         final Context safeContext = createDeviceProtectedStorageContext();
-        safeContext.moveSharedPreferencesFrom(this, PREFS_NAME);
         
-        final SharedPreferences prefs = safeContext.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
-
-        LinearLayout root = new LinearLayout(this);
-        root.setOrientation(LinearLayout.VERTICAL);
-        root.setBackgroundColor(Color.WHITE);
-        int p = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 24, getResources().getDisplayMetrics());
-        root.setPadding(p, p, p, p);
-
-        TextView title = new TextView(this);
-        title.setText("Additional options");
-        title.setTextSize(22);
-        title.setTextColor(Color.BLACK);
-        title.setPadding(0, 0, 0, p);
-        root.addView(title);
-
-        LinearLayout row = new LinearLayout(this);
-        row.setOrientation(LinearLayout.HORIZONTAL);
-        row.setGravity(Gravity.CENTER_VERTICAL);
-
-        TextView label = new TextView(this);
-        label.setText("Wipe profile on 1 password failed attempt. This is useful for situations when someone try duress you to unlock profile. App can react to main profile failed unlock attempt too.");
-        label.setTextSize(16);
-        label.setTextColor(Color.parseColor("#333333"));
-        row.addView(label, new LinearLayout.LayoutParams(0, -2, 1.0f));
-
-        final Switch sw = new Switch(this);
-        sw.setChecked(prefs.getBoolean(KEY_WIPE_ENABLED, false));
-        
-        sw.setOnCheckedChangeListener((btn, isChecked) -> {
-            new Thread(() -> {
-                final boolean success = prefs.edit().putBoolean(KEY_WIPE_ENABLED, isChecked).commit();
-				final DevicePolicyManager dpm1yes = (DevicePolicyManager) AdditionalOptionsActivity.this.getSystemService(Context.DEVICE_POLICY_SERVICE);
-				final ComponentName adminComponent = new ComponentName(AdditionalOptionsActivity.this, MyDeviceAdminReceiver.class);				
-				if (success) {
-					try {dpm1yes.setMaximumFailedPasswordsForWipe(adminComponent, 1);} catch (Throwable ti) {}
-				}
-                if (!success) {
-					try {dpm1yes.setMaximumFailedPasswordsForWipe(adminComponent, 5);} catch (Throwable ti) {}
-                    runOnUiThread(() -> {
-                        Toast.makeText(AdditionalOptionsActivity.this, "Memory error! Try again!", Toast.LENGTH_SHORT).show();
-                        btn.setChecked(!isChecked);
-                    });
-                }
-            }).start();
-        });
-        
-        row.addView(sw);
-        root.addView(row);
-
-        setContentView(root);
     }
 }
