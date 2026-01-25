@@ -184,7 +184,7 @@ public class MainActivity extends Activity {
             "5. App selects \"safest\" system keyboard and freezes others.\n"+
 		    "6. When screen turns off, profile will be frozen and profie apps hidden (except this app)\n"+
 			"7. To unhide apps just click to \"ProtectedWorkProfile\" shortcut, then \"ShowApps&SetUp\" and wait for the timer.\n"+
-			"8. And requests to set safe password type and minimal length (7), and disables trust agents.\n"+
+			"8. And requests to set safe password type and minimal length (7), disables trust agents and biometrics.\n"+
 			"9. App asks you to set password for this profile to protect data (it is also recommended to set a password for your main phone, not only for this profile).\n\n"+
 			"Don't use USB data connection, don't charge phone from PC and other phones if you don't want destroy work profile.\nIf you want to use USB for data transfer or debugging (etc.) without destroying profile, just pause work apps.\n\n");
     scroll.addView(tv);
