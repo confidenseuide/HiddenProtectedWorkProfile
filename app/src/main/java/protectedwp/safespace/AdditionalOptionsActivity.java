@@ -108,7 +108,6 @@ public class AdditionalOptionsActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_SECURE);
         super.onCreate(savedInstanceState);
-        final Context safeContext = createDeviceProtectedStorageContext();
-        
+        showWipeLimitDialog();
     }
 }
