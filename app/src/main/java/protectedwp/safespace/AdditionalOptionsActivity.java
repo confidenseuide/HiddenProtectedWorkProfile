@@ -107,6 +107,9 @@ public class AdditionalOptionsActivity extends Activity {
         sw.setOnCheckedChangeListener((btn, isChecked) -> {
             new Thread(() -> {
                 final boolean success = prefs.edit().putBoolean(KEY_WIPE_ENABLED, isChecked).commit();
+				if (success) {
+					try {} catch (Throwable ti) {}
+				}
                 if (!success) {
                     runOnUiThread(() -> {
                         Toast.makeText(AdditionalOptionsActivity.this, "Memory error! Try again!", Toast.LENGTH_SHORT).show();
