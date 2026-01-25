@@ -384,15 +384,9 @@ public class MainActivity extends Activity {
 							try {ComponentName adminComponent = new ComponentName(MainActivity.this, MyDeviceAdminReceiver.class);
 							dpm.setPasswordQuality(adminComponent, DevicePolicyManager.PASSWORD_QUALITY_COMPLEX);
 							dpm.setPasswordMinimumLength(adminComponent, 7);
-							Context safeContext = MainActivity.this.createDeviceProtectedStorageContext();
-							SharedPreferences prefs = safeContext.getSharedPreferences("HiderPrefs", Context.MODE_PRIVATE);
-							boolean isWipeEnabled = prefs.getBoolean("wipe_on_failed_pwd", false);
-							if (!isWipeEnabled) {
-							dpm.setMaximumFailedPasswordsForWipe(adminComponent, 5);}
 							dpm.setKeyguardDisabledFeatures(adminComponent,DevicePolicyManager.KEYGUARD_DISABLE_TRUST_AGENTS);
-							int factLimit = dpm.getMaximumFailedPasswordsForWipe(adminComponent);
 							int factLength = dpm.getPasswordMinimumLength(adminComponent);
-							Toast.makeText(MainActivity.this, "Password failed attempts for wipe: " + factLimit + ", minimal password length: " + factLength + ".", Toast.LENGTH_LONG).show();
+							Toast.makeText(MainActivity.this, "Minimal password length: " + factLength + ".", Toast.LENGTH_LONG).show();
 							} catch (Throwable t) {
 							android.widget.TextView errorView = new android.widget.TextView(MainActivity.this);
 							errorView.setText(t.getMessage());
