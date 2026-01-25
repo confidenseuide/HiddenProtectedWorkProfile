@@ -12,6 +12,80 @@ import java.util.*;
 public class SetPasswordActivity extends Activity {
 
 	private DevicePolicyManager dpm;
+
+
+	private void showPasswordPrompt() {
+    final android.app.Dialog dialog = new android.app.Dialog(this, android.R.style.Theme_Material_Light_Dialog);
+	if (dialog.getWindow() != null) {dialog.getWindow().addFlags(WindowManager.LayoutParams.FLAG_SECURE);}
+    dialog.requestWindowFeature(android.view.Window.FEATURE_NO_TITLE);
+    
+    android.widget.LinearLayout layout = new android.widget.LinearLayout(this);
+    layout.setOrientation(android.widget.LinearLayout.VERTICAL);
+    layout.setBackgroundColor(0xFFFFFFFF);
+    int padding = (int) (24 * getResources().getDisplayMetrics().density);
+    layout.setPadding(padding, padding, padding, padding);
+
+    android.widget.TextView tv = new android.widget.TextView(this);
+    tv.setText("Please set password for profile if you haven't done so yet. Use a password that is different from the password of the main profile. Don't use face unlock and fingerprints (it's not secure)");
+    tv.setTextSize(18);
+    tv.setTextColor(0xFF000000);
+    tv.setPadding(0, 0, 0, padding);
+    layout.addView(tv);
+
+    android.widget.LinearLayout.LayoutParams buttonParams = new android.widget.LinearLayout.LayoutParams(
+            android.view.ViewGroup.LayoutParams.MATCH_PARENT, 
+            android.view.ViewGroup.LayoutParams.WRAP_CONTENT);
+    buttonParams.setMargins(0, 8, 0, 8);
+
+    android.graphics.drawable.GradientDrawable greenShape = new android.graphics.drawable.GradientDrawable();
+    greenShape.setCornerRadius(8f);
+    greenShape.setColor(0xFF4CAF50);
+
+    android.widget.Button btnSet = new android.widget.Button(this);
+    btnSet.setText("SET PASSWORD");
+    btnSet.setTextColor(0xFFFFFFFF);
+    btnSet.setBackground(greenShape);
+    btnSet.setLayoutParams(buttonParams);
+    btnSet.setOnClickListener(v -> {
+        try {
+            android.content.Intent intent = new android.content.Intent(android.app.admin.DevicePolicyManager.ACTION_SET_NEW_PASSWORD);
+            startActivity(intent);
+        } catch (Exception ignored) {}
+    });
+    layout.addView(btnSet);
+
+    android.graphics.drawable.GradientDrawable redShape = new android.graphics.drawable.GradientDrawable();
+    redShape.setCornerRadius(8f);
+    redShape.setColor(0xFFF44336);
+
+    android.widget.Button btnClose = new android.widget.Button(this);
+    btnClose.setText("GO BACK");
+    btnClose.setTextColor(0xFFFFFFFF);
+    btnClose.setBackground(redShape);
+    btnClose.setLayoutParams(buttonParams);
+    btnClose.setOnClickListener(v -> {
+        try {
+            Context appContext2 = getApplicationContext();
+			Intent actions2 = new Intent(appContext2, ActionsActivity.class);
+			actions2.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+			appContext2.startActivity(actions2);
+        } catch (Exception ignored) {}
+    });
+    layout.addView(btnClose);
+    dialog.setContentView(layout);
+	android.view.Window window = dialog.getWindow();
+    if (window != null) {
+        WindowManager.LayoutParams lp = window.getAttributes();
+        lp.gravity = Gravity.CENTER;
+        lp.y = 0;
+        lp.width = (int) (getResources().getDisplayMetrics().widthPixels * 0.9);
+        window.setAttributes(lp);
+        window.setBackgroundDrawable(new android.graphics.drawable.ColorDrawable(android.graphics.Color.TRANSPARENT));
+    }
+    dialog.setCancelable(false);
+    dialog.setCanceledOnTouchOutside(false);    
+    dialog.show();
+	}
 	
     @Override
     protected void onResume() {
