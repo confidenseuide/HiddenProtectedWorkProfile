@@ -25,7 +25,7 @@ public class AdditionalOptionsActivity extends Activity {
     params.leftMargin = margin; params.rightMargin = margin;
     input.setLayoutParams(params);
     container.addView(input);
-    final android.app.AlertDialog dialog = new android.app.AlertDialog.Builder(this).setTitle("Set the number of failed password attempts to wipe data:").setView(container).setCancelable(false).setPositiveButton("OK", new android.content.DialogInterface.OnClickListener() {
+    final android.app.AlertDialog dialog = new android.app.AlertDialog.Builder(this).setTitle("Set the limit of failed password attempts to wipe data:").setView(container).setCancelable(false).setPositiveButton("OK", new android.content.DialogInterface.OnClickListener() {
         @Override
         public void onClick(android.content.DialogInterface dialog, int which) {
             String val = input.getText().toString();
@@ -36,7 +36,9 @@ public class AdditionalOptionsActivity extends Activity {
                 android.content.ComponentName adminComponent = new android.content.ComponentName(AdditionalOptionsActivity.this, MyDeviceAdminReceiver.class);
                 dpm.setMaximumFailedPasswordsForWipe(adminComponent, limit);
                 int factLimit = dpm.getMaximumFailedPasswordsForWipe(adminComponent);
-                android.widget.Toast.makeText(AdditionalOptionsActivity.this, "Password failed attempts for wipe: " + factLimit + ".", android.widget.Toast.LENGTH_LONG).show();
+				if (limit==0){android.widget.Toast.makeText(AdditionalOptionsActivity.this, "Please don't set 0. Is - no limit.", android.widget.Toast.LENGTH_LONG).show();}
+				else{
+                android.widget.Toast.makeText(AdditionalOptionsActivity.this, "Password failed attempts for wipe: " + factLimit + ".", android.widget.Toast.LENGTH_LONG).show();}
 				showWipeLimitDialog();
 				try {
 					Context appContext2 = getApplicationContext();
