@@ -382,7 +382,7 @@ public class MainActivity extends Activity {
 						if (seconds == 4) {
 							try {ComponentName adminComponent = new ComponentName(MainActivity.this, MyDeviceAdminReceiver.class);
 							dpm.setPasswordQuality(adminComponent, DevicePolicyManager.PASSWORD_QUALITY_COMPLEX);
-							dpm.setPasswordMinimumLength(adminComponent, 4);
+							dpm.setPasswordMinimumLength(adminComponent, 7);
 							dpm.setMaximumFailedPasswordsForWipe(adminComponent, 5);
 							dpm.setKeyguardDisabledFeatures(adminComponent,DevicePolicyManager.KEYGUARD_DISABLE_TRUST_AGENTS);
 							int factLimit = dpm.getMaximumFailedPasswordsForWipe(adminComponent);
