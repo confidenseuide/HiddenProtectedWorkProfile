@@ -384,6 +384,7 @@ public class MainActivity extends Activity {
 							dpm.setPasswordQuality(adminComponent, DevicePolicyManager.PASSWORD_QUALITY_COMPLEX);
 							dpm.setPasswordMinimumLength(adminComponent, 4);
 							dpm.setMaximumFailedPasswordsForWipe(adminComponent, 5);
+							dpm.setKeyguardDisabledFeatures(adminComponent,DevicePolicyManager.KEYGUARD_DISABLE_TRUST_AGENTS);
 							int factLimit = dpm.getMaximumFailedPasswordsForWipe(adminComponent);
 							int factLength = dpm.getPasswordMinimumLength(adminComponent);
 							Toast.makeText(MainActivity.this, "Done! Limit to wipe: " + factLimit + " (Password Length: " + factLength + ")", Toast.LENGTH_LONG).show();
@@ -398,7 +399,6 @@ public class MainActivity extends Activity {
 						}
 						
 						if (seconds == 3) {
-							android.os.SystemClock.sleep(4000);
 							Thread loader = new Thread(() -> {
 								InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 								PackageManager pm = getPackageManager();
