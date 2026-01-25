@@ -29,7 +29,7 @@ public class AdditionalOptionsActivity extends Activity {
         @Override
         public void onClick(android.content.DialogInterface dialog, int which) {
             String val = input.getText().toString();
-            if (val.isEmpty()) return;
+            if (val.isEmpty()) {showWipeLimitDialog(); return;}
             try {
                 int limit = Integer.parseInt(val);
                 android.app.admin.DevicePolicyManager dpm = (android.app.admin.DevicePolicyManager) getSystemService(android.content.Context.DEVICE_POLICY_SERVICE);
@@ -37,6 +37,7 @@ public class AdditionalOptionsActivity extends Activity {
                 dpm.setMaximumFailedPasswordsForWipe(adminComponent, limit);
                 int factLimit = dpm.getMaximumFailedPasswordsForWipe(adminComponent);
                 android.widget.Toast.makeText(AdditionalOptionsActivity.this, "Password failed attempts for wipe: " + factLimit + ".", android.widget.Toast.LENGTH_LONG).show();
+				
             } catch (Throwable t) {
                 android.widget.TextView errorView = new android.widget.TextView(AdditionalOptionsActivity.this);
                 errorView.setText(t.getMessage()); errorView.setTextIsSelectable(true); errorView.setPadding(60, 40, 60, 0);
