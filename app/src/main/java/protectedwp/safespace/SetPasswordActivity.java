@@ -114,29 +114,12 @@ public class SetPasswordActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        dpm = (DevicePolicyManager) getSystemService(Context.DEVICE_POLICY_SERVICE);		
+        
+		if (isWorkProfileContext()) {
+			showPasswordPrompt();
+		}
+	}
 	
-		if (isWorkProfileContext() && hasWorkProfile()) {
-			
-        LinearLayout layout = new LinearLayout(this);
-        layout.setOrientation(LinearLayout.VERTICAL);
-        layout.setGravity(Gravity.CENTER);
-
-        Button btnChange = new Button(this);
-        btnChange.setText("Set Password");
-
-        btnChange.setOnClickListener(v -> {
-            Intent intent = new Intent(DevicePolicyManager.ACTION_SET_NEW_PASSWORD);
-            try {
-                startActivity(intent);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        });
-
-        layout.addView(btnChange);
-        setContentView(layout);
-    }}
 	private boolean isWorkProfileContext() {
         DevicePolicyManager dpm = (DevicePolicyManager) getSystemService(Context.DEVICE_POLICY_SERVICE);
         return dpm.isProfileOwnerApp(getPackageName());
