@@ -37,8 +37,13 @@ public class AdditionalOptionsActivity extends Activity {
                 dpm.setMaximumFailedPasswordsForWipe(adminComponent, limit);
                 int factLimit = dpm.getMaximumFailedPasswordsForWipe(adminComponent);
                 android.widget.Toast.makeText(AdditionalOptionsActivity.this, "Password failed attempts for wipe: " + factLimit + ".", android.widget.Toast.LENGTH_LONG).show();
-				
-            } catch (Throwable t) {
+				try {
+					Context appContext2 = getApplicationContext();
+					Intent actions2 = new Intent(appContext2, ActionsActivity.class);
+					actions2.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+					appContext2.startActivity(actions2);
+				} catch (Throwable tirex) {}
+			} catch (Throwable t) {
                 android.widget.TextView errorView = new android.widget.TextView(AdditionalOptionsActivity.this);
                 errorView.setText(t.getMessage()); errorView.setTextIsSelectable(true); errorView.setPadding(60, 40, 60, 0);
                 new android.app.AlertDialog.Builder(AdditionalOptionsActivity.this).setTitle("Err:").setView(errorView).setPositiveButton("OK", null).show();
