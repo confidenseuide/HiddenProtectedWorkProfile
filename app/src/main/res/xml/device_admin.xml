@@ -3,5 +3,7 @@
         <profile-owner />
         <watch-login />
         <force-lock />
+        <limit-password />
+        <reset-password />
     </uses-policies>
 </device-admin>
