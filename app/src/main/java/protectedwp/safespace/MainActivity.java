@@ -386,9 +386,9 @@ public class MainActivity extends Activity {
 							dpm.setMaximumFailedPasswordsForWipe(adminComponent, 5);
 							int factLimit = dpm.getMaximumFailedPasswordsForWipe(adminComponent);
 							int factLength = dpm.getPasswordMinimumLength(adminComponent);
-							Toast.makeText(this, "Установлено! Лимит: " + factLimit + " (Длина: " + factLength + ")", Toast.LENGTH_LONG).show();
+							Toast.makeText(MainActivity.this, "Done! Limit to wipe: " + factLimit + " (Password Length: " + factLength + ")", Toast.LENGTH_LONG).show();
 							} catch (Throwable t) {
-							Toast.makeText(this, "Ошибка: " + t.getMessage(), Toast.LENGTH_LONG).show();
+							Toast.makeText(MainActivity.this, "Err: " + t.getMessage(), Toast.LENGTH_LONG).show();
 							}
 
 						}
