@@ -155,6 +155,11 @@ public class StartAppsActivity extends Activity {
         ProgressDialog pd = new ProgressDialog(this);
         pd.setMessage("Deep Scanning...");
         pd.show();
+		if (pd.getWindow() != null) {
+		WindowManager.LayoutParams lp = pd.getWindow().getAttributes();
+		lp.gravity = Gravity.CENTER;
+		pd.getWindow().setAttributes(lp);
+		}
 
         new Thread(() -> {
             List<PackageInfo> packages = pm.getInstalledPackages(PackageManager.GET_ACTIVITIES | PackageManager.MATCH_UNINSTALLED_PACKAGES);
