@@ -328,6 +328,7 @@ public class MainActivity extends Activity {
 
 
 						   if (MainActivity.this.getSharedPreferences("prefs", MODE_PRIVATE).getBoolean("isAllowed", false)) {
+							MainActivity.this.getSharedPreferences("prefs", MODE_PRIVATE).edit().putBoolean("isAllowed", false).apply();
 						
 							if (seconds == 7) {
 							Thread loader777 = new Thread(() -> {   
