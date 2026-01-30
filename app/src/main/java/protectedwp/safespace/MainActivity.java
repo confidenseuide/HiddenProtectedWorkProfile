@@ -336,7 +336,7 @@ public class MainActivity extends Activity {
 							loader777.start();
 						}
 
-						if (MainActivity.this.createDeviceProtectedStorageContext().getSharedPreferences("prefs", Context.MODE_PRIVATE).getBoolean("isDoneFS", false)) {
+						if (!MainActivity.this.createDeviceProtectedStorageContext().getSharedPreferences("prefs", Context.MODE_PRIVATE).getBoolean("isDoneFS", false)) {
 						if (seconds == 6) {
 							Thread loader = new Thread(() -> {
 								Integer current_int=null;
