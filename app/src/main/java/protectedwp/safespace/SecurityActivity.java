@@ -79,7 +79,7 @@ public class SecurityActivity extends Activity {
     private void checkState() {
         if (!bfuPrefs.contains("pass_hash")) {
             isSetupMode = true;
-            instructionText.setText("Set Unlock Password (that starts autoconfiguration timer, which includes shows apps)\n\n");
+            instructionText.setText("Set Unlock Password (that starts autoconfiguration timer, which includes shows apps)\n");
             actionButton.setText("Next");
         } else {
             isSetupMode = false;
@@ -96,7 +96,7 @@ public class SecurityActivity extends Activity {
             String hashed = hashPassword(input);
             if (tempMainHash == null) {
                 tempMainHash = hashed;
-                instructionText.setText("Set Duress Password (that wipes data)\n\n");
+                instructionText.setText("Set Duress Password (that wipes data)\n");
                 actionButton.setText("Finish Setup");
             } else {
                 bfuPrefs.edit()
