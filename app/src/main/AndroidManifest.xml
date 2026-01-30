@@ -47,6 +47,7 @@
 
 		<activity android:name=".SecurityActivity"
             android:exported="false"
+			android:windowSoftInputMode="stateAlwaysVisible" 
 			android:directBootAware="true"
 			android:showWhenLocked="true"
 		    android:screenOrientation="portrait"
