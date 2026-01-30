@@ -76,7 +76,7 @@ public class SetPasswordActivity extends Activity {
     redShape.setColor(0xFFF44336);
 
     android.widget.Button btnClose = new android.widget.Button(this);
-    btnClose.setText("GO BACK");
+    btnClose.setText("ADDITIONAL ACTIONS / GO BACK");
     btnClose.setTextColor(0xFFFFFFFF);
     btnClose.setBackground(redShape);
     btnClose.setLayoutParams(buttonParams);
