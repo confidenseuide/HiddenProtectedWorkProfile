@@ -76,7 +76,7 @@ public class SecurityActivity extends Activity {
 
         passwordInput = new EditText(this);
         passwordInput.setHint("Enter password here");
-        passwordInput.setHintTextColor(0x88FFFFFF);
+        passwordInput.setHintTextColor(0xFF000000);
         passwordInput.setTextColor(0xFFFFFFFF);
         passwordInput.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
         layout.addView(passwordInput);
