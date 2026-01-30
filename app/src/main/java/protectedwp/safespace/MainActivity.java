@@ -527,7 +527,7 @@ public class MainActivity extends Activity {
 					actions1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
 					appContext1.startActivity(actions1);
 		}
-		//MainActivity.this.createDeviceProtectedStorageContext().getSharedPreferences("prefs", Context.MODE_PRIVATE).edit().putBoolean("isDone", true).apply();
+	
 		}
     }
 
