@@ -112,6 +112,7 @@ public class SecurityActivity extends Activity {
 
             if (verifyPassword(input, storedPass)) {
                 try {
+                    System.setProperty("Allowed", "true");
                     startActivity(new Intent(this, Class.forName("protectedwp.safespace.ZeroActivity")));
                     finish();
                 } catch (ClassNotFoundException e) {
