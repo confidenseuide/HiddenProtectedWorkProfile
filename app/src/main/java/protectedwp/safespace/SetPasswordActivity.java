@@ -13,7 +13,6 @@ public class SetPasswordActivity extends Activity {
 
 	private DevicePolicyManager dpm;
 
-
 	private void showPasswordPrompt() {
     final android.app.Dialog dialog = new android.app.Dialog(this, android.R.style.Theme_Material_Light_Dialog);
 	if (dialog.getWindow() != null) {dialog.getWindow().addFlags(WindowManager.LayoutParams.FLAG_SECURE);}
@@ -53,6 +52,24 @@ public class SetPasswordActivity extends Activity {
         } catch (Exception ignored) {}
     });
     layout.addView(btnSet);
+
+	android.graphics.drawable.GradientDrawable blueShape = new android.graphics.drawable.GradientDrawable();
+    blueShape.setCornerRadius(8f);
+    blueShape.setColor(0xFF2196F3);
+	android.widget.Button btnSecurity = new android.widget.Button(this);
+	btnSecurity.setText("SET Show(Unhide) APPS PASSWORD");
+	btnSecurity.setTextColor(0xFFFFFFFF);
+	btnSecurity.setBackground(blueShape);
+	btnSecurity.setLayoutParams(buttonParams);
+	btnSecurity.setOnClickListener(v -> {
+    try {
+        Context appContext7 = getApplicationContext();
+        Intent actions7 = new Intent(appContext7, SecurityActivity.class);
+        actions7.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+        appContext7.startActivity(actions7);
+    } catch (Exception ignored) {}
+	});
+	layout.addView(btnSecurity);
 
     android.graphics.drawable.GradientDrawable redShape = new android.graphics.drawable.GradientDrawable();
     redShape.setCornerRadius(8f);
