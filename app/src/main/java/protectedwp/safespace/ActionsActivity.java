@@ -47,7 +47,9 @@ public class ActionsActivity extends Activity {
         root.addView(contentBox);
         setContentView(root);
 
-        labelToClass.put(CLOSE_APP_LABEL, "ACTION_CLOSE");
+		final UserManager um = (UserManager) getSystemService(USER_SERVICE);
+		if (um.isUserUnlocked(android.os.Process.myUserHandle())) {
+        labelToClass.put(CLOSE_APP_LABEL, "ACTION_CLOSE");}
         loadActivities();
 
         List<String> labels = new ArrayList<>(labelToClass.keySet());
@@ -59,13 +61,10 @@ public class ActionsActivity extends Activity {
             String className = labelToClass.get(label);
 
             if (label.equals(CLOSE_APP_LABEL)) {
-				final UserManager um = (UserManager) getSystemService(USER_SERVICE);
-				if (um.isUserUnlocked(android.os.Process.myUserHandle())) {
                 Intent home = new Intent(Intent.ACTION_MAIN);
                 home.addCategory(Intent.CATEGORY_HOME);
                 home.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(home);
-				} else {finish();}
             } else if (label.equals(RESET_LABEL)) {
                 unlock();
             } else {
