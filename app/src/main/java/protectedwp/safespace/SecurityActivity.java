@@ -45,7 +45,6 @@ public class SecurityActivity extends Activity {
         layout.setOrientation(LinearLayout.VERTICAL);
         int top = (int) (getResources().getDisplayMetrics().heightPixels * 0.30);
         layout.setPadding(60, top, 60, 60);
-        layout.setBackgroundColor(Color.WHITE);
         layout.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL);
 
         instructionText = new TextView(this);
