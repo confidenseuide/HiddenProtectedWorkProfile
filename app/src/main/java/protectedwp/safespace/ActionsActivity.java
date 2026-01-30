@@ -90,11 +90,11 @@ public class ActionsActivity extends Activity {
                 if (info.name.equals(this.getClass().getName())) continue;
                 
                 String label;
+				label = info.loadLabel(pm).toString();
+					if (label.isEmpty()){continue;}
+					if (label.equals("hideme")) { continue;}
                 if (info.name.endsWith("MainActivity")) {
                     label = RESET_LABEL;
-                } else {
-                    label = info.loadLabel(pm).toString();
-					if (label.isEmpty()){continue;}
                 }
                 labelToClass.put(label, info.name);
             }
