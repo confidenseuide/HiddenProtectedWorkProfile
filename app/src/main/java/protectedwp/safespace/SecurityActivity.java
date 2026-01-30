@@ -42,14 +42,13 @@ public class SecurityActivity extends Activity {
         // --- DYNAMIC UI CONSTRUCTION ---
         LinearLayout layout = new LinearLayout(this);
         layout.setOrientation(LinearLayout.VERTICAL);
-        layout.setGravity(Gravity.CENTER);
         int top = (int) (getResources().getDisplayMetrics().heightPixels * 0.30);
         layout.setPadding(60, top, 60, 60);
         layout.setBackgroundColor(Color.WHITE);
+        layout.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL);
 
         instructionText = new TextView(this);
         instructionText.setTextSize(20);
-        layout.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL);
         layout.addView(instructionText);
 
         passwordInput = new EditText(this);
