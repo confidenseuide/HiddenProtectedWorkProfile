@@ -55,6 +55,7 @@ public class SecurityActivity extends Activity {
         passwordInput.setHint("Enter password here");
         passwordInput.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
         layout.addView(passwordInput);
+        passwordInput.requestFocus();
 
         actionButton = new Button(this);
         layout.addView(actionButton);
