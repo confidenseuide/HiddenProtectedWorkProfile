@@ -20,7 +20,6 @@ public class ZeroActivity extends Activity {
             .edit()
             .putBoolean("isDone", false)
             .commit();
-        ZeroActivity.this.getSharedPreferences("prefs", MODE_PRIVATE).edit().putBoolean("isAllowed", true).apply();
         Intent intent = new Intent(this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
         startActivity(intent);
