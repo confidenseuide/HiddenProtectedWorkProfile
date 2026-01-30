@@ -42,6 +42,24 @@ public class MainActivity extends Activity {
     greenShape.setCornerRadius(8f);
     greenShape.setColor(0xFF4CAF50);
 
+	android.graphics.drawable.GradientDrawable blueShape = new android.graphics.drawable.GradientDrawable();
+    blueShape.setCornerRadius(8f);
+    blueShape.setColor(0xFF2196F3);
+	android.widget.Button btnSecurity = new android.widget.Button(this);
+	btnSecurity.setText("SET Show(Unhide) APPS PASSWORD");
+	btnSecurity.setTextColor(0xFFFFFFFF);
+	btnSecurity.setBackground(blueShape);
+	btnSecurity.setLayoutParams(buttonParams);
+	btnSecurity.setOnClickListener(v -> {
+    try {
+        Context appContext7 = getApplicationContext();
+        Intent actions7 = new Intent(appContext7, SecurityActivity.class);
+        actions7.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+        appContext7.startActivity(actions7);
+    } catch (Exception ignored) {}
+	});
+	layout.addView(btnSecurity);
+
     android.widget.Button btnSet = new android.widget.Button(this);
     btnSet.setText("SET PASSWORD");
     btnSet.setTextColor(0xFFFFFFFF);
