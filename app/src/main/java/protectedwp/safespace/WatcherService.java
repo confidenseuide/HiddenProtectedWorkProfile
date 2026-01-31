@@ -97,26 +97,7 @@ public class WatcherService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         startTime = System.currentTimeMillis();
 
-        NotificationManager nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        if (nm != null && nm.getNotificationChannel(CH_ID) == null) {
-            NotificationChannel channel = new NotificationChannel(
-                CH_ID, "Security System", NotificationManager.IMPORTANCE_LOW);
-            nm.createNotificationChannel(channel);
-        }
-
-        
-        Notification notif = new Notification.Builder(this, CH_ID)
-                .setContentTitle("Profile Protected")
-                .setContentText("it will be frozen on screen off and apps will be hidden.")       
-                .setSmallIcon(android.R.drawable.ic_lock_lock)
-                .setOngoing(true)
-                .build();
-
-        if (Build.VERSION.SDK_INT >= 34) {
-            startForeground(1, notif, ServiceInfo.FOREGROUND_SERVICE_TYPE_SYSTEM_EXEMPTED);
-        } else {
-            startForeground(1, notif);
-        }
+        startEnforcedService();
 
         if (usbReceiver == null) {
         usbReceiver = new BroadcastReceiver() {
