@@ -63,7 +63,7 @@ public class SecurityActivity extends Activity {
 
         LinearLayout layout = new LinearLayout(this);
         layout.setOrientation(LinearLayout.VERTICAL);
-        int top = (int) (getResources().getDisplayMetrics().heightPixels * 0.30);
+        int top = (int) (getResources().getDisplayMetrics().heightPixels * 0.20);
         layout.setPadding(60, top, 60, 60);
         layout.setBackgroundColor(0xFF000000); 
         layout.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL);
