@@ -14,8 +14,8 @@ defaultConfig {
     applicationId "protectedwp.safespace"  
     minSdk 29
     targetSdk 36
-    versionCode 38
-    versionName "38.0"  
+    versionCode 39
+    versionName "39.0"  
 }  
 
 buildTypes {  
