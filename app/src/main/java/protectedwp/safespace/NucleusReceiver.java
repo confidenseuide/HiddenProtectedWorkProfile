@@ -18,6 +18,8 @@ public class NucleusReceiver extends BroadcastReceiver {
 
             DevicePolicyManager dpm = (DevicePolicyManager) context.getSystemService(Context.DEVICE_POLICY_SERVICE);
 
+            if (!dpm.isProfileOwnerApp(context.getPackageName())) return;
+
             Intent serviceIntent = new Intent(context, WatcherService.class);
             try {
                 context.startForegroundService(serviceIntent);
