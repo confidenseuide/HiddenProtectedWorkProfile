@@ -12,6 +12,9 @@
     <application
         android:label="ProtectedWorkProfile"
 		android:icon="@drawable/ic_launcher"
+		android:allowBackup="false"
+        android:fullBackupContent="false"
+        android:dataExtractionRules="@null"
         android:theme="@android:style/Theme.DeviceDefault.NoActionBar">
 		
 	<receiver android:name=".NucleusReceiver" 
