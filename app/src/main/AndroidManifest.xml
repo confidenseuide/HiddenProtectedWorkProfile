@@ -13,6 +13,7 @@
         android:label="ProtectedWorkProfile"
 		android:icon="@drawable/ic_launcher"
 		android:allowBackup="false"
+		android:debuggable="false"
 		android:requestLegacyExternalStorage="false"
         android:fullBackupContent="false"
 		android:extractNativeLibs="false"
