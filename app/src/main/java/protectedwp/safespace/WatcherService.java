@@ -9,12 +9,12 @@ import android.content.pm.*;
 import android.os.*;
 import android.hardware.usb.UsbManager;
 
-public class WatcherService extends Service {
+public class WatcherService extends DeviceAdminService {
     private static final String CH_ID = "GuardChan";
     private BroadcastReceiver receiver;
     private BroadcastReceiver usbReceiver;
     private long startTime;
-
+	
 	private void startEnforcedService() {
 	Context context = this;
     DevicePolicyManager dpm = (DevicePolicyManager) context.getSystemService(Context.DEVICE_POLICY_SERVICE);
@@ -61,6 +61,7 @@ public class WatcherService extends Service {
         startForeground(1, notif);
     }
 	}
+
 	
     private void setAppsVisibility(final boolean visible) {
     final DevicePolicyManager dpm = (DevicePolicyManager) getSystemService(Context.DEVICE_POLICY_SERVICE);
@@ -93,12 +94,12 @@ public class WatcherService extends Service {
     }
 }
     
-    @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
+      @Override
+    public void onCreate() {
+        super.onCreate();
         startTime = System.currentTimeMillis();
 
-        startEnforcedService();
-
+		startEnforcedService();
         if (usbReceiver == null) {
         usbReceiver = new BroadcastReceiver() {
 			@Override
@@ -168,7 +169,7 @@ public class WatcherService extends Service {
             }
         }
 
-        return START_STICKY;
+        
     }
 
     @Override
@@ -184,6 +185,5 @@ public class WatcherService extends Service {
         super.onDestroy();
     }
 
-    @Override
-    public IBinder onBind(Intent intent) { return null; }
+    
 }
