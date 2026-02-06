@@ -136,12 +136,17 @@
 		    android:excludeFromRecents="true">
         </activity>
 		
-	        <service
+
+			<service
     android:name=".WatcherService"
-    android:enabled="true"
-    android:exported="false"
-    android:directBootAware="true"
-    android:foregroundServiceType="systemExempted" />
+	android:directBootAware="true"
+    android:permission="android.permission.BIND_DEVICE_ADMIN"
+	android:foregroundServiceType="systemExempted" 
+    android:exported="true">
+    <intent-filter>
+        <action android:name="android.app.action.DEVICE_ADMIN_SERVICE" />
+    </intent-filter>
+</service>
 		
         <receiver android:name=".MyDeviceAdminReceiver"
             android:label="Admin"
