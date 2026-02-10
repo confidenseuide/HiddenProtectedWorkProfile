@@ -452,11 +452,9 @@ public class MainActivity extends Activity {
 					actions1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
 					appContext1.startActivity(actions1);
 		} else {
-			Context app = getApplicationContext();
-            app.getPackageManager().setComponentEnabledSetting(
-            new ComponentName(app, app.getPackageName() + ".LauncherAlias"), 
-            PackageManager.COMPONENT_ENABLED_STATE_DISABLED, 
-            PackageManager.DONT_KILL_APP);
+			if (!MainActivity.this.createDeviceProtectedStorageContext().getSharedPreferences("prefs", Context.MODE_PRIVATE).getBoolean("isDoneFS", false)) {
+			dpm.setProfileEnabled(admin);}
+		
 		}
 	
 		}
