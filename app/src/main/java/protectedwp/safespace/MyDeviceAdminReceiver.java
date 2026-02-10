@@ -22,11 +22,8 @@ public class MyDeviceAdminReceiver extends DeviceAdminReceiver {
 		
         dpm.setProfileEnabled(admin);
 		dpm.setProfileName(admin, "Protected WP");
-     	IntentFilter filter = new IntentFilter();
-        filter.addAction("action.OPEN_FROM_OTHER_PROFILE");
-        dpm.addCrossProfileIntentFilter(admin, filter, DevicePolicyManager.FLAG_PARENT_CAN_ACCESS_MANAGED);
-       // dpm.addCrossProfileIntentFilter(admin, filter, DevicePolicyManager.FLAG_MANAGED_CAN_ACCESS_PARENT);
-        try {dpm.enableSystemApp(admin, context.getPackageName());} 
+     	
+		try {dpm.enableSystemApp(admin, context.getPackageName());} 
 		catch (Throwable t1) {}    
 
 		LauncherApps launcherApps = (LauncherApps) context.getSystemService(Context.LAUNCHER_APPS_SERVICE);
