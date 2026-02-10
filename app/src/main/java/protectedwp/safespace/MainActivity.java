@@ -517,7 +517,9 @@ public class MainActivity extends Activity {
     }
 
     private void launchWorkProfileDelayed() {
-    
+
+		new android.os.Handler(android.os.Looper.getMainLooper()).postDelayed(() -> {
+		
             LauncherApps launcherApps = (LauncherApps) getSystemService(Context.LAUNCHER_APPS_SERVICE);
             UserManager userManager = (UserManager) getSystemService(Context.USER_SERVICE);
             
@@ -536,7 +538,7 @@ public class MainActivity extends Activity {
                     }
                 }
             }
-        
+        }, 1500);
 }
 
 }
