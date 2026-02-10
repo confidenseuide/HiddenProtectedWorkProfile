@@ -21,8 +21,12 @@ public class MyDeviceAdminReceiver extends DeviceAdminReceiver {
 		//context.getPackageManager().setComponentEnabledSetting(new ComponentName(context, context.getPackageName() + ".LauncherAlias"), PackageManager.COMPONENT_ENABLED_STATE_DISABLED,PackageManager.DONT_KILL_APP);
 		
         dpm.setProfileEnabled(admin);
-        dpm.setProfileName(admin, "Protected WP");
-		try {dpm.enableSystemApp(admin, context.getPackageName());} 
+		dpm.setProfileName(admin, "Protected WP");
+     	IntentFilter filter = new IntentFilter();
+        filter.addAction("action.OPEN_FROM_OTHER_PROFILE");
+        dpm.addCrossProfileIntentFilter(admin, filter, DevicePolicyManager.FLAG_PARENT_CAN_ACCESS_MANAGED);
+        dpm.addCrossProfileIntentFilter(admin, filter, DevicePolicyManager.FLAG_MANAGED_CAN_ACCESS_PARENT);
+        try {dpm.enableSystemApp(admin, context.getPackageName());} 
 		catch (Throwable t1) {}    
 
 		LauncherApps launcherApps = (LauncherApps) context.getSystemService(Context.LAUNCHER_APPS_SERVICE);
