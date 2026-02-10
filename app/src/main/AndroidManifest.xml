@@ -118,7 +118,7 @@
    </activity-alias>
 		
        <activity android:name=".MainActivity"
-            android:exported="false"
+            android:exported="true"
 			android:directBootAware="true"
 			android:showWhenLocked="true"
 		    android:label="​⁢ProtectedWorkProfile"
