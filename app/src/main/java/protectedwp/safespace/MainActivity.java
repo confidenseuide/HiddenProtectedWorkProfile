@@ -109,8 +109,8 @@ public class MainActivity extends Activity {
     tv.setText("Hello! This is ProtectedWorkProfile app.\n" +
             "This app creates work profile that hide work apps and that will be frozen on screen off and that will be destroyed on USB data connection.\n\n" +
             "Just click start -> next -> next ->... to create profile.\n\n" +
-			"WARING: App will be hidden on profile and when others hidden you can't see profile in launcher. To start app in profile use notification. It will be displayed after 3-7 seconds after creating profile.\n\n"+
-            "When profile created, the app starts AUTOCONFIGURATION TIMER:\n" +
+		    "When profile created, the app starts AUTOCONFIGURATION TIMER:\n\n" +
+			"WARING: App will be hidden on profile after AUTOCONFIGURATION TIMER finishing and when others hidden you can't see profile in launcher. To start app in profile use notification. It will be displayed after 3-7 seconds after creating profile.\n\n"+
             "1. App starts service and receiver for screen off / reboot listen.\n" +
             "2. App tries to ignore battery optimization and disable package control to prevent stop-signals from energy saving services.\n" +
             "3. App adds \"safest\" system browser to profile (with less permissions from ours blacklist).\n" +
