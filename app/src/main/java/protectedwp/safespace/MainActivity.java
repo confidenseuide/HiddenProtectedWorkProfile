@@ -109,14 +109,15 @@ public class MainActivity extends Activity {
     tv.setText("Hello! This is ProtectedWorkProfile app.\n" +
             "This app creates work profile that hide work apps and that will be frozen on screen off and that will be destroyed on USB data connection.\n\n" +
             "Just click start -> next -> next ->... to create profile.\n\n" +
+			"WARING: App will be hidden on profile and when others hidden you can't see profile in launcher. To start app in profile use notification. It will be displayed after 3-7 seconds after creating profile.\n\n"+
             "When profile created, the app starts AUTOCONFIGURATION TIMER:\n" +
             "1. App starts service and receiver for screen off / reboot listen.\n" +
             "2. App tries to ignore battery optimization and disable package control to prevent stop-signals from energy saving services.\n" +
             "3. App adds \"safest\" system browser to profile (with less permissions from ours blacklist).\n" +
             "4. App disables screenshots in profile (safety), allows apps install and accounts management (user freedom).\n" +
             "5. App selects \"safest\" system keyboard and freezes others.\n"+
-		    "6. When screen turns off, profile will be frozen and profie apps hidden (except this app)\n"+
-			"7. App tries to disable backup servicees (result not guaranteed) and disallow usb data"+
+			"6. App tries to disable backup servicees (result not guaranteed) and disallow usb data"+
+		    "7. When screen turns off, profile will be frozen and profie apps hidden\n"+
 			"8. To unhide apps just click to \"ProtectedWorkProfile\" shortcut, then \"ShowApps&SetUp\" and wait for the timer.\n"+
 			"9. App requests to set safe password type and minimal length (14), disables trust agents and biometrics.\n"+
 			"10. App asks you to set password for this profile to protect data (it is also recommended to set a password for your main phone, not only for this profile).\n\n"+
