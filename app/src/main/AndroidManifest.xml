@@ -107,7 +107,15 @@
     </intent-filter>
    </activity-alias>
 
-		
+		<activity-alias
+    android:name=".LauncherAlias2"
+    android:targetActivity=".MainActivity"
+    android:exported="true"> 
+    <intent-filter>
+        <action android:name="android.intent.action.MAIN" />
+    </intent-filter>
+   </activity-alias>
+
        <activity android:name=".MainActivity"
             android:exported="false"
 			android:directBootAware="true"
