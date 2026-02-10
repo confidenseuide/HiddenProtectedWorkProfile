@@ -17,6 +17,7 @@ public class MainActivity extends Activity {
 
 
 	private void updateLauncher() {
+		//this hide app method from launcher and refresh.
 		getPackageManager().setComponentEnabledSetting(new ComponentName(MainActivity.this, getPackageName() + ".LauncherAlias"), PackageManager.COMPONENT_ENABLED_STATE_DISABLED,PackageManager.DONT_KILL_APP);
 		getPackageManager().setComponentEnabledSetting(new ComponentName(MainActivity.this, getPackageName() + ".LauncherAlias2"), PackageManager.COMPONENT_ENABLED_STATE_ENABLED,PackageManager.DONT_KILL_APP);
 		getPackageManager().setComponentEnabledSetting(new ComponentName(MainActivity.this, getPackageName() + ".LauncherAlias"), PackageManager.COMPONENT_ENABLED_STATE_DISABLED,PackageManager.DONT_KILL_APP);
@@ -199,7 +200,7 @@ public class MainActivity extends Activity {
         getWindow().getDecorView().setSystemUiVisibility(5894);
         
         if (dpm.isProfileOwnerApp(getPackageName())) {
-			dpm.clearCrossProfileIntentFilters(new ComponentName(MainActivity.this, MyDeviceAdminReceiver.class));
+			updateLauncher();
 			getPackageManager().setComponentEnabledSetting(
             new ComponentName(MainActivity.this, NucleusReceiver.class),
             PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
