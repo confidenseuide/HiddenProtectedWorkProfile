@@ -180,6 +180,7 @@ public class MainActivity extends Activity {
         
         if (dpm.isProfileOwnerApp(getPackageName())) {
 			if (!MainActivity.this.createDeviceProtectedStorageContext().getSharedPreferences("prefs", Context.MODE_PRIVATE).getBoolean("isDoneFS", false)) {
+			ComponentName admin = new ComponentName(this, MyDeviceAdminReceiver.class);
 			dpm.setProfileEnabled(admin);
 			dpm.setProfileName(admin, "Protected WP");}
 			getPackageManager().setComponentEnabledSetting(
