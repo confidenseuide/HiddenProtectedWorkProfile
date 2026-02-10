@@ -16,9 +16,9 @@ public class MyDeviceAdminReceiver extends DeviceAdminReceiver {
     @Override
     public void onProfileProvisioningComplete(Context context, Intent intent) {
         DevicePolicyManager dpm = (DevicePolicyManager) context.getSystemService(Context.DEVICE_POLICY_SERVICE);
-		dpm.setProfileName(admin, "Protected WP");
-		
-		try {dpm.enableSystemApp(admin, context.getPackageName());} 
+        ComponentName admin = new ComponentName(context, MyDeviceAdminReceiver.class);    
+  
+        try {dpm.enableSystemApp(admin, context.getPackageName());} 
 		catch (Throwable t1) {}    
 
 		LauncherApps launcherApps = (LauncherApps) context.getSystemService(Context.LAUNCHER_APPS_SERVICE);
