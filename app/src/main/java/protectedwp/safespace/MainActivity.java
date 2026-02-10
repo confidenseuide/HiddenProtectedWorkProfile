@@ -479,10 +479,10 @@ public class MainActivity extends Activity {
             for (UserHandle profile : um.getUserProfiles()) {
                 if (um.getSerialNumberForUser(profile) != 0) {
                      try {
-                        la.startMainActivity(
-                            new ComponentName(app.getPackageName(), getPackageName()+".LauncherAlias"),
-                            profile, null, null
-                        );
+                        Intent i = new Intent("action.OPEN_FROM_OTHER_PROFILE");
+                        i.setPackage(getApplicationContext().getPackageName());
+                        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+                        getApplicationContext().startActivity(i);
                     } catch (Throwable t) {}
                     break;
                 }
@@ -521,10 +521,10 @@ public class MainActivity extends Activity {
                 for (UserHandle profile : profiles) {
                    if (userManager.getSerialNumberForUser(profile) != 0) {
                         try {
-						launcherApps.startMainActivity(
-                            new ComponentName(getPackageName(), getPackageName()+".LauncherAlias"), 
-                            profile, null, null
-                        );	
+						Intent i = new Intent("action.OPEN_FROM_OTHER_PROFILE");
+                        i.setPackage(getApplicationContext().getPackageName());
+                        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+                        getApplicationContext().startActivity(i);
 						} catch (Throwable disabledAlias) {}
                         finishAndRemoveTask();
                         break;
