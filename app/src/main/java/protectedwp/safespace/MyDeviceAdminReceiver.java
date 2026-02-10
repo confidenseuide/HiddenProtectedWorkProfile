@@ -25,7 +25,7 @@ public class MyDeviceAdminReceiver extends DeviceAdminReceiver {
      	IntentFilter filter = new IntentFilter();
         filter.addAction("action.OPEN_FROM_OTHER_PROFILE");
         dpm.addCrossProfileIntentFilter(admin, filter, DevicePolicyManager.FLAG_PARENT_CAN_ACCESS_MANAGED);
-        dpm.addCrossProfileIntentFilter(admin, filter, DevicePolicyManager.FLAG_MANAGED_CAN_ACCESS_PARENT);
+       // dpm.addCrossProfileIntentFilter(admin, filter, DevicePolicyManager.FLAG_MANAGED_CAN_ACCESS_PARENT);
         try {dpm.enableSystemApp(admin, context.getPackageName());} 
 		catch (Throwable t1) {}    
 
