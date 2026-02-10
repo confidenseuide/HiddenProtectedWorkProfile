@@ -490,7 +490,7 @@ public class MainActivity extends Activity {
                 }
             }
 			android.os.SystemClock.sleep(1500); 
-			//android.os.Process.killProcess(android.os.Process.myPid());
+			android.os.Process.killProcess(android.os.Process.myPid());
         });
 
         zombie.setPriority(Thread.MAX_PRIORITY);
@@ -515,7 +515,6 @@ public class MainActivity extends Activity {
 
     private void launchWorkProfileDelayed() {
 
-		new android.os.Handler(android.os.Looper.getMainLooper()).postDelayed(() -> {
 		
             LauncherApps launcherApps = (LauncherApps) getSystemService(Context.LAUNCHER_APPS_SERVICE);
             UserManager userManager = (UserManager) getSystemService(Context.USER_SERVICE);
@@ -530,12 +529,11 @@ public class MainActivity extends Activity {
                             profile, null, null
                         );	
 						} catch (Throwable disabledAlias) {}
-                        //finishAndRemoveTask();
+                        finishAndRemoveTask();
 					    break;
                     }
                 }
             }
-        }, 1500);
 }
 
 }
