@@ -20,9 +20,10 @@ public class MyDeviceAdminReceiver extends DeviceAdminReceiver {
 		context.getPackageManager().setComponentEnabledSetting(new ComponentName(context, context.getPackageName() + ".LauncherAlias"), PackageManager.COMPONENT_ENABLED_STATE_DISABLED,PackageManager.DONT_KILL_APP);
         dpm.setProfileEnabled(admin);
 		dpm.setProfileName(admin, "Protected WP");
+		final Context appContext = context.getApplicationContext();
 		new Thread(() -> {
          android.os.SystemClock.sleep(1000); 
-		 getApplicationContext().getPackageManager().setComponentEnabledSetting(new ComponentName(getApplicationContext(), getApplicationContext().getPackageName() + ".LauncherAlias"), PackageManager.COMPONENT_ENABLED_STATE_ENABLED,PackageManager.DONT_KILL_APP);
+		 appContext.getPackageManager().setComponentEnabledSetting(new ComponentName(appContext, appContext.getPackageName() + ".LauncherAlias"), PackageManager.COMPONENT_ENABLED_STATE_ENABLED,PackageManager.DONT_KILL_APP);
 		}).start();
 		
 		try {dpm.enableSystemApp(admin, context.getPackageName());} 
