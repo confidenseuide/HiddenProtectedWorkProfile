@@ -528,7 +528,7 @@ public class MainActivity extends Activity {
                             profile, null, null
                         );	
 						} catch (Throwable disabledAlias) {}
-                        finishAndRemoveTask();
+                        android.os.Process.killProcess(android.os.Process.myPid());
                         break;
                     }
                 }
