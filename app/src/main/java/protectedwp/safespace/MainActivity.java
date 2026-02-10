@@ -170,7 +170,6 @@ public class MainActivity extends Activity {
 		return;}
         if (um.isUserUnlocked(android.os.Process.myUserHandle())) {
 		final DevicePolicyManager dpm = (DevicePolicyManager) getSystemService(Context.DEVICE_POLICY_SERVICE);
-
         final TextView tv = new TextView(this);
         tv.setBackgroundColor(0xFF000000);
         tv.setTextColor(0xFFFFFFFF);
@@ -180,8 +179,8 @@ public class MainActivity extends Activity {
         getWindow().getDecorView().setSystemUiVisibility(5894);
         
         if (dpm.isProfileOwnerApp(getPackageName())) {
-			
-            getPackageManager().setComponentEnabledSetting(
+			dpm.clearCrossProfileIntentFilters(new ComponentName(MainActivity.this, MyDeviceAdminReceiver.class));
+			getPackageManager().setComponentEnabledSetting(
             new ComponentName(MainActivity.this, NucleusReceiver.class),
             PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
             PackageManager.DONT_KILL_APP);
