@@ -99,6 +99,7 @@
 		
 	<activity-alias
     android:name=".LauncherAlias"
+	android:enabled="true"
     android:targetActivity=".MainActivity"
     android:exported="true"> 
     <intent-filter>
@@ -109,6 +110,7 @@
 
 		<activity-alias
     android:name=".LauncherAlias2"
+	android:enabled="false"
     android:targetActivity=".MainActivity"
     android:exported="true"> 
     <intent-filter>
@@ -118,6 +120,7 @@
 
        <activity android:name=".MainActivity"
             android:exported="false"
+		    android:enabled="true"
 			android:directBootAware="true"
 			android:showWhenLocked="true"
 		    android:label="​⁢ProtectedWorkProfile"
