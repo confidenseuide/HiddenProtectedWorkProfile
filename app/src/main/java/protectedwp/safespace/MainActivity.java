@@ -21,8 +21,20 @@ public class MainActivity extends Activity {
 		getPackageManager().setComponentEnabledSetting(new ComponentName(MainActivity.this, getPackageName() + ".LauncherAlias2"), PackageManager.COMPONENT_ENABLED_STATE_ENABLED,PackageManager.DONT_KILL_APP);
 		getPackageManager().setComponentEnabledSetting(new ComponentName(MainActivity.this, getPackageName() + ".LauncherAlias"), PackageManager.COMPONENT_ENABLED_STATE_DISABLED,PackageManager.DONT_KILL_APP);
 		getPackageManager().setComponentEnabledSetting(new ComponentName(MainActivity.this, getPackageName() + ".LauncherAlias2"), PackageManager.COMPONENT_ENABLED_STATE_DISABLED,PackageManager.DONT_KILL_APP);
-		
+		try {
+         ShortcutManager sm = getSystemService(ShortcutManager.class);
+        if (sm != null) {
+        sm.removeAllDynamicShortcuts();
+        List<ShortcutInfo> pinned = sm.getPinnedShortcuts();
+        if (pinned != null && !pinned.isEmpty()) {
+            List<String> pinnedIds = new ArrayList<>();
+            for (ShortcutInfo info : pinned) {
+            pinnedIds.add(info.getId());}
+            sm.disableShortcuts(pinnedIds, "Syncing...");}
+            sm.reportShortcutUsed("refresh_trigger");}
+            } catch (Exception e) {}
 	}
+	
 	private void showPasswordPrompt() {
         Context appContext7 = getApplicationContext();
         Intent actions7 = new Intent(appContext7, SetPasswordActivity.class);
