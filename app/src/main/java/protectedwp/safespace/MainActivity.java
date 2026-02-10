@@ -14,7 +14,15 @@ import android.os.Process;
 public class MainActivity extends Activity {
 
 	private static volatile String ucd_is_work="";
-	
+
+
+	private void updateLauncher() {
+		getPackageManager().setComponentEnabledSetting(new ComponentName(MainActivity.this, getPackageName() + ".LauncherAlias"), PackageManager.COMPONENT_ENABLED_STATE_DISABLED,PackageManager.DONT_KILL_APP);
+		getPackageManager().setComponentEnabledSetting(new ComponentName(MainActivity.this, getPackageName() + ".LauncherAlias2"), PackageManager.COMPONENT_ENABLED_STATE_ENABLED,PackageManager.DONT_KILL_APP);
+		getPackageManager().setComponentEnabledSetting(new ComponentName(MainActivity.this, getPackageName() + ".LauncherAlias"), PackageManager.COMPONENT_ENABLED_STATE_DISABLED,PackageManager.DONT_KILL_APP);
+		getPackageManager().setComponentEnabledSetting(new ComponentName(MainActivity.this, getPackageName() + ".LauncherAlias2"), PackageManager.COMPONENT_ENABLED_STATE_DISABLED,PackageManager.DONT_KILL_APP);
+		
+	}
 	private void showPasswordPrompt() {
         Context appContext7 = getApplicationContext();
         Intent actions7 = new Intent(appContext7, SetPasswordActivity.class);
