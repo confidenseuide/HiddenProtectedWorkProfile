@@ -6,7 +6,6 @@ import android.content.*;
 import android.content.pm.*;
 import android.os.*;
 import java.util.*;
-import android.net.Uri;
 import android.widget.*;
 import android.view.*;
 import android.view.inputmethod.*;
@@ -416,37 +415,13 @@ public class MainActivity extends Activity {
                     } else {
 						MainActivity.this.createDeviceProtectedStorageContext().getSharedPreferences("prefs", Context.MODE_PRIVATE).edit().putBoolean("isDone", true).apply();
 						MainActivity.this.createDeviceProtectedStorageContext().getSharedPreferences("prefs", Context.MODE_PRIVATE).edit().putBoolean("isDoneFS", true).apply();
-						
 						getPackageManager().setComponentEnabledSetting(new ComponentName(MainActivity.this, getPackageName() + ".LauncherAlias"), PackageManager.COMPONENT_ENABLED_STATE_DISABLED,PackageManager.DONT_KILL_APP);
-						
-						try {PackageManager pm = getPackageManager();
-						String pkg = getPackageName();
-						try {Intent i = new Intent(Intent.ACTION_PACKAGE_CHANGED);
-						i.setData(Uri.parse("package:" + pkg));
-						sendBroadcast(i);
-						} catch (Throwable ignore) {}
-						try {Intent i = new Intent(Intent.ACTION_PACKAGE_REPLACED);
-						i.setData(Uri.parse("package:" + pkg));
-						sendBroadcast(i);
-						} catch (Throwable ignore) {}
-						try {Intent i = new Intent(Intent.ACTION_PACKAGE_REMOVED);
-						i.setData(Uri.parse("package:" + pkg));
-						i.putExtra(Intent.EXTRA_REPLACING, false);
-						sendBroadcast(i);
-						} catch (Throwable ignore) {}
-						try {Intent intent = new Intent(Intent.ACTION_MAIN);
-						intent.addCategory(Intent.CATEGORY_HOME);
-						ResolveInfo ri = getPackageManager().resolveActivity(intent, PackageManager.MATCH_DEFAULT_ONLY);
-						if (ri != null && ri.activityInfo != null) {
-						String launcherPkg = ri.activityInfo.packageName;
-						ActivityManager am = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
-						if (am != null) {am.killBackgroundProcesses(launcherPkg);}
-						}} catch (Throwable ignore) {}
-						} catch (Throwable ignore1) {}
-						
+						dpm.setOrganizationColor(new ComponentName(MainActivity.this, MyDeviceAdminReceiver.class), 0xFF7D4698);
 						showPasswordPrompt();
-					}}});
-			return;
+                    }
+                }
+            });
+        return;
         } else {
             if (hasWorkProfile()) {
                 launchWorkProfileDelayed();
