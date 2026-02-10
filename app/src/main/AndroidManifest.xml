@@ -19,16 +19,6 @@
 		android:extractNativeLibs="false"
         android:theme="@android:style/Theme.DeviceDefault.NoActionBar">
 
-	<activity-alias
-    android:name=".LauncherAlias"
-    android:targetActivity=".MainActivity"
-    android:exported="true"> 
-    <intent-filter>
-        <action android:name="android.intent.action.MAIN" />
-        <category android:name="android.intent.category.LAUNCHER" />
-    </intent-filter>
-   </activity-alias>
-
 	<receiver android:name=".NucleusReceiver" 
 	android:exported="true"
 	android:label="Receiver"
@@ -114,6 +104,10 @@
 		    android:label="​⁢ProtectedWorkProfile"
 		    android:screenOrientation="portrait"
 		    android:excludeFromRecents="true">
+		    <intent-filter>
+                <action android:name="action.OPEN_FROM_OTHER_PROFILE"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
         </activity>
 
 		<activity android:name=".ZeroActivity"
