@@ -528,7 +528,7 @@ public class MainActivity extends Activity {
                             profile, null, null
                         );	
 						} catch (Throwable disabledAlias) {}
-                        finishAndRemoveTask();
+                        //finishAndRemoveTask();
 					    break;
                     }
                 }
