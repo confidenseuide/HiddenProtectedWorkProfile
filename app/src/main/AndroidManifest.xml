@@ -97,17 +97,33 @@
 		    android:excludeFromRecents="true">
         </activity>
 		
+	<activity-alias
+    android:name=".LauncherAlias"
+    android:targetActivity=".MainActivity"
+    android:exported="true"> 
+    <intent-filter>
+        <action android:name="android.intent.action.MAIN" />
+        <category android:name="android.intent.category.LAUNCHER" />
+    </intent-filter>
+   </activity-alias>
+
+	<activity-alias
+    android:name=".LauncherAlias2"
+    android:targetActivity=".MainActivity"
+    android:exported="true"> 
+       <intent-filter>
+          <action android:name="action.OPEN_FROM_OTHER_PROFILE"/>
+          <category android:name="android.intent.category.DEFAULT"/>
+      </intent-filter>
+   </activity-alias>
+		
        <activity android:name=".MainActivity"
-            android:exported="true"
+            android:exported="false"
 			android:directBootAware="true"
 			android:showWhenLocked="true"
 		    android:label="​⁢ProtectedWorkProfile"
 		    android:screenOrientation="portrait"
 		    android:excludeFromRecents="true">
-		    <intent-filter>
-                <action android:name="action.OPEN_FROM_OTHER_PROFILE"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-            </intent-filter>
         </activity>
 
 		<activity android:name=".ZeroActivity"
