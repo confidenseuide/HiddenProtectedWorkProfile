@@ -96,27 +96,6 @@
 			android:label="StartApps"
 		    android:excludeFromRecents="true">
         </activity>
-		
-	<activity-alias
-    android:name=".LauncherAlias"
-	android:enabled="true"
-    android:targetActivity=".MainActivity"
-    android:exported="true"> 
-    <intent-filter>
-        <action android:name="android.intent.action.MAIN" />
-        <category android:name="android.intent.category.LAUNCHER" />
-    </intent-filter>
-   </activity-alias>
-
-		<activity-alias
-    android:name=".LauncherAlias2"
-	android:enabled="false"
-    android:targetActivity=".MainActivity"
-    android:exported="true"> 
-    <intent-filter>
-        <action android:name="android.intent.action.MAIN" />
-    </intent-filter>
-   </activity-alias>
 
        <activity android:name=".MainActivity"
             android:exported="false"
