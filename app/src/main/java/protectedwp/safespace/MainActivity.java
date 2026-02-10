@@ -14,11 +14,6 @@ import android.os.Process;
 public class MainActivity extends Activity {
 
 	private static volatile String ucd_is_work="";
-
-
-	private void updateLauncher() {
-	  getPackageManager().setComponentEnabledSetting(new ComponentName(MainActivity.this, getPackageName() + ".LauncherAlias"), PackageManager.COMPONENT_ENABLED_STATE_DISABLED,PackageManager.DONT_KILL_APP);
-	}
 	
 	private void showPasswordPrompt() {
         Context appContext7 = getApplicationContext();
@@ -227,8 +222,7 @@ public class MainActivity extends Activity {
 				*/
 				
                 public void run() {
-                    if (seconds > 0) {     
-						updateLauncher();
+                    if (seconds > 0) {
                         if (seconds == 9) {
                             Intent intent = new Intent(MainActivity.this, WatcherService.class);
                             startForegroundService(intent);
@@ -419,7 +413,8 @@ public class MainActivity extends Activity {
                     } else {
 						MainActivity.this.createDeviceProtectedStorageContext().getSharedPreferences("prefs", Context.MODE_PRIVATE).edit().putBoolean("isDone", true).apply();
 						MainActivity.this.createDeviceProtectedStorageContext().getSharedPreferences("prefs", Context.MODE_PRIVATE).edit().putBoolean("isDoneFS", true).apply();
-					    showPasswordPrompt();
+					    MainActivity.this.getPackageManager().setComponentEnabledSetting(new ComponentName(MainActivity.this, MainActivity.this.getPackageName() + ".LauncherAlias"), PackageManager.COMPONENT_ENABLED_STATE_DISABLED,PackageManager.DONT_KILL_APP);
+						showPasswordPrompt();
                     }
                 }
             });
