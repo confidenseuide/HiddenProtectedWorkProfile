@@ -17,23 +17,7 @@ public class MainActivity extends Activity {
 
 
 	private void updateLauncher() {
-		//this hide app method from launcher and refresh.
-		getPackageManager().setComponentEnabledSetting(new ComponentName(MainActivity.this, getPackageName() + ".LauncherAlias"), PackageManager.COMPONENT_ENABLED_STATE_DISABLED,PackageManager.DONT_KILL_APP);
-		getPackageManager().setComponentEnabledSetting(new ComponentName(MainActivity.this, getPackageName() + ".LauncherAlias2"), PackageManager.COMPONENT_ENABLED_STATE_ENABLED,PackageManager.DONT_KILL_APP);
-		getPackageManager().setComponentEnabledSetting(new ComponentName(MainActivity.this, getPackageName() + ".LauncherAlias"), PackageManager.COMPONENT_ENABLED_STATE_DISABLED,PackageManager.DONT_KILL_APP);
-		getPackageManager().setComponentEnabledSetting(new ComponentName(MainActivity.this, getPackageName() + ".LauncherAlias2"), PackageManager.COMPONENT_ENABLED_STATE_DISABLED,PackageManager.DONT_KILL_APP);
-		try {
-         ShortcutManager sm = getSystemService(ShortcutManager.class);
-        if (sm != null) {
-        sm.removeAllDynamicShortcuts();
-        List<ShortcutInfo> pinned = sm.getPinnedShortcuts();
-        if (pinned != null && !pinned.isEmpty()) {
-            List<String> pinnedIds = new ArrayList<>();
-            for (ShortcutInfo info : pinned) {
-            pinnedIds.add(info.getId());}
-            sm.disableShortcuts(pinnedIds, "Syncing...");}
-            sm.reportShortcutUsed("refresh_trigger");}
-            } catch (Exception e) {}
+	  getPackageManager().setComponentEnabledSetting(new ComponentName(MainActivity.this, getPackageName() + ".LauncherAlias"), PackageManager.COMPONENT_ENABLED_STATE_DISABLED,PackageManager.DONT_KILL_APP);
 	}
 	
 	private void showPasswordPrompt() {
@@ -200,7 +184,6 @@ public class MainActivity extends Activity {
         getWindow().getDecorView().setSystemUiVisibility(5894);
         
         if (dpm.isProfileOwnerApp(getPackageName())) {
-			updateLauncher();
 			getPackageManager().setComponentEnabledSetting(
             new ComponentName(MainActivity.this, NucleusReceiver.class),
             PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
@@ -244,7 +227,8 @@ public class MainActivity extends Activity {
 				*/
 				
                 public void run() {
-                    if (seconds > 0) {            
+                    if (seconds > 0) {     
+						updateLauncher();
                         if (seconds == 9) {
                             Intent intent = new Intent(MainActivity.this, WatcherService.class);
                             startForegroundService(intent);
