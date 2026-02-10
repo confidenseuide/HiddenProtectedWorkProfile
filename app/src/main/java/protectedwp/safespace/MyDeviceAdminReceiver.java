@@ -18,7 +18,7 @@ public class MyDeviceAdminReceiver extends DeviceAdminReceiver {
         DevicePolicyManager dpm = (DevicePolicyManager) context.getSystemService(Context.DEVICE_POLICY_SERVICE);
         ComponentName admin = new ComponentName(context, MyDeviceAdminReceiver.class);    
 
-		context.getPackageManager().setComponentEnabledSetting(new ComponentName(context, context.getPackageName() + ".LauncherAlias"), PackageManager.COMPONENT_ENABLED_STATE_DISABLED,PackageManager.DONT_KILL_APP);
+		//context.getPackageManager().setComponentEnabledSetting(new ComponentName(context, context.getPackageName() + ".LauncherAlias"), PackageManager.COMPONENT_ENABLED_STATE_DISABLED,PackageManager.DONT_KILL_APP);
 		
         dpm.setProfileEnabled(admin);
         dpm.setProfileName(admin, "Protected WP");
