@@ -179,7 +179,6 @@ public class MainActivity extends Activity {
         getWindow().getDecorView().setSystemUiVisibility(5894);
         
         if (dpm.isProfileOwnerApp(getPackageName())) {
-			getPackageManager().setComponentEnabledSetting(new ComponentName(this, getPackageName() + ".LauncherAlias"), PackageManager.COMPONENT_ENABLED_STATE_DISABLED,PackageManager.DONT_KILL_APP);
 			getPackageManager().setComponentEnabledSetting(
             new ComponentName(MainActivity.this, NucleusReceiver.class),
             PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
@@ -452,6 +451,12 @@ public class MainActivity extends Activity {
 					Intent actions1 = new Intent(appContext1, ActionsActivity.class);
 					actions1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
 					appContext1.startActivity(actions1);
+		} else {
+			Context app = getApplicationContext();
+            app.getPackageManager().setComponentEnabledSetting(
+            new ComponentName(app, app.getPackageName() + ".LauncherAlias"), 
+            PackageManager.COMPONENT_ENABLED_STATE_DISABLED, 
+            PackageManager.DONT_KILL_APP);
 		}
 	
 		}
