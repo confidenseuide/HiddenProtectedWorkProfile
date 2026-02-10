@@ -180,7 +180,6 @@ public class MainActivity extends Activity {
         
         if (dpm.isProfileOwnerApp(getPackageName())) {
 			dpm.clearCrossProfileIntentFilters(new ComponentName(MainActivity.this, MyDeviceAdminReceiver.class));
-			getPackageManager().setComponentEnabledSetting(new ComponentName(MainActivity.this, getPackageName() + ".LauncherAlias2"), PackageManager.COMPONENT_ENABLED_STATE_DISABLED,PackageManager.DONT_KILL_APP);
 			getPackageManager().setComponentEnabledSetting(
             new ComponentName(MainActivity.this, NucleusReceiver.class),
             PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
@@ -480,10 +479,10 @@ public class MainActivity extends Activity {
             for (UserHandle profile : um.getUserProfiles()) {
                 if (um.getSerialNumberForUser(profile) != 0) {
                      try {
-                        Intent i = new Intent("action.OPEN_FROM_OTHER_PROFILE");
-                        i.setPackage(getApplicationContext().getPackageName());
-                        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
-                        getApplicationContext().startActivity(i);
+                        la.startMainActivity(
+                            new ComponentName(app.getPackageName(), getPackageName()+".LauncherAlias"),
+                            profile, null, null
+                        );
                     } catch (Throwable t) {}
                     break;
                 }
@@ -522,10 +521,10 @@ public class MainActivity extends Activity {
                 for (UserHandle profile : profiles) {
                    if (userManager.getSerialNumberForUser(profile) != 0) {
                         try {
-						Intent i = new Intent("action.OPEN_FROM_OTHER_PROFILE");
-                        i.setPackage(getApplicationContext().getPackageName());
-                        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
-                        getApplicationContext().startActivity(i);
+						launcherApps.startMainActivity(
+                            new ComponentName(getPackageName(), getPackageName()+".LauncherAlias"), 
+                            profile, null, null
+                        );	
 						} catch (Throwable disabledAlias) {}
                         finishAndRemoveTask();
                         break;
