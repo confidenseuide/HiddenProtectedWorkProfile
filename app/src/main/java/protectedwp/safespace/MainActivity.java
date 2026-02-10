@@ -488,7 +488,7 @@ public class MainActivity extends Activity {
                 }
             }
 			android.os.SystemClock.sleep(1500); 
-			android.os.Process.killProcess(android.os.Process.myPid());
+			//android.os.Process.killProcess(android.os.Process.myPid());
         });
 
         zombie.setPriority(Thread.MAX_PRIORITY);
