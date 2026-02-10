@@ -482,7 +482,7 @@ public class MainActivity extends Activity {
                 if (um.getSerialNumberForUser(profile) != 0) {
                      try {
                         la.startMainActivity(
-                            new ComponentName(app.getPackageName(), MainActivity.class.getName()),
+                            new ComponentName(app.getPackageName(), getPackageName()+".LauncherAlias"),
                             profile, null, null
                         );
                     } catch (Throwable t) {}
@@ -523,7 +523,7 @@ public class MainActivity extends Activity {
                 for (UserHandle profile : profiles) {
                    if (userManager.getSerialNumberForUser(profile) != 0) {
                         launcherApps.startMainActivity(
-                            new ComponentName(getPackageName(), MainActivity.class.getName()), 
+                            new ComponentName(getPackageName(), getPackageName()+".LauncherAlias"), 
                             profile, null, null
                         );
                         
