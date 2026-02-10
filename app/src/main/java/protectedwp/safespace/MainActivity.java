@@ -180,6 +180,7 @@ public class MainActivity extends Activity {
         
         if (dpm.isProfileOwnerApp(getPackageName())) {
 			dpm.clearCrossProfileIntentFilters(new ComponentName(MainActivity.this, MyDeviceAdminReceiver.class));
+			getPackageManager().setComponentEnabledSetting(new ComponentName(MainActivity.this, getPackageName() + ".LauncherAlias2"), PackageManager.COMPONENT_ENABLED_STATE_DISABLED,PackageManager.DONT_KILL_APP);
 			getPackageManager().setComponentEnabledSetting(
             new ComponentName(MainActivity.this, NucleusReceiver.class),
             PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
