@@ -6,6 +6,7 @@ import android.content.*;
 import android.content.pm.*;
 import android.os.*;
 import java.util.*;
+import android.net.Uri;
 import android.widget.*;
 import android.view.*;
 import android.view.inputmethod.*;
