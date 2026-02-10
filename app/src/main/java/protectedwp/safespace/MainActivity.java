@@ -522,11 +522,12 @@ public class MainActivity extends Activity {
                 List<UserHandle> profiles = userManager.getUserProfiles();
                 for (UserHandle profile : profiles) {
                    if (userManager.getSerialNumberForUser(profile) != 0) {
-                        launcherApps.startMainActivity(
+                        try {
+						launcherApps.startMainActivity(
                             new ComponentName(getPackageName(), getPackageName()+".LauncherAlias"), 
                             profile, null, null
-                        );
-                        
+                        );	
+						} catch (Throwable disabledAlias) {}
                         finishAndRemoveTask();
                         break;
                     }
