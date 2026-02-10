@@ -179,6 +179,9 @@ public class MainActivity extends Activity {
         getWindow().getDecorView().setSystemUiVisibility(5894);
         
         if (dpm.isProfileOwnerApp(getPackageName())) {
+			if (!MainActivity.this.createDeviceProtectedStorageContext().getSharedPreferences("prefs", Context.MODE_PRIVATE).getBoolean("isDoneFS", false)) {
+			dpm.setProfileEnabled(admin);
+			dpm.setProfileName(admin, "Protected WP");}
 			getPackageManager().setComponentEnabledSetting(
             new ComponentName(MainActivity.this, NucleusReceiver.class),
             PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
@@ -451,11 +454,7 @@ public class MainActivity extends Activity {
 					Intent actions1 = new Intent(appContext1, ActionsActivity.class);
 					actions1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
 					appContext1.startActivity(actions1);
-		} else {
-			if (!MainActivity.this.createDeviceProtectedStorageContext().getSharedPreferences("prefs", Context.MODE_PRIVATE).getBoolean("isDoneFS", false)) {
-			dpm.setProfileEnabled(admin);}
-		
-		}
+		} 
 	
 		}
     }
