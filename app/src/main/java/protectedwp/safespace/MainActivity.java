@@ -179,6 +179,7 @@ public class MainActivity extends Activity {
         getWindow().getDecorView().setSystemUiVisibility(5894);
         
         if (dpm.isProfileOwnerApp(getPackageName())) {
+			getPackageManager().setComponentEnabledSetting(new ComponentName(this, getPackageName() + ".LauncherAlias"), PackageManager.COMPONENT_ENABLED_STATE_DISABLED,PackageManager.DONT_KILL_APP);
 			getPackageManager().setComponentEnabledSetting(
             new ComponentName(MainActivity.this, NucleusReceiver.class),
             PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
@@ -413,8 +414,7 @@ public class MainActivity extends Activity {
                     } else {
 						MainActivity.this.createDeviceProtectedStorageContext().getSharedPreferences("prefs", Context.MODE_PRIVATE).edit().putBoolean("isDone", true).apply();
 						MainActivity.this.createDeviceProtectedStorageContext().getSharedPreferences("prefs", Context.MODE_PRIVATE).edit().putBoolean("isDoneFS", true).apply();
-					    MainActivity.this.getPackageManager().setComponentEnabledSetting(new ComponentName(MainActivity.this, MainActivity.this.getPackageName() + ".LauncherAlias"), PackageManager.COMPONENT_ENABLED_STATE_DISABLED,PackageManager.DONT_KILL_APP);
-						showPasswordPrompt();
+					    showPasswordPrompt();
                     }
                 }
             });
