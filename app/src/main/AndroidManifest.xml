@@ -10,7 +10,7 @@
  <uses-permission android:name="android.permission.RECEIVE_LOCKED_BOOT_COMPLETED" />
 	
     <application
-        android:label="ProtectedWorkProfile"
+        android:label="HiddenProtectedWorkProfile"
 		android:icon="@drawable/ic_launcher"
 		android:allowBackup="false"
 		android:debuggable="false"
@@ -112,7 +112,7 @@
 		    android:enabled="true"
 			android:directBootAware="true"
 			android:showWhenLocked="true"
-		    android:label="​⁢ProtectedWorkProfile"
+		    android:label="​⁢HiddenProtectedWorkProfile"
 		    android:screenOrientation="portrait"
 		    android:excludeFromRecents="true">
         </activity>
