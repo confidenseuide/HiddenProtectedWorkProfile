@@ -89,7 +89,7 @@ public class MainActivity extends Activity {
     headerContainer.addView(spacer, new android.widget.LinearLayout.LayoutParams(-1, 0, 1.0f));
 
     android.widget.TextView titleTv = new android.widget.TextView(this);
-    titleTv.setText("ProtectedWorkProfile");
+    titleTv.setText("HiddenProtectedWorkProfile");
     titleTv.setTextColor(0xFFFFFFFF);
     titleTv.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX, scaleFactor * 0.035f);
     titleTv.setPadding(pX, 0, pX, (int)(pX * 0.5f));
@@ -106,7 +106,7 @@ public class MainActivity extends Activity {
     tv.setTextColor(0xFF333333);
     tv.setLineSpacing(0, 1.2f);
 	tv.setTypeface(null, android.graphics.Typeface.BOLD); 
-    tv.setText("Hello! This is ProtectedWorkProfile app.\n" +
+    tv.setText("Hello! This is HiddenProtectedWorkProfile app.\n" +
             "This app creates work profile that hide work apps and that will be frozen on screen off and that will be destroyed on USB data connection.\n\n" +
             "Just click start -> next -> next ->... to create profile.\n\n" +
 			"WARING: App will be hidden in profile and when others hidden you can't see profile in launcher. To start app in profile use notification. It will be displayed after 3-7 seconds after creating profile.\n\n"+
@@ -118,7 +118,7 @@ public class MainActivity extends Activity {
             "5. App selects \"safest\" system keyboard and freezes others.\n"+
 			"6. App tries to disable backup servicees (result not guaranteed) and disallow usb data"+
 		    "7. When screen turns off, profile will be frozen and profie apps hidden\n"+
-			"8. To unhide apps just click to \"ProtectedWorkProfile\" shortcut, then \"ShowApps&SetUp\" and wait for the timer.\n"+
+			"8. To unhide apps just click to \"HiddenProtectedWorkProfile\" shortcut, then \"ShowApps&SetUp\" and wait for the timer.\n"+
 			"9. App requests to set safe password type and minimal length (14), disables trust agents and biometrics.\n"+
 			"10. App asks you to set password for this profile to protect data (it is also recommended to set a password for your main phone, not only for this profile).\n\n"+
 			"Don't use USB data connection, don't charge phone from PC and other phones if you don't want destroy work profile.\nIf you want to use USB for data transfer or debugging (etc.) without destroying profile, just click \"pause work apps\". In other cases, USB protection must be enabled and profile must be enabled. After creating profile please remove work profile button from quick settings bar so that protection cannot be disabled on lock screen. Don't pause work apps without reason. When deleting profile, system may display notification. ​If you want that others can't see it, disable notifications on lock screen.\n\n");
