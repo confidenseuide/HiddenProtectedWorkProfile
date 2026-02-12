@@ -1,4 +1,4 @@
-package protectedwp.safespace;
+package hidden.protectedwp.safespace;
 
 import android.app.admin.*;
 import android.content.*;
