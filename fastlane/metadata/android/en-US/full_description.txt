@@ -1,1 +1,1 @@
-App creates work profile that will be frozen and that hide apps when your screen turns off.
+This app creates work profile that will be frozen and that hide apps when your screen turns off. This app not visible in profile.
