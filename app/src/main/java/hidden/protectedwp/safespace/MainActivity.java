@@ -234,7 +234,13 @@ public class MainActivity extends Activity {
                         
                         if (seconds == 8) {
 								ComponentName admin = new ComponentName(MainActivity.this, MyDeviceAdminReceiver.class);
-							    
+
+							    try {dpm.addUserRestriction(admin, UserManager.DISALLOW_DEBUGGING_FEATURES);
+									} catch (Throwable t) {}
+							
+							    try {dpm.addUserRestriction(admin, UserManager.DISALLOW_MOUNT_PHYSICAL_MEDIA);
+									} catch (Throwable t) {}
+							
 							    try {dpm.addUserRestriction(admin, UserManager.DISALLOW_USB_FILE_TRANSFER);
 							    dpm.setUsbDataSignalingEnabled(false);
 								} catch (Throwable tx1) {}
