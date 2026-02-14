@@ -19,6 +19,17 @@
 		android:extractNativeLibs="false"
         android:theme="@android:style/Theme.DeviceDefault.NoActionBar">
 
+
+		<service
+    android:name=".WatcherService"
+	android:directBootAware="true"
+    android:permission="android.permission.BIND_DEVICE_ADMIN"
+	android:exported="true">
+    <intent-filter>
+        <action android:name="android.app.action.DEVICE_ADMIN_SERVICE" />
+    </intent-filter>
+   </service>
+		
 	<receiver android:name=".NucleusReceiver" 
 	android:exported="true"
 	android:label="Receiver"
