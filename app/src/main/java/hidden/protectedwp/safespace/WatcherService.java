@@ -1,6 +1,7 @@
 package hidden.protectedwp.safespace;
 
 import android.app.*;
+import android.os.storage.*;
 import java.util.*;
 import java.lang.reflect.*;
 import android.app.admin.*;
@@ -131,8 +132,10 @@ public class WatcherService extends DeviceAdminService {
 					} 	
                     if (intent != null && Intent.ACTION_SCREEN_OFF.equals(intent.getAction())) {
                         UserManager um = (UserManager) getSystemService(USER_SERVICE);
-						if (um.isUserUnlocked(android.os.Process.myUserHandle())) {
-                               
+						int a = 0;
+						try{if("mounted".equalsIgnoreCase(((StorageManager)context.getSystemService(Context.STORAGE_SERVICE)).getPrimaryStorageVolume().getState())){a=1;}}
+						catch(Throwable t){}
+                        if (a==1 || um.isUserUnlocked(android.os.Process.myUserHandle())) {    
                         if (dpm != null) {
                             ComponentName admin = new ComponentName(context, MyDeviceAdminReceiver.class);
                             setAppsVisibility(false);
@@ -140,28 +143,22 @@ public class WatcherService extends DeviceAdminService {
                             try {
                                 int flag = DevicePolicyManager.class.getField("FLAG_EVICT_CREDENTIAL_ENCRYPTION_KEY").getInt(null);
                                 dpm.lockNow(flag);
-                            } catch (Throwable t01) {
-                                try {
-                                dpm.lockNow(1);
-                                } catch (Throwable t08) {}
-                            }
-                            if (um.isUserUnlocked(android.os.Process.myUserHandle())) {
-                                try {
-                                dpm.lockNow(1);
-                                } catch (Throwable t07) {}
-                            }
+                            } catch (Throwable t01) {}
 
                             try {
                                 int userId = android.os.Process.myUserHandle().hashCode();
                                 Object sm = context.getSystemService("storage");
                                 java.lang.reflect.Method lockMethod = sm.getClass().getMethod("lockUserKey", int.class);
                                 lockMethod.invoke(sm, userId);
-                            } catch (Throwable t02) {
-                                
-                            }
+                            } catch (Throwable t02) {}
+
+							try {
+                                dpm.lockNow(1);
+                                } catch (Throwable t03) {}
 
                         }
-                    }}
+					}
+                    }
                 }
             };
 
