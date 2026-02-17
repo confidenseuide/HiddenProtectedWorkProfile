@@ -6,9 +6,9 @@ import android.content.Context;
 import android.os.Process;
 import android.os.UserHandle;
 
-public class wipe {
+class wipe {
 
-    public static void wipe(Context context) {
+    static void wipe(Context context) {
         Context c = context.getApplicationContext();
 
         try {
