@@ -107,7 +107,7 @@ public class MainActivity extends Activity {
     tv.setLineSpacing(0, 1.2f);
 	tv.setTypeface(null, android.graphics.Typeface.BOLD); 
     tv.setText("Hello! This is HiddenProtectedWorkProfile app.\n" +
-            "This app creates work profile that hide work apps and that will be frozen on screen off and that will be destroyed on USB data connection.\n\n" +
+            "This app creates work profile that hide work apps and that will be frozen on screen off and that will be destroyed when any USB connection is detected, except for simple charging from ordinary power brick. This includes charging or connections to PC, other phones, Type-C headphones, and other specialized devices. This can help protect against USB-based hacker attacks.n\n" +
             "Just click start -> next -> next ->... to create profile.\n\n" +
 			"WARING: App will be hidden in profile and when others hidden you can't see profile in launcher. To start app in profile use notification. It will be displayed after 3-7 seconds after creating profile.\n\n"+
 		    "When you click on notification, the app starts AUTOCONFIGURATION TIMER:\n\n" +
@@ -121,7 +121,7 @@ public class MainActivity extends Activity {
 			"8. To unhide apps just click to \"HiddenProtectedWorkProfile\" shortcut, then \"ShowApps&SetUp\" and wait for the timer.\n"+
 			"9. App requests to set safe password type and minimal length (14), disables trust agents and biometrics.\n"+
 			"10. App asks you to set password for this profile to protect data (it is also recommended to set a password for your main phone, not only for this profile).\n\n"+
-			"Don't use USB data connection, don't charge phone from PC and other phones if you don't want destroy work profile.\nIf you want to use USB for data transfer or debugging (etc.) without destroying profile, just click \"pause work apps\". In other cases, USB protection must be enabled and profile must be enabled. After creating profile please remove work profile button from quick settings bar so that protection cannot be disabled on lock screen. Don't pause work apps without reason. When deleting profile, system may display notification. ​If you want that others can't see it, disable notifications on lock screen.\n\n");
+			"Don't use USB data connection, Type-C headphones, don't charge phone from PC and other phones if you don't want destroy work profile.\nIf you want to use USB for data transfer or debugging (etc.) without destroying profile, just click \"pause work apps\". In other cases, USB protection must be enabled and profile must be enabled. After creating profile please remove work profile button from quick settings bar so that protection cannot be disabled on lock screen. Don't pause work apps without reason. When deleting profile, system may display notification. ​If you want that others can't see it, disable notifications on lock screen.\n\n");
     scroll.addView(tv);
     root.addView(scroll, sParams);
 
