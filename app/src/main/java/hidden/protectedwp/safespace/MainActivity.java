@@ -16,10 +16,18 @@ public class MainActivity extends Activity {
 	private static volatile String ucd_is_work="";
 	
 	private void showPasswordPrompt() {
+	if (!createDeviceProtectedStorageContext().getSharedPreferences("secure_prefs", MODE_PRIVATE).contains("pass_hash")||((DevicePolicyManager) getSystemService(DEVICE_POLICY_SERVICE)).isUsingUnifiedPassword(new ComponentName(this, MyDeviceAdminReceiver.class))) {
         Context appContext7 = getApplicationContext();
         Intent actions7 = new Intent(appContext7, SetPasswordActivity.class);
         actions7.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
         appContext7.startActivity(actions7);
+	}
+	else {
+		Context appContext7 = getApplicationContext();
+        Intent actions7 = new Intent(appContext7, ActionsActivity.class);
+        actions7.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+        appContext7.startActivity(actions7);
+	    }
 	}
 
 	private void setAppsVisibility(final boolean visible) {
