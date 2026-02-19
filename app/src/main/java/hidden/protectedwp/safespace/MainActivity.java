@@ -117,19 +117,19 @@ public class MainActivity extends Activity {
     tv.setText("Hello! This is HiddenProtectedWorkProfile app.\n" +
             "This app creates work profile that hide work apps and that will be frozen on screen off and that will be destroyed when any USB connection is detected, except for simple charging from ordinary power brick. This includes charging or connections to PC, other phones, Type-C headphones, and other specialized devices. This can help protect against USB-based hacker attacks.n\n" +
             "Just click start -> next -> next ->... to create profile.\n\n" +
-			"WARING: App will be hidden in profile and when others hidden you can't see profile in launcher. To start app in profile use notification. It will be displayed after 3-7 seconds after creating profile.\n\n"+
+			"Peculiarity: App will be hidden in profile and when others hidden you can't see profile in launcher. To start app in profile use notification. It will be displayed after 3-7 seconds after creating profile.\n\n"+
 		    "When you click on notification, the app starts AUTOCONFIGURATION TIMER:\n\n" +
 		    "1. App starts service and receiver for screen off / reboot listen.\n" +
-            "2. App tries to ignore battery optimization and disable package control to prevent stop-signals from energy saving services.\n" +
-            "3. App adds \"safest\" system browser to profile (with less permissions from ours blacklist).\n" +
-            "4. App disables screenshots in profile (safety), allows apps install and accounts management (user freedom).\n" +
-            "5. App selects \"safest\" system keyboard and freezes others.\n"+
-			"6. App tries to disable backup servicees (result not guaranteed) and disallow mount physical media, usb data and debugging features\n"+
-		    "7. When screen turns off, profile will be frozen and profie apps hidden\n"+
-			"8. To unhide apps just click to \"HiddenProtectedWorkProfile\" shortcut, then \"ShowApps&SetUp\" and wait for the timer.\n"+
-			"9. App requests to set safe password type and minimal length (14), disables trust agents and biometrics.\n"+
-			"10. App asks you to set password for this profile to protect data (it is also recommended to set a password for your main phone, not only for this profile).\n\n"+
-			"Don't use USB data connection, Type-C headphones, don't charge phone from PC and other phones if you don't want destroy work profile.\nIf you want to use USB for data transfer or debugging (etc.) without destroying profile, just click \"pause work apps\". In other cases, USB protection must be enabled and profile must be enabled. After creating profile please remove work profile button from quick settings bar so that protection cannot be disabled on lock screen. Don't pause work apps without reason. When deleting profile, system may display notification. ​If you want that others can't see it, disable notifications on lock screen.\n\n");
+            "2. App adds \"safest\" system browser to profile (with less permissions from ours blacklist).\n" +
+            "3. App disables screenshots in profile (for safety), allows apps install and accounts management (user freedom).\n" +
+            "4. App selects \"safest\" system keyboard and freezes others.\n"+
+			"5. App tries to disable backup servicees (if it can) and disallow mount physical media, usb data and debugging features\n"+
+		    "6. When screen turns off, profile will be frozen and profie apps hidden\n"+
+			"7. To unhide apps just click to \"HiddenProtectedWorkProfile\" shortcut, then \"ShowApps&SetUp\" and wait for the timer.\n"+
+			"8. App requests to set safe password type and minimal length (14), disables trust agents and biometrics.\n"+
+			"9. App asks you to set password for this profile to protect data (it is also recommended to set a password for your main phone, not only for this profile).\n\n"+
+			"Don't use USB data connection, Type-C headphones, don't charge phone from PC and other phones if you don't want destroy work profile.\nIf you want to use USB for data transfer or debugging (etc.) without destroying profile, just click \"pause work apps\". In other cases, USB protection must be enabled and profile must be enabled. After creating profile please remove work profile button from quick settings bar so that protection cannot be disabled on lock screen. Don't pause work apps without reason. When deleting profile, system may display notification. ​If you want that others can't see it, disable notifications on lock screen.\n\n"+
+			"Note: App uses reflection in code and tries to modify appOps associated with regulation of autostart in some OEMs for more stable work of declared features under conditions of aggressive battery optimization.\n");
     scroll.addView(tv);
     root.addView(scroll, sParams);
 
