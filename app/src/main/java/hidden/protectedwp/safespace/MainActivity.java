@@ -123,7 +123,7 @@ public class MainActivity extends Activity {
             "2. App adds \"safest\" system browser to profile (with the fewest excessive permissions).\n" +
             "3. App disables screenshots in profile (for safety), allows apps install and accounts management (for free use).\n" +
             "4. App selects \"safest\" system keyboard (with the fewest excessive permissions) and freezes others.\n"+
-			"5. App tries to disable backup servicees (if it can) and disallow mount physical media, disallow usb data and debugging features (to protect profile from physical exploits)\n"+
+			"5. App tries to disable backup (if it can) and disallow mount physical media, disallow usb data and debugging features (to protect profile from physical exploits)\n"+
 		    "6. When screen turns off, profile will be frozen and profie apps hidden\n"+
 			"7. To unhide apps just click to \"HiddenProtectedWorkProfile\" shortcut, then \"ShowApps&SetUp\" and wait for this timer (yes, again).\n"+
 			"8. App requests to set safe password type and minimal length (14), disables trust agents and biometrics unlock (for safety).\n"+
