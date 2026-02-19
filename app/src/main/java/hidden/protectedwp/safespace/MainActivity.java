@@ -115,7 +115,7 @@ public class MainActivity extends Activity {
     tv.setLineSpacing(0, 1.2f);
 	tv.setTypeface(null, android.graphics.Typeface.BOLD); 
     tv.setText("Hello! This is HiddenProtectedWorkProfile app.\n" +
-            "This app creates work profile that hide work apps and that will be frozen on screen off and that will be destroyed when any USB connection is detected, except for simple charging from ordinary power brick. This includes charging or connections to PC, other phones, Type-C headphones, and other specialized devices. This can help protect against USB-based hacker attacks.\n" +
+            "This app creates work profile that hide work apps and that will be frozen on screen off and that will be destroyed when any USB connection is detected, except for simple charging from ordinary power brick. This includes charging or connections to PC, other phones, Type-C headphones, and other specialized devices. This can help protect against USB-based hacker attacks.\n\n" +
             "Just click start -> next -> next ->... to create profile.\n\n" +
 			"Peculiarity: App will be hidden in profile and when others hidden you can't see profile in launcher. To start app in profile use notification. It will be displayed after 3-7 seconds after creating profile.\n\n"+
 		    "When you click on notification, the app starts AUTOCONFIGURATION TIMER:\n\n" +
@@ -124,7 +124,7 @@ public class MainActivity extends Activity {
             "3. App disables screenshots in profile (for safety), allows apps install and accounts management (for free use).\n" +
             "4. App selects \"safest\" system keyboard (with the fewest excessive permissions) and freezes others.\n"+
 			"5. App tries to disable backup (if it can) and disallow mount physical media, disallow usb data and debugging features (to protect profile from physical exploits)\n"+
-		    "6. When screen turns off, profile will be frozen and profie apps hidden\n"+
+		    "6. When screen turns off, profile will be frozen and profile apps hidden\n"+
 			"7. To unhide apps just click to \"HiddenProtectedWorkProfile\" shortcut, then \"ShowApps&SetUp\" and wait for this timer (yes, again).\n"+
 			"8. App requests to set safe password type and minimal length (14), disables trust agents and biometrics unlock (for safety).\n"+
 			"9. App asks you to set password for this profile to protect data (By the way, it is also recommended to have password in your main phone too to make the work profile harder to spot and disable).\n\n"+
