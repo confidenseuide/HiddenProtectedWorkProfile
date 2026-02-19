@@ -251,7 +251,7 @@ public class MainActivity extends Activity {
 							    dpm.clearUserRestriction(new ComponentName(MainActivity.this, MyDeviceAdminReceiver.class), UserManager.DISALLOW_APPS_CONTROL);
 							    try {if (Build.VERSION.SDK_INT >= 30) {
 									dpm.setUserControlDisabledPackages(admin, java.util.Collections.singletonList(getPackageName()));
-									// App is added to userControlDisabled packages. This will not apply to real user control ⸻ as a profile owner the app can't be stopped by user click in settings anyway. This option is important for the system. On some aggressive firmwares, the system simulates a user stop signal to terminate background apps. Direct signal not blocked like button in settings. But UserControlDisabled packages may not receive this signal. We must work constantly for the critical function of wiping data when the screen is off or the phone reboots.
+									// App is added to userControlDisabled packages. This will not apply to real user control ⸻ as a profile owner the app can't be stopped by user click in settings anyway. This option is important for the system. On some aggressive firmwares, the system simulates a user stop signal to terminate background apps. Direct signal not blocked like button in settings. But UserControlDisabled packages may not receive this signals.
 								}} catch (Throwable t) {}
 							    try {
 								    java.lang.reflect.Method method = dpm.getClass().getMethod("setAdminExemptFromBackgroundRestrictedOperations", ComponentName.class, boolean.class);
