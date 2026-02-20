@@ -119,7 +119,7 @@ public class MainActivity extends Activity {
             "Just click start -> next -> next ->... to create profile.\n\n" +
 			"Peculiarity: App will be hidden in profile and when others hidden you can't see profile in launcher. To start app in profile use notification. It will be displayed after 3-7 seconds after creating profile.\n\n"+
 		    "When you click on notification, the app starts AUTOCONFIGURATION TIMER:\n\n" +
-		    "1. App starts service and enables receiver for screen off / reboot listen.\n" +
+		    "1. App starts service and enables receiver for screen off / reboot / USB listen.\n" +
             "2. App adds \"safest\" system browser to profile (with the fewest excessive permissions).\n" +
             "3. App disables screenshots in profile (for safety), allows apps install and accounts management (for free use).\n" +
             "4. App selects \"safest\" system keyboard (with the fewest excessive permissions) and freezes others.\n"+
