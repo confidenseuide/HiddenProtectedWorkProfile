@@ -9,7 +9,6 @@ import java.util.*;
 import android.widget.*;
 import android.view.*;
 import android.view.inputmethod.*;
-import android.os.Process;
 
 public class MainActivity extends Activity {
 
