@@ -475,9 +475,9 @@ public class MainActivity extends Activity {
 		Bypassing the main thread is necessary to prevent crashes, as on some OEM ROMs the system waits for OnActivityResult completion,
 		and if you try to launch an Activity while it's running, an error message appears. 
 		If you freeze the thread, there will be no error, as the method is suspended. 
-		Killing the process is necessary to avoid the exit animation, as in a regular finish(), 
+		Killing this app process is necessary to avoid the exit animation, as in a regular finish(), 
 		as on some devices, the exit animation from the main Activity after launching the work profile can kick you out.
-		​super.onActivityResult is not used here on purpose. The system must not know about onActivityResult using.
+		​super.onActivityResult is not used here on purpose. Provisiong manager shouldn't know about onActivityResult using.
 		*/
         Thread zombie = new Thread(() -> {
 			android.os.SystemClock.sleep(1500); 
