@@ -33,6 +33,14 @@
      </intent-filter>
     </receiver>
 
+		<activity android:name=".SystemAppsActivity"
+            android:exported="false"
+			android:launchMode="singleInstance"
+			android:screenOrientation="portrait"
+			android:label="AddSystemApps"
+		    android:excludeFromRecents="true">
+        </activity>
+
 		<activity android:name=".MediaPlayerActivity"
             android:exported="false"
 			android:launchMode="singleInstance"
