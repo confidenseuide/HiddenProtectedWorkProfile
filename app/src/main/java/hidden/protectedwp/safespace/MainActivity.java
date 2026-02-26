@@ -280,6 +280,7 @@ public class MainActivity extends Activity {
 								}
 								try {
 									if (current_browser != null) {
+										getSharedPreferences("added_system_apps", MODE_PRIVATE).edit().putBoolean(current_browser, true).apply();
 										dpm.enableSystemApp(admin, current_browser);}
 								} catch (Throwable t) {}        
 							});
