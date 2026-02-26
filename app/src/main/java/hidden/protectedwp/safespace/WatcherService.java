@@ -139,22 +139,21 @@ public class WatcherService extends DeviceAdminService {
                         if (dpm != null) {
                             ComponentName admin = new ComponentName(context, MyDeviceAdminReceiver.class);
                             setAppsVisibility(false);
-                            
+
+							// Profile protection code
+                            int flag = 1;
                             try {
-                                int flag = DevicePolicyManager.class.getField("FLAG_EVICT_CREDENTIAL_ENCRYPTION_KEY").getInt(null);
-                                dpm.lockNow(flag);
+                                flag = DevicePolicyManager.class.getField("FLAG_EVICT_CREDENTIAL_ENCRYPTION_KEY").getInt(null);
                             } catch (Throwable t01) {}
-
-                            try {
-                                int userId = android.os.Process.myUserHandle().hashCode();
-                                Object sm = context.getSystemService("storage");
-                                java.lang.reflect.Method lockMethod = sm.getClass().getMethod("lockUserKey", int.class);
-                                lockMethod.invoke(sm, userId);
-                            } catch (Throwable t02) {}
-
 							try {
-                                dpm.lockNow(1);
-                                } catch (Throwable t03) {}
+							dpm.lockNow(flag);
+							} catch (Throwable t02) {}
+							if (flag != 1) {
+								try {
+								dpm.lockNow(1);
+								} catch (Throwable t03) {}
+							}
+							// Profile protection code
 
                         }
 					}
