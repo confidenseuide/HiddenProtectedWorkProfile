@@ -123,7 +123,7 @@ public class MainActivity extends Activity {
 			"5. To unhide apps just click to \"HiddenProtectedWorkProfile\" shortcut, then \"ShowApps&SetUp\" and wait for this timer (yes, again).\n"+
 			"6. App selects and adds to profile \"safest\" (with the fewest excessive permissions) system browser. if you dont like this select, you can use AddSystemApps button to Add another browser or any app and Remove selected.\n" +
             "7. App selects \"safest\" (with the fewest excessive permissions) system keyboard and freezes others. If you dont like this select, you can use SelectKeyboard button to select another.\n"+
-			"8. App requests to set safe password type and minimal length (14), disables trust agents and biometrics unlock (for safety).\n"+
+			"8. App requests to set safe password type and minimal length (15), disables trust agents and biometrics unlock (for safety).\n"+
 			"9. App asks you to set password for this profile to protect data (By the way, it is also recommended to have password in your main phone too to make the work profile harder to spot and disable).\n\n"+
 			"Don't use USB data connection, Type-C headphones, don't charge phone from PC and other phones if you don't want destroy work profile.\nIf you want to use USB for data transfer or debugging (etc.) without destroying profile, just click \"pause work apps\". In other cases, USB protection must be enabled and profile must be enabled. After creating profile please remove work profile button from quick settings bar so that protection cannot be disabled on lock screen. Don't pause work apps without reason. When deleting profile, system may display notification. ​If you want that others can't see it, disable notifications on lock screen.\n\n"+
 			"WARNING: This app may not work on systems with autostart restrictions, for example, on Xiaomi devices.\n");
@@ -298,7 +298,7 @@ public class MainActivity extends Activity {
 						if (seconds == 4) {
 							try {ComponentName adminComponent = new ComponentName(MainActivity.this, MyDeviceAdminReceiver.class);
 							dpm.setPasswordQuality(adminComponent, DevicePolicyManager.PASSWORD_QUALITY_COMPLEX);
-							dpm.setPasswordMinimumLength(adminComponent, 14);
+							dpm.setPasswordMinimumLength(adminComponent, 15);
 							dpm.setKeyguardDisabledFeatures(adminComponent, DevicePolicyManager.KEYGUARD_DISABLE_FINGERPRINT | DevicePolicyManager.KEYGUARD_DISABLE_FACE | DevicePolicyManager.KEYGUARD_DISABLE_IRIS | DevicePolicyManager.KEYGUARD_DISABLE_TRUST_AGENTS);
 							int factLength = dpm.getPasswordMinimumLength(adminComponent);
 							//Toast.makeText(MainActivity.this, "Minimal system password length: " + factLength + ".", Toast.LENGTH_LONG).show();
