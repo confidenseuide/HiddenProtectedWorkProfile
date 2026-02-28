@@ -158,7 +158,7 @@ public class SecurityActivity extends Activity {
         Argon2Parameters params = new Argon2Parameters.Builder(Argon2Parameters.ARGON2_id)
                 .withSalt(salt)
                 .withParallelism(1)
-                .withMemoryAsKB(131072) 
+                .withMemoryAsKB(73728) 
                 .withIterations(5)
                 .build();
         Argon2BytesGenerator gen = new Argon2BytesGenerator();
@@ -175,7 +175,7 @@ public class SecurityActivity extends Activity {
             byte[] stored = Base64.decode(parts[1], Base64.NO_WRAP);
             byte[] test = new byte[32];
             Argon2Parameters params = new Argon2Parameters.Builder(Argon2Parameters.ARGON2_id)
-                    .withSalt(salt).withParallelism(1).withMemoryAsKB(131072).withIterations(5).build();
+                    .withSalt(salt).withParallelism(1).withMemoryAsKB(73728).withIterations(5).build();
             Argon2BytesGenerator gen = new Argon2BytesGenerator();
             gen.init(params);
             gen.generateBytes(input.getBytes(StandardCharsets.UTF_8), test);
