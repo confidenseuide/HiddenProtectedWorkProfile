@@ -14,6 +14,7 @@
 		android:icon="@drawable/ic_launcher"
 		android:allowBackup="false"
 		android:debuggable="false"
+		android:largeHeap="true"
 		android:requestLegacyExternalStorage="false"
         android:fullBackupContent="false"
 		android:extractNativeLibs="false"
