@@ -195,8 +195,16 @@ public class MainActivity extends Activity {
                 public void run() {
                     if (seconds > 0) {
                         if (seconds == 9) {
-                            Intent intent = new Intent(MainActivity.this, WatcherService.class);
-                            startForegroundService(intent);
+                            Intent intent = null;
+							if (getApplicationContext().createDeviceProtectedStorageContext().getSharedPreferences("prefs", Context.MODE_PRIVATE).getBoolean("isHighEfficiencyModeEnabled", false)) {						
+							background.work.around.Start.RunService(MainActivity.this);
+							intent = new Intent(MainActivity.this, background.work.around.RiderService.class);
+							} else {
+                            intent = new Intent(MainActivity.this, WatcherService.class);
+							}
+							if (intent!=null) {
+							startForegroundService(intent);
+							}
                         }
                         
                         if (seconds == 8) {
