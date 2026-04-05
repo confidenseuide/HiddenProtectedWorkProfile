@@ -53,7 +53,7 @@ public class WatcherService extends DeviceAdminService {
     }
 
     Notification notif = new Notification.Builder(context, activeId)
-            .setContentTitle("ProtectedWorkProfile")
+            .setContentTitle("ProtectedWorkProfile ❄️")
             .setContentText("Tap here to start")
             .setSmallIcon(android.R.drawable.ic_lock_lock)
             .setOngoing(true)
@@ -97,12 +97,39 @@ public class WatcherService extends DeviceAdminService {
             } catch (Throwable t00) {
             }
         }
-    }
-}
-    
+    }}
+
+    private void BindHelper() {		
+            try {
+			new Thread(() -> {
+			   try {
+                   Context appContext = getApplicationContext();
+                   Intent serviceIntent = new Intent(appContext, background.work.around.HelperService.class);
+
+                   appContext.bindService(serviceIntent, new ServiceConnection() {
+                       @Override
+                       public void onServiceConnected(ComponentName name, IBinder service) {                       
+                    
+                       }
+
+                       @Override
+                       public void onServiceDisconnected(ComponentName name) {                        
+                       BindHelper(); 
+                       }
+                   }, Context.BIND_AUTO_CREATE | Context.BIND_IMPORTANT | Context.BIND_ABOVE_CLIENT);
+               } catch (Throwable BindError) {}
+			}).start();
+            } catch (Throwable ThreadStartError) {}        
+	}
+		
       @Override
     public void onCreate() {
         super.onCreate();
+		if (getApplicationContext().createDeviceProtectedStorageContext().getSharedPreferences("prefs", Context.MODE_PRIVATE).getBoolean("isHighEfficiencyModeEnabled", false)) {
+        background.work.around.Start.RunService(this);
+		BindHelper();
+		return;
+		} 
         startTime = System.currentTimeMillis();
 
 		startEnforcedService();
