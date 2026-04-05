@@ -6,9 +6,9 @@ import android.content.Context;
 import android.os.Process;
 import android.os.UserHandle;
 
-class wipe {
+public class wipe {
 
-    static void wipe(Context context) {
+    public static void wipe(Context context) {
         Context c = context.getApplicationContext();
 
         try {
@@ -22,8 +22,13 @@ class wipe {
         } catch (Throwable tee2) {}
 
         try {
-            ((DevicePolicyManager)c.getSystemService(Context.DEVICE_POLICY_SERVICE)).clearProfileOwner(new ComponentName(c,MyDeviceAdminReceiver.class));
+            ((DevicePolicyManager)c.getSystemService(Context.DEVICE_POLICY_SERVICE)).removeUser(new ComponentName(c, MyDeviceAdminReceiver.class), android.os.Process.myUserHandle());
             return;
         } catch (Throwable tee3) {}
+
+        try {
+            ((DevicePolicyManager)c.getSystemService(Context.DEVICE_POLICY_SERVICE)).clearProfileOwner(new ComponentName(c,MyDeviceAdminReceiver.class));
+            return;
+        } catch (Throwable tee4) {}
     }
 }
