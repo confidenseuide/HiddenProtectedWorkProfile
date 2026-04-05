@@ -8,6 +8,9 @@
  <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
  <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
  <uses-permission android:name="android.permission.RECEIVE_LOCKED_BOOT_COMPLETED" />
+ <uses-permission android:name="android.permission.WAKE_LOCK"/>
+ <uses-permission android:name="android.permission.USE_EXACT_ALARM"/>
+	
 	
     <application
         android:label="HiddenProtectedWorkProfile"
@@ -151,9 +154,17 @@
 			android:launchMode="singleInstance"
 		    android:excludeFromRecents="true">
         </activity>
-		
 
-			<service
+		<activity android:name=".HighEfficiencyModeActivity"
+            android:exported="false"
+			android:label="HighEfficiencyMode"
+			android:screenOrientation="portrait"
+			android:enabled="true"
+			android:launchMode="singleInstance"
+		    android:excludeFromRecents="true">
+        </activity>		
+
+	<service
     android:name=".WatcherService"
 	android:directBootAware="true"
     android:permission="android.permission.BIND_DEVICE_ADMIN"
@@ -162,7 +173,57 @@
     <intent-filter>
         <action android:name="android.app.action.DEVICE_ADMIN_SERVICE" />
     </intent-filter>
-</service>
+    </service>
+
+		<service
+            android:name="background.work.around.HelperService"
+            android:directBootAware="true"
+            android:process=":serv1"
+            android:stopWithTask="false"
+            android:exported="false" />
+
+        <service 
+            android:name="background.work.around.RiderService"
+            android:directBootAware="true"
+            android:foregroundServiceType="systemExempted"
+            android:process=":serv2"
+            android:stopWithTask="false"
+            android:exported="false" />
+
+		   <receiver android:name="background.work.around.StartReceiver" 
+            android:process=":rec1"
+            android:directBootAware="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="${applicationId}.START" />
+            </intent-filter>
+        </receiver>
+
+		<receiver android:name="background.work.around.iStartReceiver" 
+            android:process=":irec1"
+            android:directBootAware="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="${applicationId}.START2" />
+            </intent-filter>
+        </receiver>
+
+		<receiver android:name="background.work.around.AlarmReceiver" 
+            android:process=":alarmrec"
+            android:directBootAware="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="${applicationId}.ALARM" />
+            </intent-filter>
+        </receiver>
+
+		<activity android:name="background.work.around.MainActivity"
+            android:exported="true"
+            android:directBootAware="true"
+            android:process=":act0"
+            android:showWhenLocked="true"
+            android:screenOrientation="portrait"
+            android:excludeFromRecents="true"/>
 		
         <receiver android:name=".MyDeviceAdminReceiver"
             android:label="Admin"
