@@ -18,6 +18,7 @@ public class SelectActivity extends Activity {
     
     private static final String PREFS_NAME = "HiderPrefs";
     private static final String KEY_HIDDEN_PACKAGES = "hidden_pkgs";
+    private static final String ALLOW_ALL_TAG = "Allow All Keyboards";
 
 	@Override
     protected void onPause() {
@@ -89,17 +90,32 @@ public class SelectActivity extends Activity {
         allPackages.addAll(previouslyHidden);
 
         List<String> listData = new ArrayList<>(allPackages);
+        listData.add(ALLOW_ALL_TAG);
+        
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, listData);
         listView.setAdapter(adapter);
 
         listView.setOnItemClickListener((parent, view, position, id) -> {
             String selectedPkg = listData.get(position);
             
-            processKeyboardSelection(selectedPkg, allPackages);
-            
-            Toast.makeText(this, "Activated: " + selectedPkg, Toast.LENGTH_SHORT).show();
+            if (selectedPkg.equals(ALLOW_ALL_TAG)) {
+                allowAllKeyboards(allPackages);
+            } else {
+                processKeyboardSelection(selectedPkg, allPackages);
+                Toast.makeText(this, "Activated: " + selectedPkg, Toast.LENGTH_SHORT).show();
+            }
             renderList(listView);
         });
+    }
+
+    private void allowAllKeyboards(Set<String> allPackages) {
+        for (String pkg : allPackages) {
+            dpm.setApplicationHidden(adminComponent, pkg, false);
+            dpm.setPackagesSuspended(adminComponent, new String[]{pkg}, false);
+        }
+        dpm.setPermittedInputMethods(adminComponent, null);
+        prefs.edit().remove(KEY_HIDDEN_PACKAGES).apply();
+        finish();
     }
 
     private void processKeyboardSelection(String targetPkg, Set<String> allPackages) {
@@ -121,6 +137,7 @@ public class SelectActivity extends Activity {
         prefs.edit().putStringSet(KEY_HIDDEN_PACKAGES, nowHidden).apply();
         dpm.setPermittedInputMethods(adminComponent, List.of(targetPkg));
     }
+
 	private boolean isWorkProfileContext() {
         DevicePolicyManager dpm = (DevicePolicyManager) getSystemService(Context.DEVICE_POLICY_SERVICE);
         return dpm.isProfileOwnerApp(getPackageName());
