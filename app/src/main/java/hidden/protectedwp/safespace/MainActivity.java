@@ -9,10 +9,85 @@ import java.util.*;
 import android.widget.*;
 import android.view.*;
 import android.view.inputmethod.*;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.Color;
 
 public class MainActivity extends Activity {
 
+	private void showWorkProfileCreatedDialog() {
+    MainActivity.this.createDeviceProtectedStorageContext().getSharedPreferences("prefs", Context.MODE_PRIVATE).edit().putBoolean("AlertAlarm", false).apply();	
+	final android.app.Dialog dialog = new android.app.Dialog(this, android.R.style.Theme_NoTitleBar_Fullscreen);
+    
+    android.view.Window window = dialog.getWindow();
+    if (window != null) {
+        
+        window.addFlags(android.view.WindowManager.LayoutParams.FLAG_SECURE);
+        window.addFlags(android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        
+        window.getDecorView().setSystemUiVisibility(
+                android.view.View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                | android.view.View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                | android.view.View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                | android.view.View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                | android.view.View.SYSTEM_UI_FLAG_FULLSCREEN
+                | android.view.View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+        
+        window.setBackgroundDrawable(new android.graphics.drawable.ColorDrawable(android.graphics.Color.TRANSPARENT));
+    }
+
+    android.util.DisplayMetrics dm = getResources().getDisplayMetrics();
+    int pX = (int) (dm.widthPixels * 0.08f);
+
+    android.widget.FrameLayout root = new android.widget.FrameLayout(this);
+    root.setBackgroundColor(android.graphics.Color.BLACK);
+    root.setLayoutParams(new android.view.ViewGroup.LayoutParams(-1, -1));
+    
+    android.widget.LinearLayout card = new android.widget.LinearLayout(this);
+    card.setOrientation(android.widget.LinearLayout.VERTICAL);
+    
+    android.graphics.drawable.GradientDrawable shape = new android.graphics.drawable.GradientDrawable();
+    shape.setShape(android.graphics.drawable.GradientDrawable.RECTANGLE);
+    shape.setColor(0xFFFFFFFF);
+    shape.setCornerRadius(15f);
+    card.setBackground(shape);
+    
+    card.setPadding(pX, pX, pX, pX);
+    
+    android.widget.FrameLayout.LayoutParams cardParams = new android.widget.FrameLayout.LayoutParams(
+            (int)(dm.widthPixels * 0.75f), 
+            android.view.ViewGroup.LayoutParams.WRAP_CONTENT);
+    cardParams.gravity = android.view.Gravity.CENTER;
+    card.setLayoutParams(cardParams);
+    
+    android.widget.TextView tv = new android.widget.TextView(this);
+    tv.setText("Work Profile is created, but now you are in Main Profile. You can start Work Profile via notification in notification bar. Notification Title: \"ProtectedWorkProfile\". If you don't see the notification, just wait a few seconds. In Main Profile you can delete this app if you want more stealth.");
+    tv.setTextColor(0xFF333333);
+    tv.setTextSize(android.util.TypedValue.COMPLEX_UNIT_SP, 16);
+    card.addView(tv);
+
+    android.widget.Button btn = new android.widget.Button(this);    
+	btn.setText("OK");	
+		
+    btn.setTypeface(null, android.graphics.Typeface.BOLD);
+    android.widget.LinearLayout.LayoutParams btnParams = new android.widget.LinearLayout.LayoutParams(-2, -2);
+    btnParams.gravity = android.view.Gravity.END;
+    btnParams.topMargin = (int)(pX * 0.5f);
+    btn.setOnClickListener(v -> {
+        dialog.dismiss();
+        finish();
+    });
+    card.addView(btn, btnParams);
+
+    root.addView(card);
+
+    dialog.setContentView(root);
+    dialog.setCancelable(false);
+    dialog.show();
+	}
+
 	private void showPasswordPrompt() {
+	if (MainActivity.this.createDeviceProtectedStorageContext().getSharedPreferences("prefs", Context.MODE_PRIVATE).getBoolean("AlertAlarm", false)) {
+		return;}
 	if (!createDeviceProtectedStorageContext().getSharedPreferences("secure_prefs", MODE_PRIVATE).contains("pass_hash")||((DevicePolicyManager) getSystemService(DEVICE_POLICY_SERVICE)).isUsingUnifiedPassword(new ComponentName(this, MyDeviceAdminReceiver.class))) {
         Context appContext7 = getApplicationContext();
         Intent actions7 = new Intent(appContext7, SetPasswordActivity.class);
@@ -87,7 +162,7 @@ public class MainActivity extends Activity {
 
     android.widget.LinearLayout headerContainer = new android.widget.LinearLayout(this);
     headerContainer.setOrientation(android.widget.LinearLayout.VERTICAL);
-    headerContainer.setBackgroundColor(0xFF7484B0);
+    headerContainer.setBackgroundColor(0xFF6A0D91);
     android.widget.LinearLayout.LayoutParams hParams = new android.widget.LinearLayout.LayoutParams(-1, 0, 1.0f);
     
     android.view.View spacer = new android.view.View(this);
@@ -411,6 +486,10 @@ public class MainActivity extends Activity {
     protected void onResume() {
         super.onResume();
 
+		if (!isWorkProfileContext()) {
+		if (MainActivity.this.createDeviceProtectedStorageContext().getSharedPreferences("prefs", Context.MODE_PRIVATE).getBoolean("AlertAlarm", false)) {
+		showWorkProfileCreatedDialog();}}
+
         if (!isWorkProfileContext() && hasWorkProfile()) {
             launchWorkProfileDelayed();
 		}
@@ -449,7 +528,8 @@ public class MainActivity extends Activity {
 		​super.onActivityResult is not used here on purpose. Provisiong manager shouldn't know about onActivityResult using.
 		*/
         Thread zombie = new Thread(() -> {
-			android.os.SystemClock.sleep(1500); 
+			MainActivity.this.createDeviceProtectedStorageContext().getSharedPreferences("prefs", Context.MODE_PRIVATE).edit().putBoolean("AlertAlarm", true).apply();						
+			android.os.SystemClock.sleep(1500);
 			Context app = getApplicationContext();
             UserManager um = (UserManager) app.getSystemService(Context.USER_SERVICE);
             LauncherApps la = (LauncherApps) app.getSystemService(Context.LAUNCHER_APPS_SERVICE);
