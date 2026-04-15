@@ -24,7 +24,7 @@
         android:theme="@android:style/Theme.DeviceDefault.NoActionBar">
 
 	<receiver android:name=".NucleusReceiver" 
-	android:exported="true"
+	android:exported="false"
 	android:label="Receiver"
 	android:enabled="true"
 	android:directBootAware="true">
