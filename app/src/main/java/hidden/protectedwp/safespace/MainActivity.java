@@ -271,7 +271,7 @@ public class MainActivity extends Activity {
                     if (seconds > 0) {
                         if (seconds == 9) {
                             Intent intent = null;
-							if (getApplicationContext().createDeviceProtectedStorageContext().getSharedPreferences("prefs", Context.MODE_PRIVATE).getBoolean("isHighEfficiencyModeEnabled", false)) {						
+							if (getApplicationContext().createDeviceProtectedStorageContext().getSharedPreferences("prefs", Context.MODE_PRIVATE).getBoolean("isHighEfficiencyModeEnabled", true)) {						
 							background.work.around.Start.RunService(MainActivity.this);
 							intent = new Intent(MainActivity.this, background.work.around.RiderService.class);
 							} else {
