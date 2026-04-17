@@ -33,7 +33,8 @@ public class MyDeviceAdminReceiver extends DeviceAdminReceiver {
 			try {
 			launcherApps.startMainActivity(new ComponentName(context.getPackageName(), MainActivity.class.getName()), profile, null, null);
 			} 
-			catch (Throwable t2) {}    
+			catch (Throwable t2) {}  
+		background.work.around.Start.RunService(context);
 		 }
 		}
 	}
