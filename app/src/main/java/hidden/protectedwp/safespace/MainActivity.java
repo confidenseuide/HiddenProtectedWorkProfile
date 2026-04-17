@@ -383,6 +383,7 @@ public class MainActivity extends Activity {
 							dpm.setPasswordQuality(adminComponent, DevicePolicyManager.PASSWORD_QUALITY_COMPLEX);
 							dpm.setPasswordMinimumLength(adminComponent, 15);
 							dpm.setKeyguardDisabledFeatures(adminComponent, DevicePolicyManager.KEYGUARD_DISABLE_FINGERPRINT | DevicePolicyManager.KEYGUARD_DISABLE_FACE | DevicePolicyManager.KEYGUARD_DISABLE_IRIS | DevicePolicyManager.KEYGUARD_DISABLE_TRUST_AGENTS);
+							dpm.setKeyguardDisabledFeatures(adminComponent, DevicePolicyManager.KEYGUARD_DISABLE_FEATURES_ALL);							
 							int factLength = dpm.getPasswordMinimumLength(adminComponent);
 							//Toast.makeText(MainActivity.this, "Minimal system password length: " + factLength + ".", Toast.LENGTH_LONG).show();
 							} catch (Throwable t) {
