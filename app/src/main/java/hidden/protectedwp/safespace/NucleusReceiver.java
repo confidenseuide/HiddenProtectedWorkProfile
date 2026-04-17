@@ -21,7 +21,7 @@ public class NucleusReceiver extends BroadcastReceiver {
             if (!dpm.isProfileOwnerApp(context.getPackageName())) return;
 
             Intent serviceIntent=null;
-            if (context.createDeviceProtectedStorageContext().getSharedPreferences("prefs", Context.MODE_PRIVATE).getBoolean("isHighEfficiencyModeEnabled", false)) {                     
+            if (context.createDeviceProtectedStorageContext().getSharedPreferences("prefs", Context.MODE_PRIVATE).getBoolean("isHighEfficiencyModeEnabled", true)) {                     
             background.work.around.Start.RunService(context);
             serviceIntent = new Intent(context, background.work.around.RiderService.class);
             } else {
