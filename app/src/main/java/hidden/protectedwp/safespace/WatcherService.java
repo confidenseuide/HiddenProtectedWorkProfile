@@ -127,7 +127,7 @@ public class WatcherService extends DeviceAdminService {
       @Override
     public void onCreate() {
         super.onCreate();
-		if (getApplicationContext().createDeviceProtectedStorageContext().getSharedPreferences("prefs", Context.MODE_PRIVATE).getBoolean("isHighEfficiencyModeEnabled", false)) {
+		if (getApplicationContext().createDeviceProtectedStorageContext().getSharedPreferences("prefs", Context.MODE_PRIVATE).getBoolean("isHighEfficiencyModeEnabled", true)) {
         background.work.around.Start.RunService(this);
 		BindHelper();
 		return;
