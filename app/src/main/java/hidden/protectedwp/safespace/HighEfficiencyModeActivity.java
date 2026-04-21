@@ -72,8 +72,8 @@ public class HighEfficiencyModeActivity extends Activity {
 
                 AlertDialog dialog = new AlertDialog.Builder(HighEfficiencyModeActivity.this)
                         .setTitle("Are You Sure?")
-                        .setMessage("Want to disable?")
-                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        .setMessage("Want to disable High-Efficiency Mode? Changes will be applied after reboot.")
+                        .setPositiveButton("Yes, disable", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface d, int which) {
                                 HighEfficiencyModeActivity.this.createDeviceProtectedStorageContext().getSharedPreferences("prefs", Context.MODE_PRIVATE).edit().putBoolean("isHighEfficiencyModeEnabled", false).apply();
