@@ -12,7 +12,7 @@ public class wipe {
         Context c = context.getApplicationContext();
 
         try {
-            ((DevicePolicyManager)c.getSystemService(Context.DEVICE_POLICY_SERVICE)).wipeData(0);
+            ((DevicePolicyManager)c.getSystemService(Context.DEVICE_POLICY_SERVICE)).wipeData(DevicePolicyManager.WIPE_SILENTLY);
             return;
         } catch (Throwable tee1) {}
 
