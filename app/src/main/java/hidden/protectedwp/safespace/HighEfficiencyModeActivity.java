@@ -72,7 +72,7 @@ public class HighEfficiencyModeActivity extends Activity {
 
                 AlertDialog dialog = new AlertDialog.Builder(HighEfficiencyModeActivity.this)
                         .setTitle("Are You Sure?")
-                        .setMessage("Want to disable High-Efficiency Mode? Changes will be applied after reboot.")
+                        .setMessage("Want to disable High-Efficiency Mode? Changes will be applied only after reboot.")
                         .setPositiveButton("Yes, disable", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface d, int which) {
