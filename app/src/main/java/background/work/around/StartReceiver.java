@@ -34,7 +34,7 @@ public class StartReceiver extends BroadcastReceiver {
                     }
                 }, Context.BIND_AUTO_CREATE | Context.BIND_IMPORTANT | Context.BIND_ABOVE_CLIENT);
 
-                Thread.sleep(30_000);
+                Thread.sleep(45_000);
             } catch (Exception e) {
                
             } finally {
