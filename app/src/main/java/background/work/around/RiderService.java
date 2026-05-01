@@ -35,45 +35,29 @@ public class RiderService extends Service {
 	android.os.SystemClock.sleep(3000); }
 	}).start(); }
 	
-	private void startForegroundAlarm() {
+	private void startForegroundAlarm() {    
     new Thread(() -> {
         Context ctx = getApplicationContext();
+        
+            try {
+                AlarmManager am = (AlarmManager) ctx.getSystemService(Context.ALARM_SERVICE);
+                
+                Intent intent = new Intent(ctx.getPackageName() + ".ALARM");
+                intent.setPackage(ctx.getPackageName());
 
-        try {
-            AlarmManager am = (AlarmManager) ctx.getSystemService(Context.ALARM_SERVICE);
-            if (am == null) return;
+                PendingIntent pi = PendingIntent.getBroadcast(
+                        ctx, 
+                        333, 
+                        intent, 
+                        PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
+                );
 
-			Intent serviceIntent = new Intent(getPackageName() + ".ALARM");
-            serviceIntent.setPackage(getPackageName());            
+                if (am != null) {
+               am.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 30000, pi);
+                }
+            } catch (Throwable t) {} 
             
-            PendingIntent operation = PendingIntent.getBroadcast(
-                    ctx, 
-                    333, 
-                    serviceIntent, 
-                    PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
-            );
-
-            Intent showIntent = new Intent(ctx, MainActivity.class); 
-            PendingIntent showAction = PendingIntent.getActivity(
-                    ctx, 
-                    0, 
-                    showIntent, 
-                    PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
-            );
-
-            long triggerAt = System.currentTimeMillis() + 30000;
-
-            AlarmManager.AlarmClockInfo alarmClockInfo = new AlarmManager.AlarmClockInfo(
-                    triggerAt, 
-                    showAction 
-			);
-           
-			am.setAlarmClock(alarmClockInfo, operation);
-
-        } catch (Throwable t) {
-            t.printStackTrace();
-        }
-    }).start(); 
+    }).start();
 	}
 
 
