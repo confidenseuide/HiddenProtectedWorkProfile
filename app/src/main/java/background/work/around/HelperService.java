@@ -21,9 +21,9 @@ public class HelperService extends Service {
             DestroyPanic();
 			while (true) {
                 DestroyPanic();
-                android.os.SystemClock.sleep(7500);
+                android.os.SystemClock.sleep(7000);
 				DestroyPanic2();
-				android.os.SystemClock.sleep(7500);
+				android.os.SystemClock.sleep(7000);
             }
         }).start();
     }
