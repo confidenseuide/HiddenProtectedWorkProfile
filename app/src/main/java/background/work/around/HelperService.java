@@ -18,7 +18,8 @@ public class HelperService extends Service {
 	*/
 	private void startWatchdogThread() {
         new Thread(() -> {
-            while (true) {
+            DestroyPanic();
+			while (true) {
                 DestroyPanic();
                 android.os.SystemClock.sleep(7500);
 				DestroyPanic2();
