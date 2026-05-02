@@ -202,8 +202,7 @@ public class RiderService extends Service {
         sendBroadcast(intent);
 	}
 	
-	private void DestroyCleaner() {
-		isRunning = false;
+	private void DestroyCleaner() {		
 		if (receiver != null) {
             try { unregisterReceiver(receiver); } catch (Exception ignored) {}
             receiver = null;
@@ -348,6 +347,7 @@ public class RiderService extends Service {
     @Override
     public void onDestroy() {
         DestroyPanic();
+		isRunning = false;
 		DestroyCleaner();
         super.onDestroy();
     }
