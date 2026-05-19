@@ -6,6 +6,6 @@
         <limit-password />
         <wipe-data />
         <disable-keyguard-features />
-        <reset-password />
+        <disable-camera />
     </uses-policies>
 </device-admin>
