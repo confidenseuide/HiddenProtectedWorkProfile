@@ -116,6 +116,8 @@ public class MainActivity extends Activity {
 
         if (pkg.equals(getPackageName())) {continue;}
 		if (!pm.queryIntentServices(new Intent("android.view.InputMethod").setPackage(pkg), 0).isEmpty()) {continue;}
+		if (getApplicationContext().getSharedPreferences("DisablePrefs", MODE_PRIVATE).getStringSet("disabled_pkgs", Collections.emptySet()).contains(pkg)) continue;
+
 
         Intent launcherIntent = new Intent(Intent.ACTION_MAIN, null);
         launcherIntent.addCategory(Intent.CATEGORY_LAUNCHER);
