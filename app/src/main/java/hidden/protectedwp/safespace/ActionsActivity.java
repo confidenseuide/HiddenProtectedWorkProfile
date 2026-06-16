@@ -33,7 +33,8 @@ public class ActionsActivity extends Activity {
 
         TextView title = new TextView(this);
         final UserManager um00 = (UserManager) getSystemService(USER_SERVICE);
-		if (um00 != null && um00.isUserUnlocked(android.os.Process.myUserHandle())) {
+		boolean isLocked = createDeviceProtectedStorageContext().getSharedPreferences("prefs", Context.MODE_PRIVATE).getBoolean("isLockedState", false);				
+		if (um00 != null && !isLocked && um00.isUserUnlocked(android.os.Process.myUserHandle())) {
 		title.setText("What to do? (It's recommended to check SecuritySettings)");
 		} else {
 		title.setText("To see all options, apps and unlock profile - use ShowApps&SetUp button.");}
@@ -86,6 +87,7 @@ public class ActionsActivity extends Activity {
         Intent intent = new Intent(ActionsActivity.this, SecurityActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
 		startActivity(intent);
+		finish();
     }
 
     private void loadActivities() {
