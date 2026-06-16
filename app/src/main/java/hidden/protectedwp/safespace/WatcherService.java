@@ -167,7 +167,8 @@ public class WatcherService extends DeviceAdminService {
                         if (a==1 || um.isUserUnlocked(android.os.Process.myUserHandle())) {    
                         if (dpm != null) {
                             ComponentName admin = new ComponentName(context, MyDeviceAdminReceiver.class);
-                            setAppsVisibility(false);
+                            WatcherService.this.createDeviceProtectedStorageContext().getSharedPreferences("prefs", Context.MODE_PRIVATE).edit().putBoolean("isLockedState", true).apply();		
+							setAppsVisibility(false);
 
 							// Profile protection code
                             int flag = 1;
