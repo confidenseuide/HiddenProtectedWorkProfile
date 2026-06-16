@@ -139,6 +139,7 @@ public class SecurityActivity extends Activity {
                 wipe.wipe(this);
             } else if (verifyPassword(input, storedPass)) {
                 try {
+					SecurityActivity.this.createDeviceProtectedStorageContext().getSharedPreferences("prefs", Context.MODE_PRIVATE).edit().putBoolean("isLockedState", false).apply();									
                     startActivity(new Intent(this, ZeroActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_MULTIPLE_TASK));
 				    finishAndRemoveTask();
                 } catch (Throwable StateErr) {
