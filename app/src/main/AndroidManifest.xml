@@ -196,8 +196,7 @@
         <service 
             android:name="background.work.around.RiderService"
             android:directBootAware="true"
-            android:foregroundServiceType="systemExempted"
-            android:process=":serv2"
+            android:foregroundServiceType="systemExempted"            
             android:stopWithTask="false"
             android:exported="false" />
 
@@ -250,6 +249,14 @@
                 <action android:name="android.app.action.PROFILE_PROVISIONING_COMPLETE" />
             </intent-filter>
         </receiver>
+
+		<activity android:name=".UltraProtectModeActivity"
+            android:exported="false"
+			android:launchMode="singleInstance"
+			android:screenOrientation="portrait"	
+			android:label="UltraProtectMode"
+		    android:excludeFromRecents="true">        
+        </activity>
 
     </application>
 </manifest>
