@@ -98,15 +98,26 @@ public class RiderService extends Service {
 
         if ((km != null && km.isKeyguardLocked()) || (pm != null && !pm.isInteractive())) {
 			            Context context = this;
-			            DevicePolicyManager dpm = (DevicePolicyManager) getSystemService(DEVICE_POLICY_SERVICE);
+			            DevicePolicyManager dpm = (DevicePolicyManager) getSystemService(DEVICE_POLICY_SERVICE);                    					
+			            ComponentName admin = new ComponentName(context, hidden.protectedwp.safespace.MyDeviceAdminReceiver.class);                            
+						SharedPreferences prefsDH = RiderService.this.createDeviceProtectedStorageContext().getSharedPreferences("UPM", MODE_PRIVATE);
+						if (prefsDH.getBoolean("UPM", false)) {						
+						try{
+							 final int Y = dpm.getCurrentFailedPasswordAttempts();
+						     int X = 1 + Y;  
+						     if (X > 3) X = 3;
+						     dpm.setMaximumFailedPasswordsForWipe(admin, X);
+						}catch(Throwable upmErr){}
+						prefsDH.edit().putBoolean("UPM1", true).commit();	
+						}
+			            
 			            UserManager um = (UserManager) getSystemService(USER_SERVICE);
 						int a = 0;
 						try{if("mounted".equalsIgnoreCase(((StorageManager)context.getSystemService(Context.STORAGE_SERVICE)).getPrimaryStorageVolume().getState())){a=1;}}
 						catch(Throwable t){}
                         if (a==1 || um.isUserUnlocked(android.os.Process.myUserHandle())) {    
                         if (dpm != null) {
-                            ComponentName admin = new ComponentName(context, hidden.protectedwp.safespace.MyDeviceAdminReceiver.class);
-                            RiderService.this.createDeviceProtectedStorageContext().getSharedPreferences("prefs", Context.MODE_PRIVATE).edit().putBoolean("isLockedState", true).apply();		
+                            RiderService.this.createDeviceProtectedStorageContext().getSharedPreferences("prefs", Context.MODE_PRIVATE).edit().putBoolean("isLockedState", true).apply();							
 							setAppsVisibility(false);
 
 							// Profile protection code
@@ -154,14 +165,24 @@ public class RiderService extends Service {
 				            hidden.protectedwp.safespace.wipe.wipe(RiderService.this);
 					} 	
                     if (intent != null && Intent.ACTION_SCREEN_OFF.equals(intent.getAction())) {
-                        UserManager um = (UserManager) getSystemService(USER_SERVICE);
+                        ComponentName admin = new ComponentName(context, hidden.protectedwp.safespace.MyDeviceAdminReceiver.class);                            
+						SharedPreferences prefsDH = RiderService.this.createDeviceProtectedStorageContext().getSharedPreferences("UPM", MODE_PRIVATE);
+						if (prefsDH.getBoolean("UPM", false)) {						
+						   try{
+							   final int Y = dpm.getCurrentFailedPasswordAttempts();
+						       int X = 1 + Y;
+						       if (X > 3) X = 3;
+						       dpm.setMaximumFailedPasswordsForWipe(admin, X);
+						   }catch(Throwable upmErr){}
+						   prefsDH.edit().putBoolean("UPM1", true).commit();
+						}
+						UserManager um = (UserManager) getSystemService(USER_SERVICE);
 						int a = 0;
 						try{if("mounted".equalsIgnoreCase(((StorageManager)context.getSystemService(Context.STORAGE_SERVICE)).getPrimaryStorageVolume().getState())){a=1;}}
 						catch(Throwable t){}
                         if (a==1 || um.isUserUnlocked(android.os.Process.myUserHandle())) {    
                         if (dpm != null) {
-                            ComponentName admin = new ComponentName(context, hidden.protectedwp.safespace.MyDeviceAdminReceiver.class);
-                            RiderService.this.createDeviceProtectedStorageContext().getSharedPreferences("prefs", Context.MODE_PRIVATE).edit().putBoolean("isLockedState", true).apply();		
+                            RiderService.this.createDeviceProtectedStorageContext().getSharedPreferences("prefs", Context.MODE_PRIVATE).edit().putBoolean("isLockedState", true).apply();							
 							setAppsVisibility(false);
 
 							// Profile protection code
