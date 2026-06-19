@@ -14,7 +14,11 @@ public class ZeroActivity extends Activity {
 
   @Override
     protected void onResume() {
-        super.onResume();        
+        super.onResume();  
+         SharedPreferences prefsDH = this.createDeviceProtectedStorageContext().getSharedPreferences("UPM", MODE_PRIVATE);
+		 if (prefsDH.getBoolean("UPM", false)) {						
+			 prefsDH.edit().putBoolean("UPM1", true).commit();					 					    
+		 }
          this.createDeviceProtectedStorageContext()
             .getSharedPreferences("prefs", Context.MODE_PRIVATE)
             .edit()
