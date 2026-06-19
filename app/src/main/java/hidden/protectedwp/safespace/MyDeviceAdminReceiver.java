@@ -10,7 +10,20 @@ public class MyDeviceAdminReceiver extends DeviceAdminReceiver {
 
 	@Override
 	public void onPasswordFailed(Context context, Intent intent, UserHandle user) {
-    super.onPasswordFailed(context, intent, user);
+      super.onPasswordFailed(context, intent, user);
+	
+	  if (!android.os.Process.myUserHandle().equals(user)) return;
+	  DevicePolicyManager dpm = (DevicePolicyManager) context.getSystemService(Context.DEVICE_POLICY_SERVICE);
+      if (!dpm.isProfileOwnerApp(context.getPackageName())) return;	  
+            
+         UserManager um = (UserManager) context.getSystemService(Context.USER_SERVICE);            
+         if (!um.isUserUnlocked(android.os.Process.myUserHandle())) {    
+             ComponentName admin = new ComponentName(context, MyDeviceAdminReceiver.class);                            
+             SharedPreferences prefsDH = context.createDeviceProtectedStorageContext().getSharedPreferences("UPM", Context.MODE_PRIVATE);
+             if (prefsDH.getBoolean("UPM", false) && prefsDH.getBoolean("UPM1", true)) {						
+                    wipe.wipe(context);
+             }
+        }	
 	}
 	
     @Override
