@@ -119,7 +119,7 @@ public class TipsActivity extends Activity {
     private String getTextIntro() {
         return isRussian 
             ? "Привет, это советы по безопасности. Тут вы можете увидеть советы по общей безопасности вашего устройства. Это не советы для конкретно этого профиля. Они могу звучать банально, но не все им следуют."
-            : "Hi, these are security tips. Here you can see tips for the general security of your device. These are not tips specifically for this profile. They may sounds basic, but not everyone follows them.";
+            : "Hi, these are security tips. Here you can see tips for the general security of your device. These are not tips specifically for this profile. They may sound basic, but not everyone follows them.";
     }
 
     private String getTextTip1() {
@@ -135,8 +135,8 @@ public class TipsActivity extends Activity {
 
     private String getTextTip1Note() {
         return isRussian 
-            ? "Помните, что это будет иметь смысл только если вы перезагрузили телефон или иным образом перевели пользователя в состояние BFU (до первой разблокировки), ведь иначе (в AFU) даже если экран заблокирован, взломать шифрование можно и без пароля.\nДля принудительной перезагрузки (если вендор блокирует обычную до подтверждения пароля) на большинстве устройств Android нужно зажать кнопку питания и ближайшую к ней кнопку громкости и подождать, пока она не произойдет, независимо от того, что происходит в этот момент."
-            : "Remember that this will only make sense if you reboot the phone or in another way put the user into the BFU (Before First Unlock) state. Otherwise (in AFU), even if the screen is locked, encryption can be hacked without a password.\nFor a forced reboot (if the vendor blocks the standard one before the password confirmation), on most Android devices you need to press and hold the power button and the nearest volume button, and wait until it happens, regardless of what is happening at this moment.";
+            ? "Помните, что это будет иметь смысл только если вы перезагрузили телефон или иным образом перевели пользователя в состояние BFU (до первой разблокировки), ведь иначе (в AFU) даже если экран заблокирован, взломать шифрование можно и без пароля.\n\nДля принудительной перезагрузки (если вендор блокирует обычную до подтверждения пароля) на большинстве устройств Android нужно зажать кнопку питания и ближайшую к ней кнопку громкости и подождать, пока она не произойдет, независимо от того, что происходит в этот момент."
+            : "Remember that this will only make sense if you reboot the phone or in another way put the user into the BFU (Before First Unlock) state. Otherwise (in AFU), even if the screen is locked, encryption can be hacked without a password.\n\nFor a forced reboot (if the vendor blocks the standard one before the password confirmation), on most Android devices you need to press and hold the power button and the nearest volume button, and wait until it happens, regardless of what is happening at this moment.";
     }
 
     private String getTextTip2() {
@@ -158,7 +158,7 @@ public class TipsActivity extends Activity {
     private String getTextTip4() {
         return isRussian 
             ? "4. Многие забывают об этом. Но защиту нужно ставить не только на телефон, но и на SIM-карту. Если телефон украдут или отберут, то её могут использовать для кражи ваших аккаунтов или чтобы вас подставить. Если у вас физическая SIM-карта, то чтобы её защитить нужно установить на неё пин-код в настройках подключений."
-            : "4. Many forget about this. But protection needs to be applied not only to the phone, but also to the SIM card. If the phone is stolen or taken away, it can be used to steal your accounts or to frame you. If you have a physical SIM card, you need to set a PIN code for it in the connection settings to protect it.";
+            : "4. Many forget about this. But protection needs to be applied not only to the phone, but also to the SIM card. If the phone is stolen or taken away, SIM card can be used to steal your accounts or to frame you. If you have a physical SIM card, you need to set a PIN code for it in the connection settings to protect it.";
     }
 
     private String getBtnConnections() {
@@ -183,6 +183,6 @@ public class TipsActivity extends Activity {
     private String getTextTip4Note() {
         return isRussian 
             ? "Это не сложно, но в некоторых случаях у вас перед установкой могут спросить пин-код оператора по умолчанию. Обычно это 0000. Но если сомневаетесь эту информацию легко найти в интернете почти под любого оператора. Код который вы зададите после этого не должен быть таким же простым!"
-            : "It's not difficult, but in some cases, you might be asked for the default carrier PIN before setting it up. Usually, it's 0000. But if in doubt, this information is easy to find on the internet for almost any carrier. The code you set after this, shouldn't be as simple!";
+            : "It's not difficult, but in some cases, before setting it up you might be asked for the default carrier PIN. Usually, it's 0000. But if in doubt, this information is easy to find on the internet for almost any carrier. The code you set after this, shouldn't be as simple!";
     }
 }
