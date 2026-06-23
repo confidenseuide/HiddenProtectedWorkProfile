@@ -148,7 +148,7 @@ public class TipsActivity extends Activity {
     private String getTextTip3() {
         return isRussian 
             ? "3. Полностью отключите уведомления на экране блокировки. Сам факт что вам пришло уведомление посторонние люди уже могут использовать для давления на вас."
-            : "3. Completely disable lock screen notifications. The mere fact that you received a notification can already be used by outsiders to pressure you.";
+            : "3. Completely disable lock screen notifications. The mere fact that a notification has arrived can already be used by outsiders to pressure you.";
     }
 
     private String getBtnNotifications() {
