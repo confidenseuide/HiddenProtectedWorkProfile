@@ -68,7 +68,7 @@
             android:exported="false"
 			android:launchMode="singleInstance"
 			android:screenOrientation="portrait"	
-			android:label="SecuritySettings"
+			android:label="UnlockAttemptsLimitSettings"
 		    android:excludeFromRecents="true">        
         </activity>
 
@@ -166,7 +166,7 @@
 
 		<activity android:name=".HardwareSettingsActivity"
             android:exported="false"
-			android:label="HardwareSettings"
+			android:label="SecuritySettings"
 			android:screenOrientation="portrait"
 			android:enabled="true"
 			android:launchMode="singleInstance"
