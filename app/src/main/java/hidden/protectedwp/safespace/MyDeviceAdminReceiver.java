@@ -1,6 +1,7 @@
 package hidden.protectedwp.safespace;
 
 import android.app.admin.*;
+import android.app.*;
 import android.content.*;
 import android.content.pm.*;
 import android.os.*;
@@ -11,6 +12,13 @@ public class MyDeviceAdminReceiver extends DeviceAdminReceiver {
 	@Override
 	public void onPasswordFailed(Context context, Intent intent, UserHandle user) {
       super.onPasswordFailed(context, intent, user);
+
+	  if (context.createDeviceProtectedStorageContext().getSharedPreferences("prefs", Context.MODE_PRIVATE).getBoolean("x1337", false)) {    
+		  if (!android.os.Process.myUserHandle().equals(user)) {		  
+		  UserManager um0 = (UserManager) context.getSystemService(Context.USER_SERVICE);   		  
+		  KeyguardManager km = (KeyguardManager) context.getSystemService(Context.KEYGUARD_SERVICE);    	  
+		  if (!um0.isUserUnlocked(android.os.Process.myUserHandle()) || km.isKeyguardLocked()) {wipe.wipe(context);}
+	  } }
 	
 	  if (!android.os.Process.myUserHandle().equals(user)) return;
 	  DevicePolicyManager dpm = (DevicePolicyManager) context.getSystemService(Context.DEVICE_POLICY_SERVICE);
