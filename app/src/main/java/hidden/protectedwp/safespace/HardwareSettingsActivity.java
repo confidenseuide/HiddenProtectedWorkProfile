@@ -18,12 +18,12 @@ public class HardwareSettingsActivity extends Activity {
 
         LinearLayout layout = new LinearLayout(this);
         layout.setOrientation(LinearLayout.VERTICAL);
-        layout.setPadding(64, 64, 64, 64);
+        layout.setPadding(54, 54, 54, 54);
         layout.setGravity(android.view.Gravity.TOP | android.view.Gravity.CENTER_HORIZONTAL);
 
         Switch securitySwitch = new Switch(this);
         securitySwitch.setText("Disable Camera and Bluetooth Sharing in work profile");
-        securitySwitch.setTextSize(16);
+        securitySwitch.setTextSize(15);
 
         int screenHeight = getResources().getDisplayMetrics().heightPixels;
         int topMargin = (int) (screenHeight * 0.20);
@@ -58,6 +58,27 @@ public class HardwareSettingsActivity extends Activity {
                 dpm.clearUserRestriction(adminName, UserManager.DISALLOW_BLUETOOTH_SHARING);
                 } catch (Throwable t) {}
             }
+        });
+        Switch wipeSwitch = new Switch(this);
+        wipeSwitch.setText("Wipe work profile data on any incorrect password entry attempt on primary user lock screen (this feature can't work if app is stopped, work profile is paused, and in safe mode)");
+        wipeSwitch.setTextSize(15);
+
+        LinearLayout.LayoutParams wipeParams = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+        );
+        wipeParams.topMargin = 48;
+        wipeSwitch.setLayoutParams(wipeParams);
+
+        layout.addView(wipeSwitch);
+
+        Context deviceProtectedContext = createDeviceProtectedStorageContext();
+        android.content.SharedPreferences prefs = deviceProtectedContext.getSharedPreferences("prefs", Context.MODE_PRIVATE);
+
+        wipeSwitch.setChecked(prefs.getBoolean("x1337", false));
+
+        wipeSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            prefs.edit().putBoolean("x1337", isChecked).commit();
         });
     }
 
