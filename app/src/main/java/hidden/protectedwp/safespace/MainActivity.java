@@ -560,9 +560,7 @@ public class MainActivity extends Activity {
                             new ComponentName(getPackageName(), getPackageName()+".LauncherAlias"), 
                             profile, null, null
                         );	
-						} catch (Throwable disabledAlias) {}
-                        finishAndRemoveTask();
-					    break;
+						} catch (Throwable e) {}                        
                     }
                 }
             }
