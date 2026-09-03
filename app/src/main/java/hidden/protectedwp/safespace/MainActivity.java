@@ -123,8 +123,7 @@ public class MainActivity extends Activity {
         launcherIntent.addCategory(Intent.CATEGORY_LAUNCHER);
         launcherIntent.setPackage(pkg);
 
-		//We get ALL packages in the current profile, including hidden (uninstalled) ones.
-        List<ResolveInfo> activities = pm.queryIntentActivities(launcherIntent, 
+		List<ResolveInfo> activities = pm.queryIntentActivities(launcherIntent, 
                 PackageManager.MATCH_DISABLED_COMPONENTS | PackageManager.MATCH_UNINSTALLED_PACKAGES);
 
         if (activities != null && !activities.isEmpty()) {
@@ -393,8 +392,6 @@ public class MainActivity extends Activity {
 							dpm.setPasswordQuality(adminComponent, DevicePolicyManager.PASSWORD_QUALITY_COMPLEX);
 							dpm.setPasswordMinimumLength(adminComponent, 15);
 							dpm.setKeyguardDisabledFeatures(adminComponent, DevicePolicyManager.KEYGUARD_DISABLE_FINGERPRINT | DevicePolicyManager.KEYGUARD_DISABLE_FACE | DevicePolicyManager.KEYGUARD_DISABLE_IRIS | DevicePolicyManager.KEYGUARD_DISABLE_TRUST_AGENTS | DevicePolicyManager.KEYGUARD_DISABLE_FEATURES_ALL);					    
-							int factLength = dpm.getPasswordMinimumLength(adminComponent);
-							//Toast.makeText(MainActivity.this, "Minimal system password length: " + factLength + ".", Toast.LENGTH_LONG).show();
 							} catch (Throwable t) {
 							android.widget.TextView errorView = new android.widget.TextView(MainActivity.this);
 							errorView.setText(t.getMessage());
@@ -466,8 +463,7 @@ public class MainActivity extends Activity {
 											nowHidden.add(pkg);
 										}}
 									p.edit().putStringSet("hidden_pkgs", nowHidden).apply();
-									//dpm.setPermittedInputMethods(admin, java.util.Collections.singletonList(current_keyboard));
-								}
+									}
 							});
 							loader.start();
 						}}
