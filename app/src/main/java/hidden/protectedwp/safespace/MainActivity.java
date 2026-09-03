@@ -555,11 +555,11 @@ public class MainActivity extends Activity {
 						launcherApps.startMainActivity(
                             new ComponentName(getPackageName(), getPackageName()+".LauncherAlias"), 
                             profile, null, null
-                        );
-						finish();
+                        );						
 						} catch (Throwable e) {}                        
                     }
                 }
+				finish();
             }
 }
 
