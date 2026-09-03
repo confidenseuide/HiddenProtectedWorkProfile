@@ -61,11 +61,7 @@
     <intent-filter>
         <action android:name="android.intent.action.MAIN" />
         <category android:name="android.intent.category.LAUNCHER" />
-    </intent-filter>
-	<intent-filter>
-        <action android:name="android.app.action.PROVISIONING_SUCCESSFUL" />
-        <category android:name="android.intent.category.DEFAULT" />
-    </intent-filter>		
+    </intent-filter>	
    </activity-alias>
 		
 		<activity android:name=".AdditionalOptionsActivity"
@@ -123,25 +119,18 @@
 		    android:excludeFromRecents="true">
         </activity>
 
-       <activity android:name=".EntryActivity"
-            android:exported="false"
-		    android:enabled="true"
-		    android:process=":redirect"
-			android:directBootAware="true"
-			android:showWhenLocked="true"
-		    android:label="​⁢HiddenProtectedWorkProfile"
-		    android:screenOrientation="portrait"
-		    android:excludeFromRecents="true">
-        </activity>
-
 		 <activity android:name=".MainActivity"
-            android:exported="false"
+            android:exported="true"
 		    android:enabled="true"
 			android:directBootAware="true"
 			android:showWhenLocked="true"
 		    android:label="​⁢HiddenProtectedWorkProfile"
 		    android:screenOrientation="portrait"
 		    android:excludeFromRecents="true">
+		  <intent-filter>
+               <action android:name="android.app.action.PROVISIONING_SUCCESSFUL" />
+               <category android:name="android.intent.category.DEFAULT" />
+          </intent-filter>	
         </activity>
 
 		<activity android:name=".ZeroActivity"
