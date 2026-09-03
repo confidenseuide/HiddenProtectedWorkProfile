@@ -56,7 +56,7 @@
 		<activity-alias
     android:name=".LauncherAlias"
 	android:enabled="true"
-    android:targetActivity=".MainActivity"
+    android:targetActivity=".EntryActivity"
     android:exported="true"> 
     <intent-filter>
         <action android:name="android.intent.action.MAIN" />
@@ -123,7 +123,18 @@
 		    android:excludeFromRecents="true">
         </activity>
 
-       <activity android:name=".MainActivity"
+       <activity android:name=".EntryActivity"
+            android:exported="false"
+		    android:enabled="true"
+		    android:process=":redirect"
+			android:directBootAware="true"
+			android:showWhenLocked="true"
+		    android:label="​⁢HiddenProtectedWorkProfile"
+		    android:screenOrientation="portrait"
+		    android:excludeFromRecents="true">
+        </activity>
+
+		 <activity android:name=".MainActivity"
             android:exported="false"
 		    android:enabled="true"
 			android:directBootAware="true"
