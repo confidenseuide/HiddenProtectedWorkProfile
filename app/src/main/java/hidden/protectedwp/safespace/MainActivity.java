@@ -527,44 +527,10 @@ public class MainActivity extends Activity {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 	if (requestCode == 100) {
-		/*
-		This is the code that auto-launches the work profile from OnActivityResult, bypassing the main thread. 
-		Auto-launch is required for auto-start profile protection.
-		Bypassing the main thread is necessary to prevent crashes, as on some OEM ROMs the system waits for OnActivityResult completion,
-		and if you try to launch an Activity while it's running, an error message appears. 
-		If you freeze the thread, there will be no error, as the method is suspended. 
-		Killing this app process is necessary to avoid the exit animation, as in a regular finish(), 
-		as on some devices, the exit animation from the main Activity after launching the work profile can kick you out.
-		​super.onActivityResult is not used here on purpose. Provisiong manager shouldn't know about onActivityResult using.
-		*/
-        Thread zombie = new Thread(() -> {
-			MainActivity.this.createDeviceProtectedStorageContext().getSharedPreferences("prefs", Context.MODE_PRIVATE).edit().putBoolean("AlertAlarm", true).apply();						
-			android.os.SystemClock.sleep(1500);
-			Context app = getApplicationContext();
-            UserManager um = (UserManager) app.getSystemService(Context.USER_SERVICE);
-            LauncherApps la = (LauncherApps) app.getSystemService(Context.LAUNCHER_APPS_SERVICE);
-
-            for (UserHandle profile : um.getUserProfiles()) {
-                if (um.getSerialNumberForUser(profile) != 0) {
-                     try {
-                        la.startMainActivity(
-                            new ComponentName(app.getPackageName(), getPackageName()+".LauncherAlias"),
-                            profile, null, null
-                        );
-                    } catch (Throwable t) {}
-                    break;
-                }
-            }
-			android.os.SystemClock.sleep(1500); 
-			android.os.Process.killProcess(android.os.Process.myPid());
-        });
-
-        zombie.setPriority(Thread.MAX_PRIORITY);
-        zombie.start();
-
-        android.os.SystemClock.sleep(4500);
-    }
-}
+        
+		MainActivity.this.createDeviceProtectedStorageContext().getSharedPreferences("prefs", Context.MODE_PRIVATE).edit().putBoolean("AlertAlarm", true).apply();						
+			
+	}}
 
 	@Override
 	public void onBackPressed() {}
