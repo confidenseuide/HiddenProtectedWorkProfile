@@ -1,5 +1,6 @@
 package hidden.protectedwp.safespace;
 
+import java.util.Collections;
 import android.content.Intent;
 import android.widget.Toast;
 import android.widget.Button;
@@ -29,7 +30,7 @@ import android.widget.TextView;
 import java.util.Locale;
 
 public class CopeActivity extends Activity {
-
+	
     @Override
     protected void onResume() {
         super.onResume();
@@ -49,7 +50,7 @@ public class CopeActivity extends Activity {
         
     private boolean isCopeOwner() {
         DevicePolicyManager dpm = (DevicePolicyManager) getSystemService(Context.DEVICE_POLICY_SERVICE);
-        boolean isCOPE = dpm != null && android.os.Build.VERSION.SDK_INT >= 30 && dpm.isOrganizationOwnedDeviceWithManagedProfile() && dpm.isProfileOwnerApp(getPackageName());
+        boolean isCOPE = dpm != null && dpm.isOrganizationOwnedDeviceWithManagedProfile() && dpm.isProfileOwnerApp(getPackageName());
         return isCOPE;
     }
 
@@ -277,7 +278,7 @@ public class CopeActivity extends Activity {
 	CheckBox cbCrossProfileCopyPaste = new CheckBox(this);
 
 	  cbCrossProfileCopyPaste.setText(isEn()
-        ? "Disallow cross profile copy-paste"
+        ? "Disallow cross-profile copy-paste"
         : "Запретить копирование и вставку между профилями");
 
 	  cbCrossProfileCopyPaste.setTextColor(Color.WHITE);
@@ -360,6 +361,44 @@ public class CopeActivity extends Activity {
 				
     buttonBox.addView(cbCameraAndCapture);
 
+	CheckBox frpSwitch = new CheckBox(this);
+    frpSwitch.setText(isEn() ? "Permanently disable FRP (until profile destruction)" : "Навсегда отключить FRP (до уничтожения профиля)");
+    frpSwitch.setTextColor(Color.WHITE);
+    frpSwitch.setTextSize(15f);
+    
+    boolean frpDisabled = isFRPdisabled();
+    frpSwitch.setChecked(frpDisabled);
+
+    if (!isCO || frpDisabled) {
+        frpSwitch.setAlpha(0.5f);
+    }
+
+    frpSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+        if (!isCopeOwner()) {
+            if (isChecked) {
+                frpSwitch.setChecked(false);
+                showCopeOwnerInstruction();
+            }
+            return;
+        }
+
+        if (isFRPdisabled()) {
+            if (!isChecked) {
+                frpSwitch.setChecked(true);
+                Toast.makeText(CopeActivity.this, isEn() ? "This is an irreversible operation" : "Это необратимая операция", Toast.LENGTH_SHORT).show();
+            }
+            return;
+        }
+
+
+        if (isChecked) {            
+            disableFRP(CopeActivity.this);
+            frpSwitch.setAlpha(0.5f);
+        }
+    });
+
+    buttonBox.addView(frpSwitch);
+
     
     Button btnSetWorkPassword = new Button(this);
     btnSetWorkPassword.setText(
@@ -390,6 +429,37 @@ public class CopeActivity extends Activity {
     });
 
     buttonBox.addView(btnSetWorkPassword);
+
+		Button setPasswordButton = new Button(this);
+		setPasswordButton.setText(
+			isEn() ? "Set password for apps display"
+           : "Установить пароль для показа приложений" );
+
+		GradientDrawable buttonBackground = new GradientDrawable();
+		buttonBackground.setShape(GradientDrawable.RECTANGLE);
+		buttonBackground.setColor(Color.parseColor("#34495e"));
+		buttonBackground.setCornerRadius(6f);
+
+		setPasswordButton.setBackground(buttonBackground);
+		setPasswordButton.setTextColor(Color.WHITE);
+		setPasswordButton.setPadding(32, 32, 32, 32);
+
+		LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(    
+		LinearLayout.LayoutParams.MATCH_PARENT,
+        LinearLayout.LayoutParams.WRAP_CONTENT );
+
+		layoutParams.setMargins(0, 16, 0, 16);
+		setPasswordButton.setLayoutParams(layoutParams);
+
+		setPasswordButton.setOnClickListener(view -> {        
+        Intent setPasswordIntent = new Intent(this, SecurityActivity.class);
+        startActivity(setPasswordIntent);  
+        finish();
+
+		});
+
+		buttonBox.addView(setPasswordButton);
+
 
      boolean isSeparate = false;
      try {
@@ -680,6 +750,30 @@ public class CopeActivity extends Activity {
 
     }
 
-   
+
+	private static void disableFRP(Context context) {       
+           DevicePolicyManager dpm = (DevicePolicyManager) context.getSystemService(Context.DEVICE_POLICY_SERVICE);
+           ComponentName admin = new ComponentName(context, MyDeviceAdminReceiver.class);
+           
+           android.app.admin.FactoryResetProtectionPolicy frpPolicy =       
+                  new android.app.admin.FactoryResetProtectionPolicy.Builder()
+                  .setFactoryResetProtectionAccounts(Collections.emptyList())        
+                  .setFactoryResetProtectionEnabled(false)
+                  .build();
+            dpm.setFactoryResetProtectionPolicy(admin, frpPolicy);                               
+       
+           Intent intent = new Intent("com.google.android.gms.auth.FRP_CONFIG_CHANGED");
+           intent.setPackage("com.google.android.gms");
+           context.sendBroadcast(intent);                      
+   }
+
+
+	private boolean isFRPdisabled() {    
+		if (!isCopeOwner()) return false;
+        DevicePolicyManager dpm = (DevicePolicyManager) getSystemService(DEVICE_POLICY_SERVICE);                
+        ComponentName admin = new ComponentName(this, MyDeviceAdminReceiver.class);
+        android.app.admin.FactoryResetProtectionPolicy frpPolicy = dpm.getFactoryResetProtectionPolicy(admin);        
+        return frpPolicy != null && !frpPolicy.isFactoryResetProtectionEnabled();
+   }   
     
 }
