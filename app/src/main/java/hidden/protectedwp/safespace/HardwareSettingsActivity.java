@@ -20,45 +20,7 @@ public class HardwareSettingsActivity extends Activity {
         layout.setOrientation(LinearLayout.VERTICAL);
         layout.setPadding(54, 54, 54, 54);
         layout.setGravity(android.view.Gravity.TOP | android.view.Gravity.CENTER_HORIZONTAL);
-
-        Switch securitySwitch = new Switch(this);
-        securitySwitch.setText("Disable Camera and Bluetooth Sharing in work profile");
-        securitySwitch.setTextSize(15);
-
-        int screenHeight = getResources().getDisplayMetrics().heightPixels;
-        int topMargin = (int) (screenHeight * 0.20);
-
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
-        );
-        params.topMargin = topMargin;
-        securitySwitch.setLayoutParams(params);
-        
-        layout.addView(securitySwitch);
-        setContentView(layout);
-
-        DevicePolicyManager dpm = (DevicePolicyManager) getSystemService(Context.DEVICE_POLICY_SERVICE);
-        ComponentName adminName = new ComponentName(this, MyDeviceAdminReceiver.class);
-        UserManager um = (UserManager) getSystemService(Context.USER_SERVICE);
-
-        securitySwitch.setChecked(
-            dpm.getCameraDisabled(adminName) &&            
-            um.hasUserRestriction(UserManager.DISALLOW_BLUETOOTH_SHARING)
-        );
-
-        securitySwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            dpm.setCameraDisabled(adminName, isChecked);
-            if (isChecked) {
-                try {
-                dpm.addUserRestriction(adminName, UserManager.DISALLOW_BLUETOOTH_SHARING);                
-                } catch (Throwable t) {}
-            } else {
-                try {
-                dpm.clearUserRestriction(adminName, UserManager.DISALLOW_BLUETOOTH_SHARING);
-                } catch (Throwable t) {}
-            }
-        });
+                
         Switch wipeSwitch = new Switch(this);
         wipeSwitch.setText("Wipe work profile data on any incorrect password entry attempt on primary user lock screen (this feature can't work if app is stopped, work profile is paused, and in safe mode)");
         wipeSwitch.setTextSize(15);
@@ -71,6 +33,7 @@ public class HardwareSettingsActivity extends Activity {
         wipeSwitch.setLayoutParams(wipeParams);
 
         layout.addView(wipeSwitch);
+        setContentView(layout);
 
         Context deviceProtectedContext = createDeviceProtectedStorageContext();
         android.content.SharedPreferences prefs = deviceProtectedContext.getSharedPreferences("prefs", Context.MODE_PRIVATE);
