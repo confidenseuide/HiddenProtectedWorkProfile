@@ -325,7 +325,7 @@ public class CopeActivity extends Activity {
 	
     CheckBox cbCameraAndCapture = new CheckBox(this);
         cbCameraAndCapture.setText(isEn()
-        ? "Disallow camera and screenshots on main profile"
+        ? "Disallow camera and screenshots in main profile"
         : "Запретить камеру и скриншоты в основном профиле");
         cbCameraAndCapture.setTextColor(Color.WHITE);
         cbCameraAndCapture.setTextSize(15f);
@@ -360,6 +360,40 @@ public class CopeActivity extends Activity {
     });
 				
     buttonBox.addView(cbCameraAndCapture);
+	
+	CheckBox cbWipeAllData = new CheckBox(this);
+	cbWipeAllData.setText(isEn()
+        ? "Wipe all phone data when wipe profile data"
+        : "Очистить все данные телефона при очистке данных профиля");
+		cbWipeAllData.setTextColor(Color.WHITE);
+		cbWipeAllData.setTextSize(15f);
+
+		Context deviceProtectedContext = getApplicationContext().createDeviceProtectedStorageContext();
+	    SharedPreferences devicePrefs = deviceProtectedContext.getSharedPreferences("prefs", Context.MODE_PRIVATE);
+
+		final String PREF_KEY_WIPE_ALL = "wipe_all_phone_data";
+
+		if (isCO) {       
+			boolean isWipeAllEnabled = devicePrefs.getBoolean(PREF_KEY_WIPE_ALL, false);  
+			cbWipeAllData.setChecked(isWipeAllEnabled);
+		} else {       
+			cbWipeAllData.setChecked(false);      
+			cbWipeAllData.setAlpha(0.5f);
+		}
+
+		cbWipeAllData.setOnClickListener(v -> {  
+			if (!isCO) {             
+				cbWipeAllData.setChecked(false);             
+				showCopeOwnerInstruction();                 
+				return;      
+			}
+   
+			boolean isChecked = cbWipeAllData.isChecked();   
+			devicePrefs.edit().putBoolean(PREF_KEY_WIPE_ALL, isChecked).apply();
+
+		});
+				
+		buttonBox.addView(cbWipeAllData);
 
 	CheckBox frpSwitch = new CheckBox(this);
     frpSwitch.setText(isEn() ? "Permanently disable FRP (until profile destruction)" : "Навсегда отключить FRP (до уничтожения профиля)");
@@ -505,12 +539,47 @@ public class CopeActivity extends Activity {
                     : "Задайте максимальное количество неверных попыток разблокировки до сброса для рабочего профиля. Этот сброс может стереть и основной профиль если вы использовали ADB команду указанную в переключателях."    
             );
 
-          renderWorkProfileAttemptsInput();
+          renderWorkProfileAttemptsInput(0);
         });
 
         buttonBox.addView(btnSetWorkAttempts);
-            
-    }
+
+        if (isCO) {
+		Button btnLimitAttempts = new Button(this);
+
+		btnLimitAttempts.setText(
+			isEn()
+        ? "Set unlock attempts limit for main profile"
+        : "Установить лимит попыток разблокировки основного профиля" );
+
+		GradientDrawable buttonLimit = new GradientDrawable();
+		buttonLimit.setShape(GradientDrawable.RECTANGLE);
+		buttonLimit.setColor(Color.parseColor("#34495e"));
+		buttonLimit.setCornerRadius(6f);
+
+		btnLimitAttempts.setBackground(buttonLimit);
+		btnLimitAttempts.setTextColor(Color.WHITE);
+		btnLimitAttempts.setPadding(32, 32, 32, 32);
+
+		LinearLayout.LayoutParams layoutMargins = new LinearLayout.LayoutParams(
+        LinearLayout.LayoutParams.MATCH_PARENT,
+        LinearLayout.LayoutParams.WRAP_CONTENT );
+
+		layoutMargins.setMargins(0, 15, 0, 15);
+		btnLimitAttempts.setLayoutParams(layoutMargins);
+
+		btnLimitAttempts.setOnClickListener(v -> {       
+			render(   
+				isEn()
+            ? "Set the maximum number of failed unlock attempts before reset for the maim profile."
+            : "Задайте максимальное количество неверных попыток разблокировки до сброса для основного профиля." );
+ 
+			renderWorkProfileAttemptsInput(1);
+		});
+
+		buttonBox.addView(btnLimitAttempts);            
+    
+	}}
 
         Button btnBack = new Button(this);
         btnBack.setText(isEn() ? "Main menu" : "Главное меню");
@@ -548,7 +617,7 @@ public class CopeActivity extends Activity {
         super.onDestroy();
     }
 
-    private void renderWorkProfileAttemptsInput() {
+    private void renderWorkProfileAttemptsInput(int mode) {
     buttonBox.removeAllViews();
     currentInput.setLength(0);
 
@@ -679,12 +748,18 @@ public class CopeActivity extends Activity {
                                 (DevicePolicyManager) getSystemService(
                                         Context.DEVICE_POLICY_SERVICE
                                 );
+						
 
                         ComponentName adminName =
                                 new ComponentName(
                                         this,
                                         MyDeviceAdminReceiver.class
                                 );
+
+
+						    if (mode==1) {
+							dpm = dpm.getParentProfileInstance(adminName);
+						    }
 
                                             
                             dpm.setMaximumFailedPasswordsForWipe(
