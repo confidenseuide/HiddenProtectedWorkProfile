@@ -274,6 +274,30 @@ public class CopeActivity extends Activity {
     });
     buttonBox.addView(cbRestrictions2);
 
+	CheckBox cbCrossProfileCopyPaste = new CheckBox(this);
+
+	  cbCrossProfileCopyPaste.setText(isEn()
+        ? "Disallow cross profile copy-paste"
+        : "Запретить копирование и вставку между профилями");
+
+	  cbCrossProfileCopyPaste.setTextColor(Color.WHITE);
+	  cbCrossProfileCopyPaste.setTextSize(15f);
+
+		Bundle restrictions = dpm.getUserRestrictions(new ComponentName(this, MyDeviceAdminReceiver.class));
+		boolean copyPasteDisabled = restrictions != null
+        && restrictions.getBoolean(UserManager.DISALLOW_CROSS_PROFILE_COPY_PASTE, false);
+		cbCrossProfileCopyPaste.setChecked(copyPasteDisabled);
+		cbCrossProfileCopyPaste.setOnClickListener(v -> {   
+			boolean disable = cbCrossProfileCopyPaste.isChecked();  
+			if (disable) {      
+				dpm.addUserRestriction(adminName, UserManager.DISALLOW_CROSS_PROFILE_COPY_PASTE);  
+			} else {   
+				dpm.clearUserRestriction(adminName, UserManager.DISALLOW_CROSS_PROFILE_COPY_PASTE);
+			}
+		});
+
+	buttonBox.addView(cbCrossProfileCopyPaste);
+
 	CheckBox cbCamAndScr = new CheckBox(this);
 		cbCamAndScr.setText(isEn()
         ? "Disallow camera and screenshots in work profile"
