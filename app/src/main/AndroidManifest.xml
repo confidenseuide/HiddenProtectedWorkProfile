@@ -9,8 +9,7 @@
  <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
  <uses-permission android:name="android.permission.WAKE_LOCK"/>
  <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM"/>		
- <uses-permission android:name="android.permission.USE_EXACT_ALARM"/>
-	
+ <uses-permission android:name="android.permission.USE_EXACT_ALARM"/>	
 	
     <application
         android:label="HiddenProtectedWorkProfile"
@@ -45,14 +44,6 @@
 		    android:excludeFromRecents="true">
         </activity>
 
-		<activity android:name=".MediaPlayerActivity"
-            android:exported="false"
-			android:launchMode="singleInstance"
-			android:screenOrientation="portrait"
-			android:label="PlayMedia"
-		    android:excludeFromRecents="true">
-        </activity>
-
 		<activity-alias
     android:name=".LauncherAlias"
 	android:enabled="true"
@@ -64,14 +55,6 @@
     </intent-filter>	
    </activity-alias>
 		
-		<activity android:name=".AdditionalOptionsActivity"
-            android:exported="false"
-			android:launchMode="singleInstance"
-			android:screenOrientation="portrait"	
-			android:label="UnlockAttemptsLimitSettings"
-		    android:excludeFromRecents="true">        
-        </activity>
-
 		<activity android:name=".SecurityActivity"
             android:exported="false"
 			android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen"
@@ -93,11 +76,11 @@
 		    android:excludeFromRecents="true">
         </activity>
 
-		<activity android:name=".SetPasswordActivity"
+		<activity android:name=".CopeActivity"
             android:exported="false"
 			android:screenOrientation="portrait"
 			android:launchMode="singleInstance"
-			android:label="SetPassword"
+			android:label="Control Panel"
 		    android:excludeFromRecents="true">
         </activity>
 
