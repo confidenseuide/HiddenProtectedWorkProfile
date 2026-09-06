@@ -187,7 +187,7 @@ public class MainActivity extends Activity {
 		    "1. App restricts backup, camera and screenshots in work profile\n"+			
 			"2. Enables and activates the necessary system programs in work profile and allows app installation\n" +
             "3. Sets unlocking security requirements to help you choose the optimal password length and type (you can set password using SetPassword button)\n"+			   
-			"4. When timer is finished app opens control panel screen where you can manage profile or set a password (by the way, it is also recommended to have a password in your main phone too - to make it even more difficult to access profile)\n\n"+			   
+			"4. When timer is finished app opens control panel screen where you can manage profile or set a password (by the way, it is also recommended to have a password in your main phone too - to make it even more difficult to access profile)"+			   
 			"\n\nDon't use USB data connection, Type-C headphones, don't charge phone from PC and other phones if you don't want destroy work profile.\nIf you want to use USB for data transfer or debugging (etc.) without destroying profile, just click \"pause work apps\". In other cases, USB protection must be enabled and profile must be enabled. After creating profile please remove work profile button from quick settings bar so that protection cannot be disabled on lock screen. Don't pause work apps without reason. When deleting profile, system may display notification. ​If you want that others can't see it, disable notifications on lock screen.\n\n"+
 			"WARNING: This app may not work on systems with autostart restrictions, for example, on Xiaomi devices.\n");  
 	
