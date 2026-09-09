@@ -364,7 +364,7 @@ public class CopeActivity extends Activity {
 	CheckBox cbWipeAllData = new CheckBox(this);
 	cbWipeAllData.setText(isEn()
         ? "Wipe all phone data when wipe profile data"
-        : "Очистить все данные телефона при очистке данных профиля");
+        : "Очищать все данные телефона при очистке данных профиля");
 		cbWipeAllData.setTextColor(Color.WHITE);
 		cbWipeAllData.setTextSize(15f);
 
