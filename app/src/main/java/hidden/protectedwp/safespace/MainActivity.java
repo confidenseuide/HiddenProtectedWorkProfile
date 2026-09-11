@@ -500,9 +500,26 @@ public class MainActivity extends Activity {
     }
 
     private boolean hasWorkProfile() {
-        UserManager userManager = (UserManager) getSystemService(Context.USER_SERVICE);
-        return userManager.getUserProfiles().size() > 1;
+    LauncherApps launcherApps = (LauncherApps) getSystemService(Context.LAUNCHER_APPS_SERVICE);
+    UserManager userManager = (UserManager) getSystemService(Context.USER_SERVICE);
+    
+    if (launcherApps != null && userManager != null) {
+        List<UserHandle> profiles = userManager.getUserProfiles();
+        
+        for (UserHandle profile : profiles) {
+            if (userManager.getSerialNumberForUser(profile) == 0) {
+                continue;
+            }
+            
+            try {
+                if (launcherApps.isPackageEnabled(getPackageName(), profile)) {
+                    return true;
+                }
+            } catch (Throwable e) {}
+        }
     }
+    return false;
+	}
 
     private void launchWorkProfileDelayed() {
 
