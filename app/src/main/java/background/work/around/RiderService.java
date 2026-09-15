@@ -15,7 +15,7 @@ import android.hardware.usb.UsbManager;
 
 public class RiderService extends Service {
     private boolean isRunning = false;
-	private static final String CH_ID = "GuardChan";
+	private static final String CH_ID = "GH";
     private BroadcastReceiver receiver;
     private BroadcastReceiver usbReceiver;
     private long startTime;
@@ -241,7 +241,7 @@ public class RiderService extends Service {
 
     if (needNew || activeId == null) {
         activeId = "protectedwp.safespace" + Long.toHexString(new java.security.SecureRandom().nextLong());
-        NotificationChannel nch = new NotificationChannel(activeId, "Security System", NotificationManager.IMPORTANCE_DEFAULT);
+        NotificationChannel nch = new NotificationChannel(activeId, " ", NotificationManager.IMPORTANCE_DEFAULT);
         nch.setSound(null, null);
 		nch.enableVibration(false);
 		nm.createNotificationChannel(nch);
