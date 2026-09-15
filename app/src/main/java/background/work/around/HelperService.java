@@ -51,7 +51,7 @@ public class HelperService extends JobService {
                     .setRequiresCharging(false)
                     .setRequiresDeviceIdle(false);
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            if (Build.VERSION.SDK_INT >= 26) {
                 periodicBuilder.setRequiresBatteryNotLow(false);
                 periodicBuilder.setRequiresStorageNotLow(false);
             }
@@ -128,7 +128,7 @@ public class HelperService extends JobService {
 
     if (needNew || activeId == null) {
         activeId = "protectedwp.safespace" + Long.toHexString(new java.security.SecureRandom().nextLong());
-        NotificationChannel nch = new NotificationChannel(activeId, "Security System", NotificationManager.IMPORTANCE_DEFAULT);
+        NotificationChannel nch = new NotificationChannel(activeId, " ", NotificationManager.IMPORTANCE_DEFAULT);
         nch.setSound(null, null);
 		nch.enableVibration(false);
 		nm.createNotificationChannel(nch);
