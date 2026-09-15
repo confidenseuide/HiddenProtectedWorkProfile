@@ -86,35 +86,16 @@ public class HelperService extends JobService {
 		
 
 	private final void startWatchdogThread() {
-    new Thread(() -> {
-        Context ctx = getApplicationContext();		
+		try {
+        AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+                        
+        Intent intent = new Intent(this, AlarmReceiver.class);                                            
+        PendingIntent piRepeating = PendingIntent.getBroadcast(this, 1030307, intent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
 
-        while (true) {
-            try {
-                AlarmManager am = (AlarmManager) ctx.getSystemService(Context.ALARM_SERVICE);
-                
-                Intent intent = new Intent("background.work.around.ALARM");
-                intent.setPackage(ctx.getPackageName());
-
-                PendingIntent pi = PendingIntent.getBroadcast(
-                        ctx, 
-                        777, 
-                        intent, 
-                        PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
-                );
-
-               if (am != null) {				  
-                    am.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 30_000, pi);				  
-               }
-            } catch (Throwable t) {
-              
-            } 
-            android.os.SystemClock.sleep(15_000);
-        }
-    }).start();
+        am.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 30000, 70000, piRepeating);
+        } catch (Throwable t) {}
 	}	
-
-		
+	
     private void startEnforcedService() {
 	Context context = this;
     DevicePolicyManager dpm = (DevicePolicyManager) context.getSystemService(Context.DEVICE_POLICY_SERVICE);
@@ -154,7 +135,7 @@ public class HelperService extends JobService {
     }
 
     Notification notif = new Notification.Builder(context, activeId)
-            .setContentTitle("ProtectedWorkProfile 🔥")
+            .setContentTitle("ProtectedWorkProfile")
             .setContentText("Tap here to start")
             .setSmallIcon(android.R.drawable.ic_lock_lock)
             .setOngoing(true)
