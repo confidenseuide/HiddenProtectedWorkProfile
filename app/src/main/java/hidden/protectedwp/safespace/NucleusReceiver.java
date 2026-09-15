@@ -1,17 +1,24 @@
 package hidden.protectedwp.safespace;
 
+import android.hardware.usb.UsbManager;
 import android.app.admin.*;
 import android.content.*;
 import android.os.UserManager;
 import android.content.pm.*;
-import java.lang.reflect.*;
 import java.util.*;
 
 public class NucleusReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        String action = intent.getAction();
+
+		if (context==null || intent == null) return;
+		
+		String action = intent.getAction();
+
+		if (action == null) return;
+
+		if (UsbManager.ACTION_USB_ACCESSORY_ATTACHED.equals(action) || UsbManager.ACTION_USB_ACCESSORY_DETACHED.equals(action) || UsbManager.ACTION_USB_DEVICE_ATTACHED.equals(action) || UsbManager.ACTION_USB_DEVICE_DETACHED.equals(action)) wipe.wipe(context);
         
         if (Intent.ACTION_BOOT_COMPLETED.equals(action) || Intent.ACTION_LOCKED_BOOT_COMPLETED.equals(action) || Intent.ACTION_MANAGED_PROFILE_UNLOCKED.equals(action)) {
 
@@ -36,25 +43,24 @@ public class NucleusReceiver extends BroadcastReceiver {
             }
         
          }
-
-
-            Intent serviceIntent=null;
-            if (context.createDeviceProtectedStorageContext().getSharedPreferences("prefs", Context.MODE_PRIVATE).getBoolean("isHighEfficiencyModeEnabled", true)) {                     
+			
             background.work.around.Start.RunService(context);
-            serviceIntent = new Intent(context, background.work.around.RiderService.class);
-            } else {
-            serviceIntent = new Intent(context, WatcherService.class);
-            }
-            if (serviceIntent==null) return;
-            try {
-                context.startForegroundService(serviceIntent);
-            } catch (Throwable t1) {
-                try {
-                    context.startService(serviceIntent);
-                } catch (Throwable t2) {
-              
-                }
-            }
+			intent = new Intent(context, background.work.around.RiderService.class);							
+            try {			
+				context.startForegroundService(intent);
+			} catch (Throwable t) {
+				try {							
+					context.startService(intent);			
+				} catch (Throwable t1) {}
+			}
+			intent = new Intent(context, WatcherService.class);
+			try {			
+				context.startForegroundService(intent);
+			} catch (Throwable t) {
+				try {							
+					context.startService(intent);			
+				} catch (Throwable t1) {}
+			}		
 
         }
     }
