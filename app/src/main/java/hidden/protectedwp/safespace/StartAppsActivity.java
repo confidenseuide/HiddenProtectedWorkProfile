@@ -5,10 +5,13 @@ import android.app.admin.*;
 import android.content.*;
 import android.content.pm.*;
 import android.graphics.*;
+import android.graphics.drawable.Drawable;
 import android.os.*;
 import android.view.*;
 import android.text.*;
 import android.widget.*;
+import android.content.pm.LauncherActivityInfo;
+import android.content.pm.LauncherApps;
 import java.util.*;
 
 public class StartAppsActivity extends Activity {
@@ -17,53 +20,62 @@ public class StartAppsActivity extends Activity {
     private List<String> filteredNames = new ArrayList<>();
     private ArrayAdapter<String> adapter;
     private PackageManager pm;
-	private DevicePolicyManager dpm;
+    private LauncherApps launcherApps;
+    private DevicePolicyManager dpm;
 
     private static class AppEntry implements Comparable<AppEntry> {
         String pkgName;
-        ActivityInfo bestActivity;
+        String appName;
+        Drawable icon;
+        ComponentName launcherActivity;
         List<ActivityInfo> allExportedActivities;
+        boolean fromLauncherApps;
 
-        AppEntry(String pkgName, ActivityInfo best, List<ActivityInfo> all) {
+        AppEntry(
+            String pkgName,
+            String appName,
+            Drawable icon,
+            ComponentName launcherActivity,
+            List<ActivityInfo> all,
+            boolean fromLauncherApps
+        ) {
             this.pkgName = pkgName;
-            this.bestActivity = best;
+            this.appName = appName;
+            this.icon = icon;
+            this.launcherActivity = launcherActivity;
             this.allExportedActivities = all;
+            this.fromLauncherApps = fromLauncherApps;
         }
 
         @Override
         public int compareTo(AppEntry other) {
-            return this.pkgName.compareToIgnoreCase(other.pkgName);
+            if (this.fromLauncherApps != other.fromLauncherApps) {
+                return this.fromLauncherApps ? -1 : 1;
+            }
+
+            return this.appName.compareToIgnoreCase(other.appName);
         }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-		dpm = (DevicePolicyManager) getSystemService(Context.DEVICE_POLICY_SERVICE);		
-		if (!isWorkProfileContext() && hasWorkProfile()) {
-            launchWorkProfileDelayed();
-		}
-		if (!isWorkProfileContext() && !hasWorkProfile()) {
-			Intent intent = new Intent(this, MainActivity.class);
-			intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-			startActivity(intent);
-			finish();
-		}
-		getWindow().getDecorView().setKeepScreenOn(true);
+        getWindow().getDecorView().setKeepScreenOn(true);
         getWindow().getDecorView().setSystemUiVisibility(
-			View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-			| View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-			| View.SYSTEM_UI_FLAG_FULLSCREEN
-			| View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-			| View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-			| View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+            View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+            | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+            | View.SYSTEM_UI_FLAG_FULLSCREEN
+            | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
         );
     }
-    
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         pm = getPackageManager();
+        launcherApps = (LauncherApps) getSystemService(LAUNCHER_APPS_SERVICE);
 
         LinearLayout layout = new LinearLayout(this);
         layout.setOrientation(LinearLayout.VERTICAL);
@@ -71,7 +83,7 @@ public class StartAppsActivity extends Activity {
         layout.setPadding(20, 20, 20, 20);
 
         EditText searchBar = new EditText(this);
-        searchBar.setHint("Search package...");
+        searchBar.setHint("Search package");
         searchBar.setHintTextColor(Color.GRAY);
         searchBar.setTextColor(Color.WHITE);
         searchBar.setBackgroundColor(Color.parseColor("#222222"));
@@ -79,80 +91,247 @@ public class StartAppsActivity extends Activity {
 
         ListView listView = new ListView(this);
         layout.addView(listView);
+
         setContentView(layout);
 
-        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, filteredNames);
+        adapter = new ArrayAdapter<String>(
+            this,
+            android.R.layout.simple_list_item_1,
+            filteredNames
+        ) {
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                LinearLayout row = new LinearLayout(StartAppsActivity.this);
+                row.setOrientation(LinearLayout.HORIZONTAL);
+                row.setPadding(30, 25, 30, 25);
+                row.setGravity(Gravity.CENTER_VERTICAL);
+                row.setBackgroundColor(Color.BLACK);
+
+                AppEntry app = findEntry(filteredNames.get(position));
+
+                ImageView iconView = new ImageView(StartAppsActivity.this);
+                iconView.setImageDrawable(app.icon);
+                row.addView(iconView, new LinearLayout.LayoutParams(100, 100));
+
+                TextView tv = new TextView(StartAppsActivity.this);
+                tv.setText(app.appName + " [" + app.pkgName + "]");
+                tv.setTextColor(Color.WHITE);
+                tv.setTextSize(15);
+                tv.setPadding(30, 0, 10, 0);
+                tv.setLayoutParams(
+                    new LinearLayout.LayoutParams(0, -2, 1.0f)
+                );
+                row.addView(tv);
+
+                return row;
+            }
+        };
+
         listView.setAdapter(adapter);
 
         searchBar.addTextChangedListener(new TextWatcher() {
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            public void onTextChanged(
+                CharSequence s,
+                int start,
+                int before,
+                int count
+            ) {
                 filter(s.toString());
             }
-            @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-            @Override public void afterTextChanged(Editable s) {}
+
+            @Override
+            public void beforeTextChanged(
+                CharSequence s,
+                int start,
+                int count,
+                int after
+            ) {}
+
+            @Override
+            public void afterTextChanged(Editable s) {}
         });
 
-        listView.setOnItemClickListener((parent, view, position, id) -> {
-            String pkgName = filteredNames.get(position);
-            AppEntry entry = findEntry(pkgName);
-            if (entry != null) {
-                 if (!launchActivity(entry.bestActivity)) {
-                    showActivitySelectionDialog(entry);
+        listView.setOnItemClickListener(
+            (parent, view, position, id) -> {
+                String key = filteredNames.get(position);
+                AppEntry entry = findEntry(key);
+
+                if (entry != null) {
+                    if (entry.launcherActivity != null) {
+                        if (!launchWithLauncherApps(entry)) {
+                            showActivitySelectionDialog(entry);
+                        }
+                    } else {
+                        showActivitySelectionDialog(entry);
+                    }
+                } else {
+                    Toast.makeText(
+                        StartAppsActivity.this,
+                        "App entry not found",
+                        Toast.LENGTH_LONG
+                    ).show();
                 }
             }
-        });
+        );
 
-     listView.setOnItemLongClickListener((parent, view, position, id) -> {
-            String pkgName = filteredNames.get(position);
-            AppEntry entry = findEntry(pkgName);
-            if (entry != null) showActivitySelectionDialog(entry);
-            return true;
-        });
+        listView.setOnItemLongClickListener(
+            (parent, view, position, id) -> {
+                String key = filteredNames.get(position);
+                AppEntry entry = findEntry(key);
+
+                if (entry != null && entry.launcherActivity == null) {
+                    showActivitySelectionDialog(entry);
+                } else if (entry == null) {
+                    Toast.makeText(
+                        StartAppsActivity.this,
+                        "App entry not found",
+                        Toast.LENGTH_LONG
+                    ).show();
+                }
+
+                return true;
+            }
+        );
 
         loadAppsAsync();
     }
 
     private void showActivitySelectionDialog(AppEntry entry) {
         List<String> actNames = new ArrayList<>();
+
         for (ActivityInfo a : entry.allExportedActivities) {
-             String shortName = a.name.replace(entry.pkgName, "");
-            actNames.add(shortName.isEmpty() ? a.name : shortName);
+            String shortName = a.name.replace(entry.pkgName, "");
+
+            actNames.add(
+                shortName.isEmpty()
+                    ? a.name
+                    : shortName
+            );
         }
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(this, AlertDialog.THEME_DEVICE_DEFAULT_DARK);
-        builder.setTitle("Select Activity for " + entry.pkgName);
-        builder.setItems(actNames.toArray(new String[0]), (dialog, which) -> {
-            ActivityInfo selected = entry.allExportedActivities.get(which);
-            if (!launchActivity(selected)) {
-                Toast.makeText(this, "Failed to launch this activity", Toast.LENGTH_SHORT).show();
+        if (actNames.isEmpty()) {
+            Toast.makeText(
+                this,
+                "No exported activities: " + entry.pkgName,
+                Toast.LENGTH_LONG
+            ).show();
+            return;
+        }
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(
+            this,
+            AlertDialog.THEME_DEVICE_DEFAULT_DARK
+        );
+
+        builder.setTitle(
+            "Select Activity for " + entry.pkgName
+        );
+
+        builder.setItems(
+            actNames.toArray(new String[0]),
+            (dialog, which) -> {
+                ActivityInfo selected =
+                    entry.allExportedActivities.get(which);
+
+                if (!launchActivity(selected)) {
+                    Toast.makeText(
+                        this,
+                        "Failed to launch: " + selected.name,
+                        Toast.LENGTH_LONG
+                    ).show();
+                }
             }
-        });
-        AlertDialog dialog = builder.create(); 
-		dialog.show();
-		if (dialog.getWindow() != null) {  
-		WindowManager.LayoutParams lp = dialog.getWindow().getAttributes();
-		lp.gravity = Gravity.CENTER;
-		lp.y = 0;
-		dialog.getWindow().setAttributes(lp);
-		}
+        );
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+
+        if (dialog.getWindow() != null) {
+            WindowManager.LayoutParams lp =
+                dialog.getWindow().getAttributes();
+
+            lp.gravity = Gravity.CENTER;
+            lp.y = 0;
+
+            dialog.getWindow().setAttributes(lp);
+        }
+    }
+
+    private boolean launchWithLauncherApps(AppEntry entry) {
+        try {
+            UserHandle user =
+                android.os.Process.myUserHandle();
+
+            launcherApps.startMainActivity(
+                entry.launcherActivity,
+                user,
+                null,
+                null
+            );
+
+            return true;
+
+        } catch (Exception e) {
+            Toast.makeText(
+                this,
+                "Launcher launch error: "
+                    + e.getClass().getSimpleName()
+                    + ": "
+                    + String.valueOf(e.getMessage()),
+                Toast.LENGTH_LONG
+            ).show();
+
+            return false;
+        }
     }
 
     private boolean launchActivity(ActivityInfo act) {
         try {
             Intent i = new Intent(Intent.ACTION_MAIN);
-            i.setComponent(new ComponentName(act.packageName, act.name));
+
+            i.setComponent(
+                new ComponentName(
+                    act.packageName,
+                    act.name
+                )
+            );
+
             i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
             startActivity(i);
+
             return true;
+
         } catch (Exception e) {
             try {
                 Intent fallback = new Intent();
-                fallback.setComponent(new ComponentName(act.packageName, act.name));
-                fallback.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+                fallback.setComponent(
+                    new ComponentName(
+                        act.packageName,
+                        act.name
+                    )
+                );
+
+                fallback.addFlags(
+                    Intent.FLAG_ACTIVITY_NEW_TASK
+                );
+
                 startActivity(fallback);
+
                 return true;
+
             } catch (Exception e2) {
+                Toast.makeText(
+                    this,
+                    "Activity launch error: "
+                        + e2.getClass().getSimpleName()
+                        + ": "
+                        + String.valueOf(e2.getMessage()),
+                    Toast.LENGTH_LONG
+                ).show();
+
                 return false;
             }
         }
@@ -160,122 +339,235 @@ public class StartAppsActivity extends Activity {
 
     private void loadAppsAsync() {
         ProgressDialog pd = new ProgressDialog(this);
-        pd.setMessage("Deep Scanning...");
+        pd.setMessage("Loading...");
         pd.show();
-		if (pd.getWindow() != null) {
-		WindowManager.LayoutParams lp = pd.getWindow().getAttributes();
-		lp.gravity = Gravity.CENTER;
-		pd.getWindow().setAttributes(lp);
-		}
+
+        if (pd.getWindow() != null) {
+            WindowManager.LayoutParams lp =
+                pd.getWindow().getAttributes();
+
+            lp.gravity = Gravity.CENTER;
+
+            pd.getWindow().setAttributes(lp);
+        }
 
         new Thread(() -> {
-            List<PackageInfo> packages = pm.getInstalledPackages(PackageManager.GET_ACTIVITIES | PackageManager.MATCH_UNINSTALLED_PACKAGES);
-            for (PackageInfo pkg : packages) {
-                if (pkg.packageName.equals(getPackageName())) continue;
-                if (pkg.activities == null) continue;
+            List<AppEntry> loadedApps =
+                new ArrayList<>();
 
-                List<ActivityInfo> exported = new ArrayList<>();
-                ActivityInfo best = null;
-                int topScore = -1;
-                String appLabel = pkg.applicationInfo.loadLabel(pm).toString();
+            try {
+                UserHandle user =
+                    android.os.Process.myUserHandle();
 
-                for (ActivityInfo act : pkg.activities) {
-                    if (!act.exported) continue;
-                    exported.add(act);
+                List<LauncherActivityInfo>
+                    launcherActivities =
+                        launcherApps.getActivityList(
+                            null,
+                            user
+                        );
 
-                    int score = calculateScore(act, appLabel);
-                    if (score > topScore) {
-                        topScore = score;
-                        best = act;
+                for (LauncherActivityInfo info :
+                     launcherActivities) {
+
+                    ComponentName componentName =
+                        info.getComponentName();
+
+                    String pkgName =
+                        componentName.getPackageName();
+
+                    if (pkgName.equals(getPackageName())) {
+                        continue;
+                    }
+
+                    String label =
+                        info.getLabel() != null
+                            ? info.getLabel().toString()
+                            : pkgName;
+
+                    String appName = label;
+
+                    Drawable icon =
+                        info.getIcon(0);
+
+                    loadedApps.add(
+                        new AppEntry(
+                            pkgName,
+                            appName,
+                            icon,
+                            componentName,
+                            new ArrayList<ActivityInfo>(),
+                            true
+                        )
+                    );
+                }
+
+            } catch (Exception e) {
+                String error =
+                    "LauncherApps load error: "
+                    + e.getClass().getSimpleName()
+                    + ": "
+                    + String.valueOf(e.getMessage());
+
+                runOnUiThread(() ->
+                    Toast.makeText(
+                        StartAppsActivity.this,
+                        error,
+                        Toast.LENGTH_LONG
+                    ).show()
+                );
+            }
+
+            try {
+                List<PackageInfo> packages =
+                    pm.getInstalledPackages(
+                        PackageManager.GET_ACTIVITIES
+                        | PackageManager.MATCH_UNINSTALLED_PACKAGES
+                    );
+
+                Set<String> launcherPackages =
+                    new HashSet<>();
+
+                for (AppEntry entry : loadedApps) {
+                    if (entry.launcherActivity != null) {
+                        launcherPackages.add(
+                            entry.pkgName
+                        );
                     }
                 }
-                if (!exported.isEmpty()) allApps.add(new AppEntry(pkg.packageName, best, exported));
+
+                for (PackageInfo pkg : packages) {
+                    if (pkg.packageName.equals(getPackageName())) {
+                        continue;
+                    }
+
+                    if (launcherPackages.contains(pkg.packageName)) {
+                        continue;
+                    }
+
+                    if (pkg.activities == null) {
+                        continue;
+                    }
+
+                    List<ActivityInfo> exported =
+                        new ArrayList<>();
+
+                    for (ActivityInfo act : pkg.activities) {
+                        if (!act.exported) {
+                            continue;
+                        }
+
+                        exported.add(act);
+                    }
+
+                    if (!exported.isEmpty()) {
+                        String appName =
+                            pkg.applicationInfo
+                                .loadLabel(pm)
+                                .toString();
+
+                        Drawable icon =
+                            pkg.applicationInfo
+                                .loadIcon(pm);
+
+                        loadedApps.add(
+                            new AppEntry(
+                                pkg.packageName,
+                                appName,
+                                icon,
+                                null,
+                                exported,
+                                false
+                            )
+                        );
+                    }
+                }
+
+            } catch (Exception e) {
+                String error =
+                    "Package load error: "
+                    + e.getClass().getSimpleName()
+                    + ": "
+                    + String.valueOf(e.getMessage());
+
+                runOnUiThread(() ->
+                    Toast.makeText(
+                        StartAppsActivity.this,
+                        error,
+                        Toast.LENGTH_LONG
+                    ).show()
+                );
             }
-            Collections.sort(allApps);
-            runOnUiThread(() -> { filter(""); pd.dismiss(); });
+
+            Collections.sort(loadedApps);
+
+            allApps.clear();
+            allApps.addAll(loadedApps);
+
+            runOnUiThread(() -> {
+                filter("");
+
+                if (pd.isShowing()) {
+                    pd.dismiss();
+                }
+            });
+
         }).start();
-    }
-
-    private int calculateScore(ActivityInfo act, String appLabel) {
-        boolean hasMain = isAction(act, Intent.ACTION_MAIN);
-        boolean hasLauncher = isCategory(act, Intent.CATEGORY_LAUNCHER);
-        boolean noLabel = (act.labelRes == 0 && act.nonLocalizedLabel == null);
-        boolean labelMatch = act.loadLabel(pm).toString().equalsIgnoreCase(appLabel);
-
-        if (hasMain && hasLauncher) {
-            if (noLabel) return 1000;
-            if (labelMatch) return 900;
-            return 800;
-        }
-        if (hasMain || hasLauncher) {
-            int bonus = hasMain ? 100 : 0;
-            if (noLabel) return 600 + bonus;
-            if (labelMatch) return 500 + bonus;
-            return 400 + bonus;
-        }
-        if (noLabel) return 300;
-        if (labelMatch) return 200;
-        return 100;
     }
 
     private void filter(String query) {
         filteredNames.clear();
-        for (AppEntry e : allApps) {
-            if (e.pkgName.toLowerCase().contains(query.toLowerCase())) filteredNames.add(e.pkgName);
+
+        String q = query.toLowerCase();
+
+        for (int i = 0; i < allApps.size(); i++) {
+            AppEntry e = allApps.get(i);
+
+            if (e.pkgName.toLowerCase().contains(q)
+                    || e.appName.toLowerCase().contains(q)) {
+
+                filteredNames.add(
+                    e.pkgName + "|" + i
+                );
+            }
         }
+
         adapter.notifyDataSetChanged();
     }
 
-    private AppEntry findEntry(String pkg) {
-        for (AppEntry e : allApps) if (e.pkgName.equals(pkg)) return e;
-        return null;
-    }
+    private AppEntry findEntry(String key) {
+        int separator =
+            key.lastIndexOf("|");
 
-    private boolean isAction(ActivityInfo act, String action) {
-        Intent i = new Intent(action).setPackage(act.packageName);
-        List<ResolveInfo> rs = pm.queryIntentActivities(i, PackageManager.MATCH_ALL);
-        for (ResolveInfo r : rs) if (r.activityInfo.name.equals(act.name)) return true;
-        return false;
-    }
+        if (separator >= 0) {
+            try {
+                int index = Integer.parseInt(
+                    key.substring(separator + 1)
+                );
 
-    private boolean isCategory(ActivityInfo act, String cat) {
-        Intent i = new Intent(Intent.ACTION_MAIN).addCategory(cat).setPackage(act.packageName);
-        List<ResolveInfo> rs = pm.queryIntentActivities(i, PackageManager.MATCH_ALL);
-        for (ResolveInfo r : rs) if (r.activityInfo.name.equals(act.name)) return true;
-        return false;
-    }
-	private boolean isWorkProfileContext() {
-        DevicePolicyManager dpm = (DevicePolicyManager) getSystemService(Context.DEVICE_POLICY_SERVICE);
-        return dpm.isProfileOwnerApp(getPackageName());
-    }
+                if (index >= 0 &&
+                    index < allApps.size()) {
 
-    private boolean hasWorkProfile() {
-        UserManager userManager = (UserManager) getSystemService(Context.USER_SERVICE);
-        return userManager.getUserProfiles().size() > 1;
-    }
-
-    private void launchWorkProfileDelayed() {
-    new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
-        @Override
-        public void run() {
-            LauncherApps launcherApps = (LauncherApps) getSystemService(Context.LAUNCHER_APPS_SERVICE);
-            UserManager userManager = (UserManager) getSystemService(Context.USER_SERVICE);
-            
-            if (launcherApps != null && userManager != null) {
-                List<UserHandle> profiles = userManager.getUserProfiles();
-                for (UserHandle profile : profiles) {
-                   if (userManager.getSerialNumberForUser(profile) != 0) {
-                        launcherApps.startMainActivity(
-                            new ComponentName(getPackageName(), StartAppsActivity.class.getName()), 
-                            profile, null, null
-                        );
-                        
-                        finishAndRemoveTask();
-                        break;
-                    }
+                    return allApps.get(index);
                 }
+
+            } catch (Exception e) {
+                Toast.makeText(
+                    this,
+                    "Entry parse error: "
+                        + e.getClass().getSimpleName()
+                        + ": "
+                        + String.valueOf(e.getMessage()),
+                    Toast.LENGTH_LONG
+                ).show();
             }
         }
-    }, 1000);
-	}
+
+        for (AppEntry e : allApps) {
+            if (e.pkgName.equals(key)) {
+                return e;
+            }
+        }
+
+        return null;
+    }
 }
