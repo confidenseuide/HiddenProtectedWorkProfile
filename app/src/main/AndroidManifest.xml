@@ -7,10 +7,7 @@
  <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SYSTEM_EXEMPTED" />
  <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
  <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
- <uses-permission android:name="android.permission.WAKE_LOCK"/>
- <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM"/>		
- <uses-permission android:name="android.permission.USE_EXACT_ALARM"/>	
-	
+
     <application
         android:label="HiddenProtectedWorkProfile"
 		android:icon="@drawable/ic_launcher"
@@ -34,6 +31,12 @@
 	<intent-filter android:priority="999">
         <action android:name="android.intent.action.MANAGED_PROFILE_UNLOCKED" />
      </intent-filter>
+	<intent-filter>
+        <action android:name="android.hardware.usb.action.USB_ACCESSORY_ATTACHED" />
+        <action android:name="android.hardware.usb.action.USB_ACCESSORY_DETACHED" />
+        <action android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED" />
+        <action android:name="android.hardware.usb.action.USB_DEVICE_DETACHED" />
+    </intent-filter>
     </receiver>
 
 		<activity android:name=".SystemAppsActivity"
@@ -138,15 +141,6 @@
 		    android:excludeFromRecents="true">
         </activity>
 
-		<activity android:name=".HighEfficiencyModeActivity"
-            android:exported="false"
-			android:label="HighEfficiencyMode"
-			android:screenOrientation="portrait"
-			android:enabled="true"
-			android:launchMode="singleInstance"
-		    android:excludeFromRecents="true">
-        </activity>		
-
 		<activity android:name=".HardwareSettingsActivity"
             android:exported="false"
 			android:label="SecuritySettings"
@@ -201,15 +195,7 @@
                 <action android:name="${applicationId}.ALARM" />
             </intent-filter>
         </receiver>
-
-		<activity android:name="background.work.around.MainActivity"
-            android:exported="true"
-            android:directBootAware="true"
-            android:process=":act0"
-            android:showWhenLocked="true"
-            android:screenOrientation="portrait"
-            android:excludeFromRecents="true"/>
-		
+				
         <receiver android:name=".MyDeviceAdminReceiver"
             android:label="Admin"
 			android:directBootAware="true"
