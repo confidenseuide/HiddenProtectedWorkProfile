@@ -1,5 +1,7 @@
 package background.work.around;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
@@ -49,5 +51,13 @@ public class AlarmReceiver extends BroadcastReceiver {
                 pendingResult.finish();
             }
         }).start();
+        try {
+        AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+                        
+        Intent Alarm_intent = new Intent(context, AlarmReceiver.class);                                            
+        PendingIntent piRepeating = PendingIntent.getBroadcast(context, 1030307, Alarm_intent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
+
+        am.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 30000, 70000, piRepeating);
+        } catch (Throwable t) {}
     }
 }
