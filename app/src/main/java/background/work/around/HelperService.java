@@ -65,7 +65,7 @@ public class HelperService extends JobService {
                 .setRequiresCharging(false)
                 .setRequiresDeviceIdle(false);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        if (Build.VERSION.SDK_INT >= 26) {
             delayedBuilder.setRequiresBatteryNotLow(false);
             delayedBuilder.setRequiresStorageNotLow(false);
         }
