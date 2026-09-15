@@ -54,7 +54,7 @@ public class WatcherService extends DeviceAdminService {
     }
 
     Notification notif = new Notification.Builder(context, activeId)
-            .setContentTitle("ProtectedWorkProfile ❄️")
+            .setContentTitle("ProtectedWorkProfile")
             .setContentText("Tap here to start")
             .setSmallIcon(android.R.drawable.ic_lock_lock)
             .setOngoing(true)
@@ -126,11 +126,10 @@ public class WatcherService extends DeviceAdminService {
       @Override
     public void onCreate() {
         super.onCreate();
-		if (getApplicationContext().createDeviceProtectedStorageContext().getSharedPreferences("prefs", Context.MODE_PRIVATE).getBoolean("isHighEfficiencyModeEnabled", true)) {
-        background.work.around.Start.RunService(this);
+		
+		background.work.around.Start.RunService(this);
 		BindHelper();
-		return;
-		} 
+		
         startTime = System.currentTimeMillis();
 
 		startEnforcedService();
@@ -179,6 +178,12 @@ public class WatcherService extends DeviceAdminService {
                             WatcherService.this.createDeviceProtectedStorageContext().getSharedPreferences("prefs", Context.MODE_PRIVATE).edit().putBoolean("isLockedState", true).apply();							
 							setAppsVisibility(false);
 
+							//restart preconfiguration
+							background.work.around.Start.RunService(WatcherService.this);
+							background.work.around.Start.RunService(WatcherService.this);
+							background.work.around.Start.RunService(WatcherService.this);
+							//restart preconfiguration
+
 							// Profile protection code
                             int flag = 1;
                             try {
@@ -211,6 +216,12 @@ public class WatcherService extends DeviceAdminService {
         }
 
         
+    }
+
+	@Override
+    public int onStartCommand(Intent intent, int flags, int startId) {    
+	startEnforcedService();
+	return START_STICKY;
     }
 
     @Override
