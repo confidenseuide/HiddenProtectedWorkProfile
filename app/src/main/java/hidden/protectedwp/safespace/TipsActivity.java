@@ -55,7 +55,7 @@ public class TipsActivity extends Activity {
 
         layout.addView(createTextView(getTextTip4(), true));
         layout.addView(createButton(getBtnConnections(), v -> 
-                openSettingsByClass("com.android.settings.Settings$IccLockSettingsActivity")));
+                openSettingsAction("android.settings.SECURITY_SETTINGS")));
         layout.addView(createTextView(getTextTip4Note(), false));
 
         setContentView(scrollView);
@@ -104,18 +104,7 @@ public class TipsActivity extends Activity {
             Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
         }
     }
-    
-	private void openSettingsByClass(String className) {
-        try {
-            Intent intent = new Intent();
-            intent.setClassName("com.android.settings", className);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-			startActivity(intent);
-        } catch (Throwable e) {
-            Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
-        }
-    }
-
+    	
     private String getTextIntro() {
         return isRussian 
             ? "Привет, это советы по безопасности. Тут вы можете увидеть советы по общей безопасности вашего устройства. Это не советы для конкретно этого профиля. Они могу звучать банально, но не все им следуют."
@@ -157,12 +146,12 @@ public class TipsActivity extends Activity {
 
     private String getTextTip4() {
         return isRussian 
-            ? "4. Многие забывают об этом. Но защиту нужно ставить не только на телефон, но и на SIM-карту. Если телефон украдут или отберут, то её могут использовать для кражи ваших аккаунтов или чтобы вас подставить. Если у вас физическая SIM-карта, то чтобы её защитить нужно установить на неё пин-код в настройках подключений."
-            : "4. Many forget about this. But protection needs to be applied not only to the phone, but also to the SIM card. If the phone is stolen or taken away, SIM card can be used to steal your accounts or to frame you. If you have a physical SIM card, you need to set a PIN code for it in the connection settings to protect it.";
+            ? "4. Многие забывают об этом. Но защиту нужно ставить не только на телефон, но и на SIM-карту. Если телефон украдут или отберут, то её могут использовать для кражи ваших аккаунтов или чтобы вас подставить. Если у вас физическая SIM-карта, то чтобы её защитить нужно установить на неё пин-код в настройках безопасности."
+            : "4. Many forget about this. But protection needs to be applied not only to the phone, but also to the SIM card. If the phone is stolen or taken away, SIM card can be used to steal your accounts or to frame you. If you have a physical SIM card, you need to set a PIN code for it in the security settings to protect it.";
     }
 
     private String getBtnConnections() {
-        return isRussian ? "Открыть настройки подключений" : "Open connection settings";
+        return isRussian ? "Открыть настройки безопасности" : "Open security settings";
     }
 
     @Override
