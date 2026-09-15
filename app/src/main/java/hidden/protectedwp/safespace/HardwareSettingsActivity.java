@@ -17,9 +17,8 @@ public class HardwareSettingsActivity extends Activity {
         super.onCreate(savedInstanceState);
 
         LinearLayout layout = new LinearLayout(this);
-        layout.setOrientation(LinearLayout.VERTICAL);
-        layout.setPadding(54, 54, 54, 54);
-        layout.setGravity(android.view.Gravity.TOP | android.view.Gravity.CENTER_HORIZONTAL);
+        layout.setOrientation(LinearLayout.VERTICAL);        
+        layout.setGravity(android.view.Gravity.CENTER);
                 
         Switch wipeSwitch = new Switch(this);
         wipeSwitch.setText("Wipe work profile data on any incorrect password entry attempt on primary user lock screen (this feature can't work if app is stopped, work profile is paused, and in safe mode)");
