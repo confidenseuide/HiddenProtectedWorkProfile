@@ -1,6 +1,5 @@
 <device-admin>
     <uses-policies>
-        <profile-owner />
         <watch-login />
         <force-lock />
         <limit-password />
