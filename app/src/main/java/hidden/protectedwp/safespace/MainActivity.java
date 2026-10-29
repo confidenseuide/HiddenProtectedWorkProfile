@@ -218,7 +218,8 @@ public class MainActivity extends Activity {
     btn.setOnClickListener(v -> {
         
 		Intent intent = new Intent(DevicePolicyManager.ACTION_PROVISION_MANAGED_PROFILE);
-        intent.putExtra(DevicePolicyManager.EXTRA_PROVISIONING_DEVICE_ADMIN_COMPONENT_NAME, new ComponentName(this, MyDeviceAdminReceiver.class));
+		intent.putExtra(DevicePolicyManager.EXTRA_PROVISIONING_DEVICE_ADMIN_COMPONENT_NAME, new ComponentName(this, MyDeviceAdminReceiver.class));
+		intent.putExtra(DevicePolicyManager.EXTRA_PROVISIONING_ALLOW_OFFLINE, true);
 		startActivityForResult(intent, 100);
 		
         dialog.dismiss();
@@ -480,7 +481,7 @@ public class MainActivity extends Activity {
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-	if (requestCode == 100) {
+	if (requestCode == 100 && resultCode == Activity.RESULT_OK) {
         
 		MainActivity.this.createDeviceProtectedStorageContext().getSharedPreferences("prefs", Context.MODE_PRIVATE).edit().putBoolean("AlertAlarm", true).apply();						
 			
